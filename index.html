@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asesorías al Migrante — Daniela Harrington</title>
+    <!-- Google Fonts: Poppins (Titles) and Lato (Body Text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Hide Google Translate toolbar banner for a clean UI -->
+    <style>
+      .goog-te-banner-frame.skiptranslate, 
+      .goog-te-banner-frame, 
+      iframe.goog-te-banner-frame {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+      }
+      body {
+        top: 0px !important;
+        position: static !important;
+      }
+      #google_translate_element {
+        display: none !important;
+      }
+      .goog-te-spinner-pos {
+        display: none !important;
+      }
+      .goog-tooltip {
+        display: none !important;
+      }
+      .goog-tooltip:hover {
+        display: none !important;
+      }
+      .goog-text-highlight {
+        background-color: transparent !important;
+        box-shadow: none !important;
+      }
+    </style>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'es',
+          includedLanguages: 'es,en,zh-CN,fr,de,pt,it,ru,ar,hi,ja,ko,id,tr,vi',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          autoDisplay: false
+        }, 'google_translate_element');
+      }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </head>
+  <body>
+    <div id="google_translate_element" style="display:none;"></div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

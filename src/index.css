@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    font-family: 'Lato', sans-serif;
+    color: #2B2B2B;
+    background-color: #F5F1E8;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  html.dark body {
+    color: #f1f5f9;
+    background-color: #070e17;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-lato {
+  font-family: 'Lato', sans-serif;
+}
+
+/* Brand Palette Custom Classes */
+.bg-brand-primary { background-color: #0B2447; }
+.text-brand-primary { color: #0B2447; }
+.border-brand-primary { border-color: #0B2447; }
+
+.bg-brand-secondary { background-color: #8FAFB3; }
+.text-brand-secondary { color: #8FAFB3; }
+.border-brand-secondary { border-color: #8FAFB3; }
+
+.bg-brand-bg { background-color: #F5F1E8; }
+.text-brand-bg { color: #F5F1E8; }
+
+.bg-brand-accent { background-color: #E79923; }
+.text-brand-accent { color: #E79923; }
+.border-brand-accent { border-color: #E79923; }
+
+.bg-brand-text { background-color: #2B2B2B; }
+.text-brand-text { color: #2B2B2B; }
+
+/* ==========================================================================
+   HIGH CONTRAST DARK MODE OVERRIDES (LECTURA CÓMODA Y NÍTIDA)
+   ========================================================================== */
+
+/* Dark Containers */
+html.dark .bg-white {
+  background-color: #0f1c2e !important;
+  color: #f8fafc !important;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #14253c !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .bg-slate-100 {
+  background-color: #182c47 !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .bg-[#F5F1E8] {
+  background-color: #14243b !important;
+  color: #f8fafc !important;
+}
+
+/* Default Headings in Dark Mode */
+html.dark h1, 
+html.dark h2, 
+html.dark h3, 
+html.dark h4, 
+html.dark h5, 
+html.dark h6 {
+  color: #ffffff;
+}
+
+/* General Dark Body Text & Labels */
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-slate-700,
+html.dark .text-slate-600,
+html.dark .text-[#2B2B2B],
+html.dark .text-brand-text,
+html.dark .text-gray-900,
+html.dark .text-gray-800,
+html.dark .text-gray-700,
+html.dark .text-gray-600 {
+  color: #f1f5f9 !important;
+}
+
+/* Muted / Secondary Text in Dark Mode (High Legibility Silver) */
+html.dark .text-slate-500,
+html.dark .text-slate-400,
+html.dark .text-gray-500,
+html.dark .text-gray-400 {
+  color: #cbd5e1 !important;
+}
+
+/* Primary Brand Text in Dark Mode (Turn to Gold/Amber on Dark Cards) */
+html.dark span.text-[#0B2447],
+html.dark h2.text-[#0B2447],
+html.dark h3.text-[#0B2447],
+html.dark h4.text-[#0B2447],
+html.dark p.text-[#0B2447],
+html.dark div.text-[#0B2447],
+html.dark label.text-[#0B2447] {
+  color: #F3B244 !important;
+}
+
+/* ==========================================================================
+   CRITICAL PROTECTION: LIGHT BUTTONS / AMBER BADGES / USER CHAT BUBBLES
+   Must always keep dark navy text (#0B2447 / #020617) so text never disappears
+   ========================================================================== */
+html.dark .bg-[#E79923],
+html.dark .bg-[#E79923] *,
+html.dark .bg-amber-500,
+html.dark .bg-amber-500 *,
+html.dark .bg-amber-400,
+html.dark .bg-amber-400 *,
+html.dark button.bg-[#E79923],
+html.dark button.bg-amber-500,
+html.dark button.bg-amber-400 {
+  color: #0B2447 !important;
+}
+
+/* Specific fix for SVG icons inside amber buttons in dark mode */
+html.dark .bg-[#E79923] svg,
+html.dark .bg-amber-500 svg,
+html.dark .bg-amber-400 svg {
+  color: #0B2447 !important;
+  fill: #0B2447;
+}
+
+/* Borders in Dark Mode */
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-300 {
+  border-color: #203552 !important;
+}
+
+/* Inputs, Selects, and Textareas in Dark Mode */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #162842 !important;
+  color: #ffffff !important;
+  border-color: #2d486d !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Contextual Tinted Callout Boxes in Dark Mode */
+html.dark .bg-emerald-50,
+html.dark .bg-emerald-50 * {
+  background-color: #062c22 !important;
+  color: #a7f3d0 !important;
+}
+
+html.dark .bg-amber-50,
+html.dark .bg-amber-50 * {
+  background-color: #2d1d07 !important;
+  color: #fde68a !important;
+}
+
+html.dark .bg-blue-50,
+html.dark .bg-blue-50 * {
+  background-color: #0f2744 !important;
+  color: #bfdbfe !important;
+}
+
+html.dark .bg-indigo-50,
+html.dark .bg-indigo-50 * {
+  background-color: #1a1b4b !important;
+  color: #c7d2fe !important;
+}
+
+html.dark .bg-rose-50,
+html.dark .bg-rose-50 * {
+  background-color: #380d19 !important;
+  color: #fecdd3 !important;
+}
+
+/* Table Contrast in Dark Mode */
+html.dark table th {
+  background-color: #182c47 !important;
+  color: #F3B244 !important;
+}
+
+html.dark table td {
+  border-color: #203552 !important;
+  color: #f1f5f9 !important;
+}
+
+
