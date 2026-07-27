@@ -84,7 +84,7 @@ export default function LoginScreen() {
     try {
       const supabase = createClient();
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(forgotEmail.trim(), {
-        redirectTo: `${window.location.origin}/login`,
+        redirectTo: `${window.location.origin}/auth/confirm?type=recovery`,
       });
 
       if (resetError) {
