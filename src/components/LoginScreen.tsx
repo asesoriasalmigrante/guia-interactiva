@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Lock, User, Eye, EyeOff, ShieldCheck, ArrowRight, AlertCircle, KeyRound, Luggage, Plane, Building2, Languages, Check, ChevronDown } from 'lucide-react';
 import { EBOOK_METADATA } from '../data/ebookData';
-import migrationBgImg from '../assets/images/migration_three_phases_1784911692499.jpg';
-import customMigranteLogo from '../assets/images/asesorias_migrante_custom_logo_1784912635483.jpg';
+const migrationBgImg = '/images/migration_three_phases_1784911692499.jpg';
+const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
 import { WORLD_LANGUAGES, LanguageOption, setAppLanguage, t, getAppLanguage } from '../utils/i18n';
 
 interface LoginScreenProps {

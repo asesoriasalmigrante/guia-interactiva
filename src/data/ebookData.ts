@@ -1,6 +1,7 @@
 import { Chapter, CountryInfo, ChecklistCategory, QuizQuestion, QuizBlock, ActionPlanMonth, OfficialResource, BudgetItem } from '../types';
 import { COUNTRIES_DATA } from './countriesData';
-import danielaAuthorImg from '../assets/images/daniela_harrington_1784747709233.jpg';
+
+const danielaAuthorImg = '/images/daniela_harrington_1784747709233.jpg';
 
 export { COUNTRIES_DATA };
 

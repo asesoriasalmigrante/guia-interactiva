@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Compass, BookOpen, Globe2, Calculator, CheckSquare, BrainCircuit, Briefcase, Sun, Moon, LogOut, ChevronDown, ChevronUp, Languages, Check } from 'lucide-react';
-import customMigranteLogo from '../assets/images/asesorias_migrante_custom_logo_1784912635483.jpg';
+const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
 import { WORLD_LANGUAGES, LanguageOption, setAppLanguage, t } from '../utils/i18n';
 
 interface HeaderProps {
