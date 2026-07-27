@@ -10,46 +10,26 @@ import { ReadinessQuiz } from '@/src/components/ReadinessQuiz';
 import { JobSearchPlanner } from '@/src/components/JobSearchPlanner';
 import { OfficialResources } from '@/src/components/OfficialResources';
 import { AIConsultantChat } from '@/src/components/AIConsultantChat';
-import { LoginScreen } from '@/src/components/LoginScreen';
 import { EBOOK_METADATA } from '@/src/data/ebookData';
 import { Phone, Instagram, Mail, Sparkles } from 'lucide-react';
 import { getAppLanguage } from '@/src/utils/i18n';
 import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
 
 export default function ClientApp() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<string>('ebook');
   const [isAIChatOpen, setIsAIChatOpen] = useState<boolean>(false);
   const [aiInitialMessage, setAiInitialMessage] = useState<string>('');
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [currentLanguage, setCurrentLanguage] = useState<string>('es');
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
-  const [supabaseConnected, setSupabaseConnected] = useState<boolean>(false);
 
-  // Initialize client-side state after mount to avoid hydration mismatch
   useEffect(() => {
     setMounted(true);
     setCurrentLanguage(getAppLanguage());
-    setIsAuthenticated(!!localStorage.getItem('migrante_auth'));
-
-    // Test Supabase connection
-    const testConnection = async () => {
-      try {
-        const supabase = createClient();
-        const { error } = await supabase.from('users').select('id').limit(1);
-        setSupabaseConnected(true);
-        if (error && error.code !== 'PGRST116' && error.code !== '42P01') {
-          console.warn('[Supabase] Table not found yet, but connection works:', error.message);
-        } else {
-          console.log('[Supabase] Connection successful');
-        }
-      } catch (err: any) {
-        console.error('[Supabase] Connection failed:', err.message);
-      }
-    };
-    testConnection();
   }, []);
 
   useEffect(() => {
@@ -79,26 +59,17 @@ export default function ClientApp() {
     setIsDarkMode(prev => !prev);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('migrante_auth');
-    setIsAuthenticated(false);
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push('/login');
   };
 
-  // Prevent hydration mismatch: render nothing until mounted
   if (!mounted) {
     return (
       <div className="min-h-screen bg-[#F5F1E8] flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-[#E79923] border-t-transparent rounded-full animate-spin" />
       </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <LoginScreen
-        onLoginSuccess={() => setIsAuthenticated(true)}
-        isDarkMode={isDarkMode}
-      />
     );
   }
 

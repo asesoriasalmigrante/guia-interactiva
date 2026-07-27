@@ -500,6 +500,7 @@ export function setAppLanguage(langCode: string): void {
  * Gets the current stored language or defaults to 'es'
  */
 export function getAppLanguage(): string {
+  if (typeof window === 'undefined') return 'es';
   return localStorage.getItem('migrante_lang') || 'es';
 }
 
