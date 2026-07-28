@@ -33,9 +33,13 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isLoginPage = request.nextUrl.pathname.startsWith('/login');
-  const isAuthCallback = request.nextUrl.pathname.startsWith('/auth');
-  const isApiRoute = request.nextUrl.pathname.startsWith('/api');
+  const pathname = request.nextUrl.pathname;
+  const isLoginPage = pathname.startsWith('/login');
+  const isAuthCallback = pathname.startsWith('/auth');
+  const isAdminRoute = pathname.startsWith('/admin');
+  const isAdminApi = pathname.startsWith('/api/admin');
+  const isDeviceApi = pathname.startsWith('/api/devices');
+  const isApiRoute = pathname.startsWith('/api');
 
   if (!user && !isLoginPage && !isAuthCallback && !isApiRoute) {
     const url = request.nextUrl.clone();
@@ -47,6 +51,51 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = '/';
     return NextResponse.redirect(url);
+  }
+
+  if (isAdminRoute || isAdminApi) {
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      return NextResponse.redirect(url);
+    }
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role, is_active')
+      .eq('id', user.id)
+      .single();
+
+    if (!profile || profile.role !== 'admin') {
+      if (isAdminApi) {
+        return NextResponse.json({ error: 'No autorizado' }, { status: 403 });
+      }
+      const url = request.nextUrl.clone();
+      url.pathname = '/';
+      return NextResponse.redirect(url);
+    }
+  }
+
+  if (user && !isAdminRoute && !isAdminApi && !isAuthCallback && !isLoginPage && !isApiRoute) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('is_active, subscription_status')
+      .eq('id', user.id)
+      .single();
+
+    if (profile && !profile.is_active) {
+      await supabase.auth.signOut();
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      url.searchParams.set('error', 'account_disabled');
+      return NextResponse.redirect(url);
+    }
+
+    if (profile && profile.subscription_status === 'inactive' && !pathname.startsWith('/payment')) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/payment';
+      return NextResponse.redirect(url);
+    }
   }
 
   return supabaseResponse;

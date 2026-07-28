@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, AlertCircle, KeyRound, Luggage, Plane, Building2, Languages, Check, ChevronDown, Send, CheckCircle2, ArrowLeft } from 'lucide-react';
 import { EBOOK_METADATA } from '../data/ebookData';
 import { createClient } from '@/lib/supabase/client';
@@ -21,6 +21,14 @@ export default function LoginScreen() {
   const [forgotSent, setForgotSent] = useState<boolean>(false);
   const [forgotError, setForgotError] = useState<string>('');
   const [forgotLoading, setForgotLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const errorParam = params.get('error');
+    if (errorParam === 'account_disabled') {
+      setError('Tu cuenta ha sido desactivada. Contacta al administrador.');
+    }
+  }, []);
 
   const selectedLang = WORLD_LANGUAGES.find((l) => l.code === selectedLangCode) || WORLD_LANGUAGES[0];
 
@@ -61,6 +69,27 @@ export default function LoginScreen() {
         }
         setIsLoading(false);
         return;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('is_active, subscription_status')
+          .eq('id', user.id)
+          .single();
+
+        if (profile && !profile.is_active) {
+          await supabase.auth.signOut();
+          setError('Tu cuenta ha sido desactivada. Contacta al administrador.');
+          setIsLoading(false);
+          return;
+        }
+
+        if (profile && profile.subscription_status === 'inactive') {
+          window.location.href = '/payment';
+          return;
+        }
       }
 
       window.location.href = '/';
