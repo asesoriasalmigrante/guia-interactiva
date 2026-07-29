@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { CHAPTERS, EBOOK_METADATA, COUNTRIES_DATA } from '../data/ebookData';
 import { BookOpen, Search, ArrowLeft, ArrowRight, Lightbulb, AlertTriangle, CheckCircle2, ChevronRight, ChevronDown, ChevronUp, Sparkles, Instagram, MessageCircle, Globe2, DollarSign, FileCheck2, CheckCircle, Loader2, Languages } from 'lucide-react';
-import { t, getAppLanguage, translateChapterWithAI, WORLD_LANGUAGES } from '../utils/i18n';
+import { t, translateChapterWithAI, WORLD_LANGUAGES } from '../utils/i18n';
+import { useLanguage } from '@/src/contexts/LanguageContext';
 
 const TikTokIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -31,28 +32,16 @@ const renderFormattedText = (text: string, strongClassName?: string) => {
 };
 
 export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+  const { language } = useLanguage();
   const [selectedChapterId, setSelectedChapterId] = useState<number>(1);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isIndexOpen, setIsIndexOpen] = useState<boolean>(false);
-  const [langCode, setLangCode] = useState<string>(() => currentLanguage || getAppLanguage());
   
   const rawChapter = CHAPTERS.find(c => c.id === selectedChapterId) || CHAPTERS[0];
   const [displayChapter, setDisplayChapter] = useState<any>(rawChapter);
   const [isTranslating, setIsTranslating] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (currentLanguage) {
-      setLangCode(currentLanguage);
-    }
-  }, [currentLanguage]);
-
-  useEffect(() => {
-    const handleLangChange = () => {
-      setLangCode(getAppLanguage());
-    };
-    window.addEventListener('languagechange', handleLangChange);
-    return () => window.removeEventListener('languagechange', handleLangChange);
-  }, []);
+  const langCode = language;
 
   useEffect(() => {
     const chapterToTranslate = CHAPTERS.find(c => c.id === selectedChapterId) || CHAPTERS[0];

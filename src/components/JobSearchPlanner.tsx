@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { JOB_ACTION_PLAN } from '../data/ebookData';
 import { Briefcase, AlertTriangle, CheckCircle2, ShieldAlert, Sparkles, ChevronRight } from 'lucide-react';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '../utils/i18n';
 
 interface JobSearchPlannerProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
@@ -8,6 +10,7 @@ interface JobSearchPlannerProps {
 }
 
 export const JobSearchPlanner: React.FC<JobSearchPlannerProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+  const { language } = useLanguage();
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({});
 
   const toggleTask = (taskId: string) => {
@@ -23,7 +26,7 @@ export const JobSearchPlanner: React.FC<JobSearchPlannerProps> = ({ onOpenAIChat
           Estrategia Laboral Internacional (Capítulo 7 del eBook)
         </div>
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-          Plan de Acción de 3 Meses para Buscar Empleo desde el Extranjero
+          {t('jobplanTitle', language)}
         </h2>
         <p className="text-slate-300 text-sm md:text-base max-w-3xl leading-relaxed">
           Daniela Harrington destaca: <em className="text-amber-300">"Conseguir empleo antes de emigrar reduce dramáticamente la incertidumbre económica y te permite acceder a visados de trabajo. Adapta tu síntesis curricular al país de destino y cuídate de las estafas."</em>

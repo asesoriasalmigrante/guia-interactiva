@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { CHECKLIST_CATEGORIES } from '../data/ebookData';
 import { CheckSquare, AlertTriangle, Cloud, HardDrive, RefreshCw, Sparkles, CheckCircle2, ChevronDown, ChevronUp, ShieldCheck } from 'lucide-react';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '../utils/i18n';
 
 interface ChecklistToolProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
@@ -8,6 +10,7 @@ interface ChecklistToolProps {
 }
 
 export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+  const { language } = useLanguage();
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>(() => {
     const saved = localStorage.getItem('migrante_checklist_state');
     if (saved) {
@@ -65,7 +68,7 @@ export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMe
           Lista de Comprobación Final (Capítulos 5 y 10 del eBook)
         </div>
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-          Checklist Interactivo de Documentación y Viaje
+          {t('checklistTitle', language)}
         </h2>
         <p className="text-slate-300 text-sm md:text-base max-w-3xl leading-relaxed">
           Daniela Harrington advierte: <em className="text-amber-300">"Tener los documentos correctos, vigentes y debidamente apostillados te ahorrará meses de retraso y miles de dólares. ¡No olvides realizar tu respaldo digital obligatorio!"</em>

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { COUNTRIES_DATA } from '../data/ebookData';
 import { CountryInfo } from '../types';
 import { Globe2, ShieldCheck, DollarSign, FileCheck2, AlertCircle, CheckCircle, Sparkles, Filter, Search, X, Check } from 'lucide-react';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '../utils/i18n';
 
 interface CountryComparerProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
@@ -9,6 +11,7 @@ interface CountryComparerProps {
 }
 
 export const CountryComparer: React.FC<CountryComparerProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+  const { language } = useLanguage();
   const [selectedCountryIds, setSelectedCountryIds] = useState<string[]>(['espana', 'canada', 'alemania']);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filterRegion, setFilterRegion] = useState<string>('all');
@@ -67,7 +70,7 @@ export const CountryComparer: React.FC<CountryComparerProps> = ({ onOpenAIChatWi
           </span>
         </div>
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white font-poppins">
-          Comparador de Países e Indicadores Migratorios
+          {t('countriesTitle', language)}
         </h2>
         <p className="text-[#F5F1E8]/90 text-sm md:text-base max-w-3xl leading-relaxed">
           Daniela Harrington destaca: <em className="text-[#E79923] font-semibold">"No todos los países son ideales para ti. Evalúa el mercado laboral, idioma, costo de vida, facilidades migratorias y seguridad antes de tomar tu decisión."</em>

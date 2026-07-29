@@ -1,6 +1,8 @@
 import React from 'react';
 import { OFFICIAL_RESOURCES, EBOOK_METADATA } from '../data/ebookData';
 import { Compass, ExternalLink, ShieldCheck, Phone, Instagram, Mail, Globe } from 'lucide-react';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '../utils/i18n';
 
 const TikTokIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -13,6 +15,7 @@ interface OfficialResourcesProps {
 }
 
 export const OfficialResources: React.FC<OfficialResourcesProps> = ({ currentLanguage }) => {
+  const { language } = useLanguage();
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* Header Banner */}
@@ -22,7 +25,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = ({ currentLan
           Directorio Oficial de Consulta (Capítulo 11 del eBook)
         </div>
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-          Recursos y Enlaces Oficiales Recomendados
+          {t('resourcesTitle', language)}
         </h2>
         <p className="text-slate-300 text-sm md:text-base max-w-3xl leading-relaxed">
           Daniela Harrington enfatiza: <em className="text-amber-300">"Las leyes migratorias pueden cambiar en cualquier momento. Siempre debes verificar los requisitos en sitios oficiales y evitar basarte únicamente en rumores."</em>

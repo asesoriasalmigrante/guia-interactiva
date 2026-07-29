@@ -35,13 +35,15 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
   const isLoginPage = pathname.startsWith('/login');
+  const isAdminLogin = pathname === '/admin/login';
   const isAuthCallback = pathname.startsWith('/auth');
   const isAdminRoute = pathname.startsWith('/admin');
   const isAdminApi = pathname.startsWith('/api/admin');
   const isDeviceApi = pathname.startsWith('/api/devices');
   const isApiRoute = pathname.startsWith('/api');
+  const isPaymentPage = pathname.startsWith('/payment');
 
-  if (!user && !isLoginPage && !isAuthCallback && !isApiRoute) {
+  if (!user && !isLoginPage && !isAdminLogin && !isAuthCallback && !isApiRoute && !isPaymentPage) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     return NextResponse.redirect(url);
@@ -53,7 +55,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (isAdminRoute || isAdminApi) {
+  if ((isAdminRoute || isAdminApi) && !isAdminLogin) {
     if (!user) {
       const url = request.nextUrl.clone();
       url.pathname = '/login';

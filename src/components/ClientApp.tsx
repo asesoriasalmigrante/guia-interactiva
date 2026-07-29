@@ -12,7 +12,7 @@ import { OfficialResources } from '@/src/components/OfficialResources';
 import { AIConsultantChat } from '@/src/components/AIConsultantChat';
 import { EBOOK_METADATA } from '@/src/data/ebookData';
 import { Phone, Instagram, Mail, Sparkles } from 'lucide-react';
-import { getAppLanguage } from '@/src/utils/i18n';
+import { useLanguage } from '@/src/contexts/LanguageContext';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
@@ -20,26 +20,16 @@ const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483
 
 export default function ClientApp() {
   const router = useRouter();
+  const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<string>('ebook');
   const [isAIChatOpen, setIsAIChatOpen] = useState<boolean>(false);
   const [aiInitialMessage, setAiInitialMessage] = useState<string>('');
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  const [currentLanguage, setCurrentLanguage] = useState<string>('es');
   const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
     setMounted(true);
-    setCurrentLanguage(getAppLanguage());
   }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    const handleLangChange = () => {
-      setCurrentLanguage(getAppLanguage());
-    };
-    window.addEventListener('languagechange', handleLangChange);
-    return () => window.removeEventListener('languagechange', handleLangChange);
-  }, [mounted]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -89,31 +79,29 @@ export default function ClientApp() {
         isDarkMode={isDarkMode}
         onToggleDarkMode={toggleDarkMode}
         onLogout={handleLogout}
-        currentLanguage={currentLanguage}
-        onLanguageChange={setCurrentLanguage}
       />
 
       <main className="flex-1 pb-16">
         {activeTab === 'ebook' && (
-          <ChapterViewer onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={currentLanguage} />
+          <ChapterViewer onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
         )}
         {activeTab === 'countries' && (
-          <CountryComparer onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={currentLanguage} />
+          <CountryComparer onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
         )}
         {activeTab === 'budget' && (
-          <BudgetCalculator onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={currentLanguage} />
+          <BudgetCalculator onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
         )}
         {activeTab === 'checklist' && (
-          <ChecklistTool onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={currentLanguage} />
+          <ChecklistTool onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
         )}
         {activeTab === 'quiz' && (
-          <ReadinessQuiz onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={currentLanguage} />
+          <ReadinessQuiz onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
         )}
         {activeTab === 'jobplan' && (
-          <JobSearchPlanner onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={currentLanguage} />
+          <JobSearchPlanner onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
         )}
         {activeTab === 'resources' && (
-          <OfficialResources currentLanguage={currentLanguage} />
+          <OfficialResources currentLanguage={language} />
         )}
       </main>
 

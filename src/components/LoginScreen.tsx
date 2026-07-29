@@ -6,16 +6,17 @@ import { EBOOK_METADATA } from '../data/ebookData';
 import { createClient } from '@/lib/supabase/client';
 const migrationBgImg = '/images/migration_three_phases_1784911692499.jpg';
 const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
-import { WORLD_LANGUAGES, LanguageOption, setAppLanguage, t, getAppLanguage } from '../utils/i18n';
+import { WORLD_LANGUAGES, LanguageOption, t } from '../utils/i18n';
+import { useLanguage } from '@/src/contexts/LanguageContext';
 
 export default function LoginScreen() {
+  const { language, setLanguage } = useLanguage();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState<boolean>(false);
-  const [selectedLangCode, setSelectedLangCode] = useState<string>(() => getAppLanguage());
   const [view, setView] = useState<'login' | 'forgot'>('login');
   const [forgotEmail, setForgotEmail] = useState<string>('');
   const [forgotSent, setForgotSent] = useState<boolean>(false);
@@ -30,12 +31,11 @@ export default function LoginScreen() {
     }
   }, []);
 
-  const selectedLang = WORLD_LANGUAGES.find((l) => l.code === selectedLangCode) || WORLD_LANGUAGES[0];
+  const selectedLang = WORLD_LANGUAGES.find((l) => l.code === language) || WORLD_LANGUAGES[0];
 
   const handleSelectLanguage = (lang: LanguageOption) => {
-    setSelectedLangCode(lang.code);
+    setLanguage(lang.code);
     setIsLangDropdownOpen(false);
-    setAppLanguage(lang.code);
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -204,7 +204,7 @@ export default function LoginScreen() {
                     <span>15 Idiomas / Languages</span>
                   </div>
                   {WORLD_LANGUAGES.map((lang) => {
-                    const isSelected = lang.code === selectedLangCode;
+                    const isSelected = lang.code === language;
                     return (
                       <button
                         key={lang.code}
@@ -240,7 +240,7 @@ export default function LoginScreen() {
             <h2 className="text-lg font-bold font-poppins text-white flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-[#E79923]" />
               {view === 'login'
-                ? t('loginGuideTitle', selectedLangCode)
+                ? t('loginGuideTitle', language)
                 : 'Recuperar Contraseña'}
             </h2>
             <p className="text-xs text-[#A2C7CC] mt-1">
@@ -285,7 +285,7 @@ export default function LoginScreen() {
                 {/* Password Input */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-200 uppercase tracking-wider block">
-                    {t('passwordLabel', selectedLangCode)}
+                    {t('passwordLabel', language)}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A2C7CC]">

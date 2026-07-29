@@ -7,3 +7,5 @@ coverage/
 *.log
 .env*
 !.env.example
+Manual_Integral_Emergencias_Migratorias.pdf
+Plan_Maestro_90_Dias_Migrante_Completo*.pdf

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { READINESS_QUIZ_BLOCKS, QUIZ_RESULT_TIERS, EBOOK_METADATA } from '../data/ebookData';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '../utils/i18n';
 import {
   Compass,
   CheckCircle2,
@@ -32,6 +34,7 @@ interface ReadinessQuizProps {
 type AnswerOption = 'Si' | 'No estoy seguro' | 'No';
 
 export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+  const { language } = useLanguage();
   // answers map: questionId -> 'Si' | 'No estoy seguro' | 'No'
   const [answers, setAnswers] = useState<Record<number, AnswerOption>>({});
   const [showResult, setShowResult] = useState<boolean>(false);
@@ -102,7 +105,7 @@ export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMe
               Test de Preparación Migratoria Oficial
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight font-poppins text-white leading-tight">
-              ¿REALMENTE ESTÁS LISTO PARA EMIGRAR?
+              {t('quizTitle', language)}
             </h1>
             <p className="text-[#8FAFB3] text-sm md:text-base leading-relaxed">
               Descubre tu nivel de preparación antes de dar uno de los pasos más importantes de tu vida.

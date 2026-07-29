@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { INITIAL_BUDGET_ITEMS } from '../data/ebookData';
 import { BudgetItem } from '../types';
 import { Calculator, Plus, Trash2, ShieldAlert, Sparkles, Download, RefreshCw, DollarSign, PieChart } from 'lucide-react';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '../utils/i18n';
 
 interface BudgetCalculatorProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
@@ -9,6 +11,7 @@ interface BudgetCalculatorProps {
 }
 
 export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+  const { language } = useLanguage();
   const [items, setItems] = useState<BudgetItem[]>(() => {
     const saved = localStorage.getItem('migrante_budget_items');
     if (saved) {
@@ -87,7 +90,7 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
           Herramienta Práctica de Finanzas (Capítulo 6 del eBook)
         </div>
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-          Calculadora de Presupuesto Migratorio Real
+          {t('budgetTitle', language)}
         </h2>
         <p className="text-slate-300 text-sm md:text-base max-w-3xl leading-relaxed">
           Daniela Harrington enfatiza: <em className="text-amber-300">"No planifiques tu migración basándote únicamente en el mejor escenario posible. Debes contar con fondos para cubrir entre 3 y 6 meses de gastos básicos más un fondo de emergencia."</em>

@@ -1,32 +1,29 @@
 export interface LanguageOption {
   code: string;
-  gtCode: string;
   name: string;
   nativeName: string;
   flag: string;
 }
 
 export const WORLD_LANGUAGES: LanguageOption[] = [
-  { code: 'es', gtCode: 'es', name: 'Español', nativeName: 'Español', flag: '🇪🇸' },
-  { code: 'en', gtCode: 'en', name: 'Inglés', nativeName: 'English', flag: '🇬🇧' },
-  { code: 'zh', gtCode: 'zh-CN', name: 'Chino Mandarín', nativeName: '中文 (简体)', flag: '🇨🇳' },
-  { code: 'fr', gtCode: 'fr', name: 'Francés', nativeName: 'Français', flag: '🇫🇷' },
-  { code: 'de', gtCode: 'de', name: 'Alemán', nativeName: 'Deutsch', flag: '🇩🇪' },
-  { code: 'pt', gtCode: 'pt', name: 'Portugués', nativeName: 'Português', flag: '🇵🇹' },
-  { code: 'it', gtCode: 'it', name: 'Italiano', nativeName: 'Italiano', flag: '🇮🇹' },
-  { code: 'ru', gtCode: 'ru', name: 'Ruso', nativeName: 'Русский', flag: '🇷🇺' },
-  { code: 'ar', gtCode: 'ar', name: 'Árabe', nativeName: 'العربية', flag: '🇸🇦' },
-  { code: 'hi', gtCode: 'hi', name: 'Hindi', nativeName: 'हिन्दी', flag: '🇮🇳' },
-  { code: 'ja', gtCode: 'ja', name: 'Japonés', nativeName: '日本語', flag: '🇯🇵' },
-  { code: 'ko', gtCode: 'ko', name: 'Coreano', nativeName: '한국어', flag: '🇰🇷' },
-  { code: 'id', gtCode: 'id', name: 'Indonesio', nativeName: 'Bahasa Indonesia', flag: '🇮🇩' },
-  { code: 'tr', gtCode: 'tr', name: 'Turco', nativeName: 'Türkçe', flag: '🇹🇷' },
-  { code: 'vi', gtCode: 'vi', name: 'Vietnamita', nativeName: 'Tiếng Việt', flag: '🇻🇳' },
+  { code: 'es', name: 'Español', nativeName: 'Español', flag: '🇪🇸' },
+  { code: 'en', name: 'Inglés', nativeName: 'English', flag: '🇬🇧' },
+  { code: 'zh', name: 'Chino Mandarín', nativeName: '中文 (简体)', flag: '🇨🇳' },
+  { code: 'fr', name: 'Francés', nativeName: 'Français', flag: '🇫🇷' },
+  { code: 'de', name: 'Alemán', nativeName: 'Deutsch', flag: '🇩🇪' },
+  { code: 'pt', name: 'Portugués', nativeName: 'Português', flag: '🇵🇹' },
+  { code: 'it', name: 'Italiano', nativeName: 'Italiano', flag: '🇮🇹' },
+  { code: 'ru', name: 'Ruso', nativeName: 'Русский', flag: '🇷🇺' },
+  { code: 'ar', name: 'Árabe', nativeName: 'العربية', flag: '🇸🇦' },
+  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'ja', name: 'Japonés', nativeName: '日本語', flag: '🇯🇵' },
+  { code: 'ko', name: 'Coreano', nativeName: '한국어', flag: '🇰🇷' },
+  { code: 'id', name: 'Indonesio', nativeName: 'Bahasa Indonesia', flag: '🇮🇩' },
+  { code: 'tr', name: 'Turco', nativeName: 'Türkçe', flag: '🇹🇷' },
+  { code: 'vi', name: 'Vietnamita', nativeName: 'Tiếng Việt', flag: '🇻🇳' },
 ];
 
-// Dictionary of core UI translations across all 15 world languages
 export const TRANSLATIONS: Record<string, Record<string, string>> = {
-  // App Title & Header
   appTitle: {
     es: 'Asesorías al Migrante',
     en: 'Migration Advisory',
@@ -78,8 +75,6 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     tr: 'Daniela Harrington ile Göç Hayatta Kalma Rehberi',
     vi: 'Hướng dẫn Sinh tồn Di cư cùng Daniela Harrington',
   },
-
-  // Navigation Items
   navEbook: {
     es: 'eBook Interactivo',
     en: 'Interactive eBook',
@@ -199,8 +194,6 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     tr: 'Resmi Kaynaklar',
     vi: 'Tài nguyên Chính thức',
   },
-
-  // Chapter Viewer / Index
   activeSectionLabel: {
     es: 'Sección Activa',
     en: 'Active Section',
@@ -354,8 +347,6 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     tr: 'Bu konu hakkında Yapay Zeka Danışmanına danışın',
     vi: 'Hỏi Cố vấn AI về chủ đề này',
   },
-
-  // Login Screen
   loginGuideTitle: {
     es: 'Acceso a la Guía Interactiva',
     en: 'Interactive Guide Access',
@@ -372,23 +363,6 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     id: 'Akses Panduan Interaktif',
     tr: 'Etkileşimli Rehber Erişimi',
     vi: 'Truy cập Hướng dẫn Tương tác',
-  },
-  usernameLabel: {
-    es: 'Usuario',
-    en: 'Username',
-    zh: '用户名',
-    fr: "Nom d'utilisateur",
-    de: 'Benutzername',
-    pt: 'Usuário',
-    it: 'Nome utente',
-    ru: 'Имя пользователя',
-    ar: 'اسم المستخدم',
-    hi: 'उपयोगकर्ता नाम',
-    ja: 'ユーザー名',
-    ko: '사용자 이름',
-    id: 'Nama Pengguna',
-    tr: 'Kullanıcı Adı',
-    vi: 'Tên người dùng',
   },
   passwordLabel: {
     es: 'Clave de Acceso',
@@ -424,23 +398,6 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     tr: 'Rehbere Giriş Yap',
     vi: 'Đăng nhập Hướng dẫn',
   },
-  quickDemoBtn: {
-    es: 'Acceso Demo Rápido',
-    en: 'Quick Demo Access',
-    zh: '快速演示入口',
-    fr: 'Accès démo rapide',
-    de: 'Schneller Demo-Zugang',
-    pt: 'Acesso Demo Rápido',
-    it: 'Accesso Demo Rapido',
-    ru: 'Быстрый демо-доступ',
-    ar: 'وصول تجريبي سريع',
-    hi: 'त्वरित डेमो एक्सेस',
-    ja: 'クイックデモアクセス',
-    ko: '빠른 데모 접속',
-    id: 'Akses Demo Cepat',
-    tr: 'Hızlı Demo Erişimi',
-    vi: 'Truy cập Demo Nhanh',
-  },
   logoutBtn: {
     es: 'Salir',
     en: 'Logout',
@@ -457,12 +414,162 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     id: 'Keluar',
     tr: 'Çıkış',
     vi: 'Đăng xuất',
-  }
+  },
+  noResults: {
+    es: 'No se encontraron resultados.',
+    en: 'No results found.',
+    zh: '未找到结果。',
+    fr: 'Aucun résultat trouvé.',
+    de: 'Keine Ergebnisse gefunden.',
+    pt: 'Nenhum resultado encontrado.',
+    it: 'Nessun risultato trovato.',
+    ru: 'Результаты не найдены.',
+    ar: 'لم يتم العثور على نتائج.',
+    hi: 'कोई परिणाम नहीं मिला।',
+    ja: '結果が見つかりません。',
+    ko: '결과를 찾을 수 없습니다.',
+    id: 'Tidak ada hasil ditemukan.',
+    tr: 'Sonuç bulunamadı.',
+    vi: 'Không tìm thấy kết quả.',
+  },
+  loading: {
+    es: 'Cargando...',
+    en: 'Loading...',
+    zh: '加载中...',
+    fr: 'Chargement...',
+    de: 'Laden...',
+    pt: 'Carregando...',
+    it: 'Caricamento...',
+    ru: 'Загрузка...',
+    ar: 'جارٍ التحميل...',
+    hi: 'लोड हो रहा है...',
+    ja: '読み込み中...',
+    ko: '로딩 중...',
+    id: 'Memuat...',
+    tr: 'Yükleniyor...',
+    vi: 'Đang tải...',
+  },
+  errorLoading: {
+    es: 'Error al cargar los datos.',
+    en: 'Error loading data.',
+    zh: '加载数据时出错。',
+    fr: 'Erreur lors du chargement des données.',
+    de: 'Fehler beim Laden der Daten.',
+    pt: 'Erro ao carregar dados.',
+    it: 'Errore nel caricamento dei dati.',
+    ru: 'Ошибка загрузки данных.',
+    ar: 'خطأ في تحميل البيانات.',
+    hi: 'डेटा लोड करने में त्रुटि。',
+    ja: 'データの読み込みエラー。',
+    ko: '데이터 로딩 오류.',
+    id: 'Gagal memuat data.',
+    tr: 'Veri yüklenirken hata oluştu.',
+    vi: 'Lỗi tải dữ liệu.',
+  },
+  countriesTitle: {
+    es: 'Comparador de Países',
+    en: 'Country Comparison',
+    zh: '国家比较器',
+    fr: 'Comparateur de pays',
+    de: 'Ländervergleich',
+    pt: 'Comparador de Países',
+    it: 'Confronto Paesi',
+    ru: 'Сравнение стран',
+    ar: 'مقارنة الدول',
+    hi: 'देश तुलना',
+    ja: '国比較',
+    ko: '국가 비교',
+    id: 'Komparator Negara',
+    tr: 'Ülke Karşılaştırıcı',
+    vi: 'So sánh Quốc gia',
+  },
+  budgetTitle: {
+    es: 'Calculadora de Presupuesto Migratorio',
+    en: 'Migration Budget Calculator',
+    zh: '移民预算计算器',
+    fr: 'Calculateur de budget migratoire',
+    de: 'Migrations-Budgetrechner',
+    pt: 'Calculadora de Orçamento Migratório',
+    it: 'Calcolatore Budget Migratorio',
+    ru: 'Калькулятор миграционного бюджета',
+    ar: 'حاسبة ميزانية الهجرة',
+    hi: 'प्रवासन बजट कैलकुलेटर',
+    ja: '移民予算計算機',
+    ko: '이민 예산 계산기',
+    id: 'Kalkulator Anggaran Migrasi',
+    tr: 'Göç Bütçe Hesaplayıcı',
+    vi: 'Máy tính Ngân sách Di cư',
+  },
+  checklistTitle: {
+    es: 'Lista de Verificación Migratoria',
+    en: 'Migration Checklist',
+    zh: '移民检查清单',
+    fr: 'Liste de vérification migratoire',
+    de: 'Migrations-Checkliste',
+    pt: 'Lista de Verificação Migratória',
+    it: 'Lista di Controllo Migratorio',
+    ru: 'Чек-лист для миграции',
+    ar: 'قائمة التحقق من الهجرة',
+    hi: 'प्रवासन चेकलिस्ट',
+    ja: '移民チェックリスト',
+    ko: '이민 체크리스트',
+    id: 'Daftar Periksa Migrasi',
+    tr: 'Göç Kontrol Listesi',
+    vi: 'Danh sách Kiểm tra Di cư',
+  },
+  quizTitle: {
+    es: 'Test de Preparación Migratoria',
+    en: 'Migration Readiness Test',
+    zh: '移民准备测试',
+    fr: 'Test de préparation migratoire',
+    de: 'Migrations-Bereitschaftstest',
+    pt: 'Teste de Preparação Migratória',
+    it: 'Test di Preparazione Migratoria',
+    ru: 'Тест готовности к миграции',
+    ar: 'اختبار الجاهزية للهجرة',
+    hi: 'प्रवासन तैयारी परीक्षण',
+    ja: '移民準備度テスト',
+    ko: '이민 준비도 테스트',
+    id: 'Tes Kesiapan Migrasi',
+    tr: 'Göç Hazırlık Testi',
+    vi: 'Kiểm tra sự sẵn sàng Di cư',
+  },
+  jobplanTitle: {
+    es: 'Plan de Búsqueda de Empleo',
+    en: 'Job Search Plan',
+    zh: '求职计划',
+    fr: "Plan de recherche d'emploi",
+    de: 'Stellensuchplan',
+    pt: 'Plano de Busca de Emprego',
+    it: 'Piano di Ricerca Lavoro',
+    ru: 'План поиска работы',
+    ar: 'خطة البحث عن عمل',
+    hi: 'रोजगार खोज योजना',
+    ja: '就職活動計画',
+    ko: '취업 계획',
+    id: 'Rencana Pencarian Kerja',
+    tr: 'İş Arama Planı',
+    vi: 'Kế hoạch Tìm việc',
+  },
+  resourcesTitle: {
+    es: 'Recursos Oficiales de Migración',
+    en: 'Official Migration Resources',
+    zh: '官方移民资源',
+    fr: 'Ressources migratoires officielles',
+    de: 'Offizielle Migrationsressourcen',
+    pt: 'Recursos Migratórios Oficiais',
+    it: 'Risorse Migratorie Ufficiali',
+    ru: 'Официальные миграционные ресурсы',
+    ar: 'موارد الهجرة الرسمية',
+    hi: 'आधिकारिक प्रवासन संसाधन',
+    ja: '公式移民リソース',
+    ko: '공식 이민 리소스',
+    id: 'Sumber Migrasi Resmi',
+    tr: 'Resmi Göç Kaynakları',
+    vi: 'Tài nguyên Di cư Chính thức',
+  },
 };
 
-/**
- * Returns a translated string for a given key and language code.
- */
 export function t(key: string, langCode?: string): string {
   const code = langCode || getAppLanguage();
   const keyMap = TRANSLATIONS[key];
@@ -470,46 +577,20 @@ export function t(key: string, langCode?: string): string {
   return keyMap[code] || keyMap['es'] || key;
 }
 
-/**
- * Applies the target language to the entire application using Google Translate widget & cookies.
- */
 export function setAppLanguage(langCode: string): void {
-  const langObj = WORLD_LANGUAGES.find((l) => l.code === langCode) || WORLD_LANGUAGES[0];
-  const targetGtCode = langObj.gtCode;
-
-  // Store user choice in localStorage
-  localStorage.setItem('migrante_lang', langCode);
-
-  // Set Google Translate cookie across all domain scopes
-  const cookieVal = langCode === 'es' ? '/es/es' : `/es/${targetGtCode}`;
-  document.cookie = `googtrans=${cookieVal}; path=/;`;
-  document.cookie = `googtrans=${cookieVal}; domain=${window.location.hostname}; path=/;`;
-
-  // Try to interact directly with Google Translate element select dropdown in DOM
-  const selectElem = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
-  if (selectElem) {
-    selectElem.value = targetGtCode;
-    selectElem.dispatchEvent(new Event('change', { bubbles: true }));
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('migrante_lang', langCode);
+    window.dispatchEvent(new Event('languagechange'));
   }
-
-  // Notify React listeners so components re-render immediately
-  window.dispatchEvent(new Event('languagechange'));
 }
 
-/**
- * Gets the current stored language or defaults to 'es'
- */
 export function getAppLanguage(): string {
   if (typeof window === 'undefined') return 'es';
   return localStorage.getItem('migrante_lang') || 'es';
 }
 
-// In-memory translation cache to store translated chapter objects
 const chapterTranslationCache = new Map<string, any>();
 
-/**
- * Translates a chapter object into target language using backend Gemini API
- */
 export async function translateChapterWithAI(chapterObj: any, langCode: string): Promise<any> {
   if (langCode === 'es') return chapterObj;
 
