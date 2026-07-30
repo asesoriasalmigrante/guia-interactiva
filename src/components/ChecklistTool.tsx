@@ -6,10 +6,9 @@ import { t } from '../utils/i18n';
 
 interface ChecklistToolProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
-  currentLanguage?: string;
 }
 
-export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMessage }) => {
   const { language } = useLanguage();
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>(() => {
     const saved = localStorage.getItem('migrante_checklist_state');

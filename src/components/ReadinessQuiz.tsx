@@ -28,12 +28,11 @@ import {
 
 interface ReadinessQuizProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
-  currentLanguage?: string;
 }
 
 type AnswerOption = 'Si' | 'No estoy seguro' | 'No';
 
-export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMessage }) => {
   const { language } = useLanguage();
   // answers map: questionId -> 'Si' | 'No estoy seguro' | 'No'
   const [answers, setAnswers] = useState<Record<number, AnswerOption>>({});

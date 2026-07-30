@@ -6,10 +6,9 @@ import { t } from '../utils/i18n';
 
 interface JobSearchPlannerProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
-  currentLanguage?: string;
 }
 
-export const JobSearchPlanner: React.FC<JobSearchPlannerProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+export const JobSearchPlanner: React.FC<JobSearchPlannerProps> = ({ onOpenAIChatWithMessage }) => {
   const { language } = useLanguage();
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({});
 

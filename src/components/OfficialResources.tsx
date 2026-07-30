@@ -10,11 +10,9 @@ const TikTokIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   </svg>
 );
 
-interface OfficialResourcesProps {
-  currentLanguage?: string;
-}
+interface OfficialResourcesProps {}
 
-export const OfficialResources: React.FC<OfficialResourcesProps> = ({ currentLanguage }) => {
+export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
   const { language } = useLanguage();
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">

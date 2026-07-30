@@ -7,10 +7,9 @@ import { t } from '../utils/i18n';
 
 interface BudgetCalculatorProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
-  currentLanguage?: string;
 }
 
-export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChatWithMessage }) => {
   const { language } = useLanguage();
   const [items, setItems] = useState<BudgetItem[]>(() => {
     const saved = localStorage.getItem('migrante_budget_items');

@@ -7,10 +7,9 @@ import { t } from '../utils/i18n';
 
 interface CountryComparerProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
-  currentLanguage?: string;
 }
 
-export const CountryComparer: React.FC<CountryComparerProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+export const CountryComparer: React.FC<CountryComparerProps> = ({ onOpenAIChatWithMessage }) => {
   const { language } = useLanguage();
   const [selectedCountryIds, setSelectedCountryIds] = useState<string[]>(['espana', 'canada', 'alemania']);
   const [searchQuery, setSearchQuery] = useState<string>('');

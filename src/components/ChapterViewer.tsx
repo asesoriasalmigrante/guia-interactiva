@@ -12,7 +12,6 @@ const TikTokIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => (
 
 interface ChapterViewerProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
-  currentLanguage?: string;
 }
 
 // Helper function to render text with **bold** markup
@@ -31,7 +30,7 @@ const renderFormattedText = (text: string, strongClassName?: string) => {
   });
 };
 
-export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMessage, currentLanguage }) => {
+export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMessage }) => {
   const { language } = useLanguage();
   const [selectedChapterId, setSelectedChapterId] = useState<number>(1);
   const [searchTerm, setSearchTerm] = useState<string>('');

@@ -83,25 +83,25 @@ export default function ClientApp() {
 
       <main className="flex-1 pb-16">
         {activeTab === 'ebook' && (
-          <ChapterViewer onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
+          <ChapterViewer onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
         )}
         {activeTab === 'countries' && (
-          <CountryComparer onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
+          <CountryComparer onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
         )}
         {activeTab === 'budget' && (
-          <BudgetCalculator onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
+          <BudgetCalculator onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
         )}
         {activeTab === 'checklist' && (
-          <ChecklistTool onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
+          <ChecklistTool onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
         )}
         {activeTab === 'quiz' && (
-          <ReadinessQuiz onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
+          <ReadinessQuiz onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
         )}
         {activeTab === 'jobplan' && (
-          <JobSearchPlanner onOpenAIChatWithMessage={handleOpenAIChatWithMessage} currentLanguage={language} />
+          <JobSearchPlanner onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
         )}
         {activeTab === 'resources' && (
-          <OfficialResources currentLanguage={language} />
+          <OfficialResources />
         )}
       </main>
 
