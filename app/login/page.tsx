@@ -1,6 +1,6 @@
-import dynamic from 'next/dynamic';
+'use client';
 
-export const runtime = 'nodejs';
+import dynamic from 'next/dynamic';
 
 const LoginClient = dynamic(() => import('./LoginClient'), { ssr: false, loading: () => (
   <div className="min-h-screen bg-[#F5F1E8] flex items-center justify-center">

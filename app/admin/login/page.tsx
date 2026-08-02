@@ -1,6 +1,6 @@
-import dynamic from 'next/dynamic';
+'use client';
 
-export const runtime = 'nodejs';
+import dynamic from 'next/dynamic';
 
 const AdminLoginPage = dynamic(() => import('./AdminLoginPage'), { ssr: false, loading: () => (
   <div className="min-h-screen bg-slate-950 flex items-center justify-center">
