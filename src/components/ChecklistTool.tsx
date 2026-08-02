@@ -43,7 +43,7 @@ export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMe
   };
 
   const handleResetChecklist = () => {
-    if (window.confirm('¿Deseas reiniciar todas las casillas marcadas de tu checklist?')) {
+    if (window.confirm(t('confirmReset', language))) {
       setCheckedItems({});
       localStorage.removeItem('migrante_checklist_state');
     }
@@ -81,7 +81,7 @@ export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMe
             <h3 className="font-extrabold text-slate-900 text-lg flex items-center gap-2">
               Progreso General de Preparación
               <span className="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">
-                {completedCount} de {totalCount} Verificados
+                {completedCount} {t('completedCount', language)} / {totalCount} {t('totalSteps', language)}
               </span>
             </h3>
             <p className="text-xs text-slate-500">
@@ -95,7 +95,7 @@ export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMe
             id="btn-reset-checklist"
           >
             <RefreshCw className="w-3.5 h-3.5" />
-            <span>Reiniciar Checklist</span>
+            <span>{t('resetChecklist', language)}</span>
           </button>
         </div>
 
@@ -108,10 +108,10 @@ export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMe
             ></div>
           </div>
           <div className="flex justify-between text-xs font-bold text-slate-700">
-            <span>{progressPercent}% Completado</span>
+            <span>{progressPercent}% {t('percentComplete', language)}</span>
             {progressPercent === 100 ? (
               <span className="text-emerald-600 flex items-center gap-1">
-                <CheckCircle2 className="w-4 h-4" /> ¡Todo listo para abordar!
+                <CheckCircle2 className="w-4 h-4" /> {t('allCompleted', language)}
               </span>
             ) : (
               <span className="text-slate-500">Faltan {totalCount - completedCount} tareas</span>
@@ -167,7 +167,7 @@ export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMe
                       {category.name}
                       {isCatAllDone && (
                         <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
-                          ✓ Completado
+                          ✓ {t('percentComplete', language)}
                         </span>
                       )}
                     </h3>
@@ -254,7 +254,7 @@ export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMe
             </p>
           </div>
           <span className="text-xs font-bold px-3 py-1 bg-slate-100 text-slate-700 rounded-full w-fit">
-            {completedCount} de {totalCount} verificados
+            {completedCount} {t('completedCount', language)} / {totalCount} {t('totalSteps', language)}
           </span>
         </div>
 
@@ -273,13 +273,13 @@ export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMe
                 {progressPercent}%
               </span>
               <span className="text-xs font-semibold text-emerald-800">
-                Completado
+                {t('percentComplete', language)}
               </span>
             </div>
             <p className="text-xs text-emerald-700/90 leading-relaxed pt-1">
               {completedCount === totalCount
-                ? "¡Has completado el 100% de los ítems de tu checklist! Estás completamente preparado."
-                : `Has verificado satisfactoriamente ${completedCount} de ${totalCount} tareas y documentos.`}
+                ? t('allCompleted', language)
+                : `${t('completedCount', language)} ${completedCount} / ${totalCount} ${t('totalSteps', language)}`}
             </p>
           </div>
 
@@ -301,8 +301,8 @@ export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMe
             </div>
             <p className="text-xs text-amber-700/90 leading-relaxed pt-1">
               {totalCount - completedCount === 0
-                ? "No te falta ninguna tarea por completar."
-                : `Te faltan ${totalCount - completedCount} tareas o documentos por verificar antes de viajar.`}
+                ? t('allCompleted', language)
+                : `Faltan ${totalCount - completedCount} ${t('totalSteps', language)}`}
             </p>
           </div>
         </div>

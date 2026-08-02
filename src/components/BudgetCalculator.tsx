@@ -5,6 +5,17 @@ import { Calculator, Plus, Trash2, ShieldAlert, Sparkles, Download, RefreshCw, D
 import { useLanguage } from '@/src/contexts/LanguageContext';
 import { t } from '../utils/i18n';
 
+const CATEGORY_MAP: Record<string, string> = {
+  'Trámites y Documentos': 'categoryTramites',
+  'Viaje y Traslado': 'categoryViaje',
+  'Alojamiento Inicial': 'categoryAlojamiento',
+  'Depósito y Alquiler': 'categoryDeposito',
+  'Alimentación e Higiene': 'categoryAlimentacion',
+  'Transporte': 'categoryTransport',
+  'Seguro Médico': 'categorySeguro',
+  'Fondo de Emergencia': 'categoryFondo',
+};
+
 interface BudgetCalculatorProps {
   onOpenAIChatWithMessage?: (msg: string) => void;
 }
@@ -22,7 +33,7 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
   const [monthsOfEmergencyFund, setMonthsOfEmergencyFund] = useState<number>(3);
   const [newItemName, setNewItemName] = useState<string>('');
   const [newItemCost, setNewItemCost] = useState<string>('');
-  const [newItemCategory, setNewItemCategory] = useState<BudgetItem['category']>('Trámites y Documentos');
+  const [newItemCategory, setNewItemCategory] = useState<BudgetItem['category']>(t('categoryTramites', language) as BudgetItem['category']);
 
   useEffect(() => {
     localStorage.setItem('migrante_budget_items', JSON.stringify(items));
@@ -45,7 +56,7 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
       category: newItemCategory,
       name: newItemName.trim(),
       estimatedCost: parseFloat(newItemCost) || 0,
-      notes: 'Gasto personalizado agregado por usuario'
+      notes: t('customNote', language)
     };
 
     setItems(prev => [...prev, newItem]);
@@ -54,7 +65,7 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
   };
 
   const handleResetToDefault = () => {
-    if (window.confirm('¿Deseas restablecer los valores del presupuesto predeterminado del eBook?')) {
+    if (window.confirm(t('confirmReset', language))) {
       setItems(INITIAL_BUDGET_ITEMS);
       localStorage.removeItem('migrante_budget_items');
     }
@@ -86,13 +97,13 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
       <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-6 md:p-8 rounded-2xl border border-slate-800 shadow-xl space-y-3">
         <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
           <Calculator className="w-4 h-4" />
-          Herramienta Práctica de Finanzas (Capítulo 6 del eBook)
+          {t('budgetToolLabel', language)}
         </div>
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
           {t('budgetTitle', language)}
         </h2>
         <p className="text-slate-300 text-sm md:text-base max-w-3xl leading-relaxed">
-          Daniela Harrington enfatiza: <em className="text-amber-300">"No planifiques tu migración basándote únicamente en el mejor escenario posible. Debes contar con fondos para cubrir entre 3 y 6 meses de gastos básicos más un fondo de emergencia."</em>
+          Daniela Harrington enfatiza: <em className="text-amber-300">{t('budgetQuote', language)}</em>
         </p>
       </div>
 
@@ -105,14 +116,14 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <label className="font-bold text-slate-900 text-sm md:text-base flex items-center gap-2">
                 <ShieldAlert className="w-5 h-5 text-amber-600" />
-                Meses de Fondo de Emergencia y Resguardo:
+                {t('emergencyFundLabel', language)}
               </label>
               <span className="bg-slate-900 text-amber-400 px-3 py-1 rounded-full text-xs font-extrabold">
-                {monthsOfEmergencyFund} Meses Sugeridos
+                {monthsOfEmergencyFund} {t('emergencyFundSuggested', language)}
               </span>
             </div>
             <p className="text-xs text-slate-600">
-              Ajusta para calcular cuánto dinero extra necesitas si tardas en conseguir empleo formal.
+              {t('emergencyFundHint', language)}
             </p>
             <input
               type="range"
@@ -124,19 +135,19 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
               className="w-full accent-amber-500 cursor-pointer"
             />
             <div className="flex justify-between text-[11px] text-slate-500 font-medium">
-              <span>1 Mes (Ajustado)</span>
-              <span>3 Meses (Recomendado)</span>
-              <span>6 Meses (Tranquilidad Absoluta)</span>
+              <span>{t('emergencyFund1', language)}</span>
+              <span>{t('emergencyFund3', language)}</span>
+              <span>{t('emergencyFund6', language)}</span>
             </div>
           </div>
 
           {/* Add New Custom Expense Form */}
           <form onSubmit={handleAddItem} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-            <h4 className="font-bold text-slate-900 text-sm">Agregar Nuevo Gasto Personalizado</h4>
+            <h4 className="font-bold text-slate-900 text-sm">{t('addExpenseTitle', language)}</h4>
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
               <input
                 type="text"
-                placeholder="Nombre del gasto (ej: Vacunas extra, Traslado mascota)..."
+                placeholder={t('addExpenseName', language)}
                 value={newItemName}
                 onChange={(e) => setNewItemName(e.target.value)}
                 className="sm:col-span-5 px-3 py-2 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"
@@ -147,19 +158,19 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
                 onChange={(e) => setNewItemCategory(e.target.value as BudgetItem['category'])}
                 className="sm:col-span-4 px-3 py-2 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none bg-white"
               >
-                <option value="Trámites y Documentos">Trámites y Documentos</option>
-                <option value="Viaje y Traslado">Viaje y Traslado</option>
-                <option value="Alojamiento Inicial">Alojamiento Inicial</option>
-                <option value="Depósito y Alquiler">Depósito y Alquiler</option>
-                <option value="Alimentación e Higiene">Alimentación e Higiene</option>
-                <option value="Transporte">Transporte</option>
-                <option value="Seguro Médico">Seguro Médico</option>
-                <option value="Fondo de Emergencia">Fondo de Emergencia</option>
+                <option value="Trámites y Documentos">{t('categoryTramites', language)}</option>
+                <option value="Viaje y Traslado">{t('categoryViaje', language)}</option>
+                <option value="Alojamiento Inicial">{t('categoryAlojamiento', language)}</option>
+                <option value="Depósito y Alquiler">{t('categoryDeposito', language)}</option>
+                <option value="Alimentación e Higiene">{t('categoryAlimentacion', language)}</option>
+                <option value="Transporte">{t('categoryTransport', language)}</option>
+                <option value="Seguro Médico">{t('categorySeguro', language)}</option>
+                <option value="Fondo de Emergencia">{t('categoryFondo', language)}</option>
               </select>
 
               <input
                 type="number"
-                placeholder="Costo USD ($)"
+                placeholder={t('costUSD', language)}
                 value={newItemCost}
                 onChange={(e) => setNewItemCost(e.target.value)}
                 className="sm:col-span-2 px-3 py-2 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"
@@ -168,7 +179,7 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
               <button
                 type="submit"
                 className="sm:col-span-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl flex items-center justify-center p-2 transition-all cursor-pointer"
-                title="Agregar Gasto"
+                title={t('addExpenseBtn', language)}
                 id="btn-add-budget-item"
               >
                 <Plus className="w-5 h-5" />
@@ -179,14 +190,14 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
           {/* Budget Categories & Item List */}
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 md:p-6 space-y-6">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="font-bold text-slate-900 text-base">Desglose de Gastos por Categoría</h3>
+              <h3 className="font-bold text-slate-900 text-base">{t('expenseBreakdown', language)}</h3>
               <button
                 onClick={handleResetToDefault}
                 className="text-xs text-slate-500 hover:text-red-600 flex items-center gap-1 transition-colors cursor-pointer"
-                title="Restablecer plantilla"
+                title={t('resetEstimations', language)}
               >
                 <RefreshCw className="w-3.5 h-3.5" />
-                <span>Restablecer Estimaciones</span>
+                <span>{t('resetEstimations', language)}</span>
               </button>
             </div>
 
@@ -202,7 +213,7 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
                   <div key={cIdx} className="space-y-3">
                     <div className="flex items-center justify-between bg-slate-50 px-3 py-2 rounded-xl border border-slate-200/80">
                       <span className="font-bold text-xs md:text-sm text-slate-800 uppercase tracking-wider">
-                        {cat}
+                        {CATEGORY_MAP[cat] ? t(CATEGORY_MAP[cat], language) : cat}
                       </span>
                       <span className="font-extrabold text-xs md:text-sm text-slate-900">
                         ${catTotal.toLocaleString()} USD
@@ -242,7 +253,7 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
                             <button
                               onClick={() => handleRemoveItem(item.id)}
                               className="text-slate-400 hover:text-red-600 transition-colors p-1"
-                              title="Eliminar gasto"
+                              title={t('deleteExpense', language)}
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -263,32 +274,32 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
             <div className="flex items-center justify-between border-b border-slate-800 pb-4">
               <h3 className="font-extrabold text-lg flex items-center gap-2">
                 <PieChart className="w-5 h-5 text-amber-400" />
-                Resumen Presupuestario
+                {t('budgetSummary', language)}
               </h3>
               <span className="bg-amber-500/20 text-amber-300 text-xs px-2 py-0.5 rounded font-bold">
-                Estimación Real
+                {t('realEstimate', language)}
               </span>
             </div>
 
             {/* Total Highlight */}
             <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 text-center space-y-1">
-              <span className="text-xs text-slate-400 uppercase tracking-widest font-semibold">Presupuesto Mínimo Estimado</span>
+              <span className="text-xs text-slate-400 uppercase tracking-widest font-semibold">{t('minBudget', language)}</span>
               <div className="text-3xl md:text-4xl font-extrabold text-amber-400 tracking-tight">
                 ${totalBudget.toLocaleString()} <span className="text-sm text-slate-400 font-normal">USD</span>
               </div>
               <p className="text-[11px] text-slate-400 pt-1">
-                Incluye gastos de salida + {monthsOfEmergencyFund} meses de fondo de emergencia.
+                {t('includesExpenses', language).replace('{months}', String(monthsOfEmergencyFund))}
               </p>
             </div>
 
             {/* Breakdown Subtotals */}
             <div className="space-y-3 text-xs text-slate-300">
               <div className="flex justify-between pb-2 border-b border-slate-800">
-                <span>Gastos de Salida e Instalación:</span>
+                <span>{t('departureCosts', language)}</span>
                 <strong className="text-white">${initialMoveCost.toLocaleString()} USD</strong>
               </div>
               <div className="flex justify-between pb-2 border-b border-slate-800">
-                <span>Fondo de Emergencia ({monthsOfEmergencyFund} meses):</span>
+                <span>{t('emergencyFundTotal', language).replace('{months}', String(monthsOfEmergencyFund))}</span>
                 <strong className="text-amber-400">${emergencyFundTotal.toLocaleString()} USD</strong>
               </div>
             </div>
@@ -296,10 +307,10 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
             {/* Advice Box */}
             <div className="bg-indigo-950/60 border border-indigo-800 p-4 rounded-xl text-xs space-y-2 text-indigo-200">
               <div className="font-bold text-amber-300 flex items-center gap-1.5">
-                💡 Recomendación de Daniela Harrington:
+                {t('danielaRecommendation', language)}
               </div>
               <p className="leading-relaxed">
-                Organiza tus finanzas pensando también en posibles retrasos para conseguir empleo, aumentos inesperados de alquiler o costos de homologación. Una preparación económica firme hace la diferencia entre el éxito y el retorno prematuro.
+                {t('budgetAdvice', language)}
               </p>
             </div>
 
@@ -311,7 +322,7 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
                 id="btn-ask-ai-budget"
               >
                 <Sparkles className="w-4 h-4 fill-slate-950" />
-                Optimizar mi Presupuesto con la Asesora IA
+                {t('optimizeBudget', language)}
               </button>
             )}
           </div>

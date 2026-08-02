@@ -22,7 +22,7 @@ export const JobSearchPlanner: React.FC<JobSearchPlannerProps> = ({ onOpenAIChat
       <div className="bg-slate-900 text-white p-6 md:p-8 rounded-2xl border border-slate-800 shadow-xl space-y-3">
         <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
           <Briefcase className="w-4 h-4" />
-          Estrategia Laboral Internacional (Capítulo 7 del eBook)
+          {t('jobplanDesc', language)}
         </div>
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
           {t('jobplanTitle', language)}
@@ -36,7 +36,7 @@ export const JobSearchPlanner: React.FC<JobSearchPlannerProps> = ({ onOpenAIChat
       <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-6 text-red-900 space-y-3 shadow-sm">
         <div className="flex items-center gap-2 text-red-800 font-extrabold text-base">
           <ShieldAlert className="w-6 h-6 text-red-600 flex-shrink-0" />
-          <span>¡ALERTA DE ESTAFAS MIGRATORIAS Y LABORALES! (Punto Crítico del eBook)</span>
+          <span>{t('jobplanSelectCountry', language)}</span>
         </div>
         <p className="text-xs md:text-sm text-red-800 leading-relaxed">
           Los estafadores se aprovechan de la urgencia del migrante. <strong>Desconfía inmediatamente si:</strong>
@@ -120,10 +120,10 @@ export const JobSearchPlanner: React.FC<JobSearchPlannerProps> = ({ onOpenAIChat
           <div className="space-y-1">
             <h4 className="font-bold text-base flex items-center gap-2 text-amber-400">
               <Sparkles className="w-5 h-5" />
-              ¿Necesitas ayuda para redactar tu CV o perfil de LinkedIn?
+              {t('jobplanTitle', language)}
             </h4>
             <p className="text-slate-300 text-xs">
-              Pídele a nuestra Asesora Virtual que te ayude a optimizar tu experiencia laboral para el país destino.
+              {t('jobplanDesc', language)}
             </p>
           </div>
 
@@ -132,7 +132,7 @@ export const JobSearchPlanner: React.FC<JobSearchPlannerProps> = ({ onOpenAIChat
             className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs flex items-center gap-2 whitespace-nowrap shadow-md cursor-pointer transition-all"
             id="btn-ask-ai-jobs"
           >
-            Optimizar mi CV con la Asesora IA
+            {t('jobplanGenerate', language)}
           </button>
         </div>
       )}

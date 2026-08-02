@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Sparkles, Send, X, Bot, User, RefreshCw, AlertCircle, HelpCircle } from 'lucide-react';
 import { ChatMessage } from '../types';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '../utils/i18n';
 
 interface AIConsultantChatProps {
   isOpen: boolean;
@@ -9,11 +11,12 @@ interface AIConsultantChatProps {
 }
 
 export const AIConsultantChat: React.FC<AIConsultantChatProps> = ({ isOpen, onClose, initialMessage }) => {
+  const { language } = useLanguage();
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
       sender: 'ai',
-      text: '¡Hola! Soy tu Asesora Virtual de Migración basada en el eBook de Daniela Harrington. ¿A qué país te gustaría emigrar o qué dudas tienes sobre visados, homologación de títulos o presupuesto?',
+      text: t('chatWelcome', language),
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
@@ -76,13 +79,13 @@ export const AIConsultantChat: React.FC<AIConsultantChatProps> = ({ isOpen, onCl
         };
         setMessages(prev => [...prev, aiMsg]);
       } else {
-        throw new Error(data.error || 'Error al comunicarse con la asesora');
+        throw new Error(data.error || t('chatError', language));
       }
     } catch (err: any) {
       const errorMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'ai',
-        text: 'Disculpa, tuve un inconveniente conectando con el servicio de consultas. Por favor intenta nuevamente.',
+        text: t('chatError', language),
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, errorMsg]);
@@ -111,7 +114,7 @@ export const AIConsultantChat: React.FC<AIConsultantChatProps> = ({ isOpen, onCl
             </div>
             <div>
               <h3 className="font-extrabold text-sm md:text-base flex items-center gap-1.5 text-white">
-                Asesora Virtual de Migración
+                {t('chatTitle', language)}
                 <span className="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.2 rounded font-mono font-normal">
                   IA
                 </span>
@@ -173,7 +176,7 @@ export const AIConsultantChat: React.FC<AIConsultantChatProps> = ({ isOpen, onCl
           {isLoading && (
             <div className="flex items-center gap-2 text-xs text-amber-400 bg-slate-800/80 border border-slate-700/80 p-3 rounded-xl w-fit">
               <Sparkles className="w-4 h-4 animate-spin" />
-              <span>Daniela Harrington Bot está analizando tu consulta...</span>
+              <span>{t('chatThinking', language)}</span>
             </div>
           )}
 
@@ -185,7 +188,7 @@ export const AIConsultantChat: React.FC<AIConsultantChatProps> = ({ isOpen, onCl
           <div className="px-4 py-2 bg-slate-950/60 border-t border-slate-800/60 space-y-2">
             <div className="text-[11px] font-bold text-slate-400 flex items-center gap-1">
               <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
-              Preguntas sugeridas frecuentes:
+              {t('chatPlaceholder', language)}
             </div>
             <div className="flex flex-col gap-1.5">
               {quickQuestions.map((q, qIdx) => (
@@ -215,7 +218,7 @@ export const AIConsultantChat: React.FC<AIConsultantChatProps> = ({ isOpen, onCl
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Escribe tu duda sobre visas, gastos, homologación..."
+              placeholder={t('chatPlaceholder', language)}
               disabled={isLoading}
               className="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs md:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 disabled:opacity-50"
             />

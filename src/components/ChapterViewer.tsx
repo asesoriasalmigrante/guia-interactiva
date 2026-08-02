@@ -102,24 +102,24 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
         <div className="relative z-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 bg-[#E79923]/20 text-[#E79923] border border-[#E79923]/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 font-poppins">
             <BookOpen className="w-3.5 h-3.5" />
-            Lectura Interactiva del eBook
+            {t('interactiveReadingBadge', language)}
           </div>
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mb-3 font-poppins text-white">
-            Mudarse a Otro País: La verdadera Guía de Supervivencia
+            {t('ebookTitle', language)}
           </h2>
           <p className="text-[#F5F1E8]/90 text-sm md:text-base leading-relaxed mb-6">
-            "Todo lo que debes saber antes de tomar la decisión de migrar." Creado por <strong className="text-[#E79923]">{EBOOK_METADATA.author}</strong>, especialista en derecho migratorio y fundadora de Asesorías al Migrante.
+            {t('ebookDescription', language)} <strong className="text-[#E79923]">{EBOOK_METADATA.author}</strong>, {t('authorRoleInEbook', language)}
           </p>
           
           <div className="flex flex-wrap gap-3 text-xs text-[#8FAFB3]">
             <span className="bg-[#081b36] px-3 py-1.5 rounded-xl border border-[#8FAFB3]/20">
-              📖 {CHAPTERS.length} Capítulos completos
+              📖 {CHAPTERS.length} {t('completeChapters', language)}
             </span>
             <span className="bg-[#081b36] px-3 py-1.5 rounded-xl border border-[#8FAFB3]/20">
-              ⚖️ Asesoría Legal e Informativa
+              ⚖️ {t('legalAdvice', language)}
             </span>
             <span className="bg-[#081b36] px-3 py-1.5 rounded-xl border border-[#8FAFB3]/20">
-              💡 Recomendaciones de Experiencia Real
+              💡 {t('realExperience', language)}
             </span>
           </div>
         </div>
@@ -150,11 +150,11 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                       {t('chapterIndexTitle', langCode)}
                     </h3>
                     <span className="text-[10px] font-extrabold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full flex-shrink-0">
-                      {CHAPTERS.length} cap.
+                      {CHAPTERS.length} {t('chapterOf', language)}.
                     </span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                    Cap. {displayChapter.id}: <strong className="text-[#0B2447] dark:text-slate-200 font-semibold">{displayChapter.title}</strong>
+                    {t('chapterTitle', language)}. {displayChapter.id}: <strong className="text-[#0B2447] dark:text-slate-200 font-semibold">{displayChapter.title}</strong>
                   </p>
                 </div>
               </div>
@@ -226,7 +226,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
 
                   {filteredChapters.length === 0 && (
                     <div className="p-4 text-center text-xs text-slate-500 dark:text-slate-400">
-                      No se encontraron capítulos con "{searchTerm}".
+                      {t('noChaptersFound', language)} "{searchTerm}".
                     </div>
                   )}
                 </div>
@@ -244,16 +244,16 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
               {isTranslating && (
                 <div className="flex items-center gap-2 bg-[#E79923]/15 border border-[#E79923]/40 text-[#0B2447] dark:text-[#E79923] px-3.5 py-2 rounded-xl text-xs font-bold animate-pulse">
                   <Loader2 className="w-4 h-4 animate-spin text-[#E79923]" />
-                  <span>Traduciendo este capítulo al {activeLangObj.name} ({activeLangObj.nativeName})...</span>
+                  <span>{t('translatingTo', language)} {activeLangObj.name} ({activeLangObj.nativeName})...</span>
                 </div>
               )}
 
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="bg-[#0B2447] text-[#E79923] font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider font-poppins">
-                  Capítulo {displayChapter.id} • {displayChapter.category}
+                  {t('chapterTitle', language)} {displayChapter.id} • {displayChapter.category}
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                  ⏱️ Tiempo estimado: {displayChapter.readTime}
+                  ⏱️ {t('estimatedTime', language)} {displayChapter.readTime}
                 </span>
               </div>
 
@@ -274,28 +274,28 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                     <img 
                       src={displayChapter.authorImage || EBOOK_METADATA.authorImage} 
                       alt="Daniela Harrington - Abogada Migratoria" 
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-top"
                       referrerPolicy="no-referrer"
                       id="author-portrait-img"
                     />
                   </div>
                   <span className="absolute -bottom-2 -right-2 bg-[#E79923] text-[#0B2447] text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md font-poppins">
-                    Verificada
+                    {t('verified', language)}
                   </span>
                 </div>
 
                 <div className="space-y-2 text-center md:text-left flex-1">
                   <div className="inline-block bg-[#E79923]/20 text-[#E79923] border border-[#E79923]/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider font-poppins">
-                    Autora y Fundadora
+                    {t('authorFounder', language)}
                   </div>
                   <h3 className="text-xl md:text-2xl font-extrabold text-white font-poppins">
                     Daniela Harrington
                   </h3>
                   <p className="text-xs md:text-sm text-slate-300 font-medium">
-                    Abogada Especialista en Derecho Migratorio e Internacional • Fundadora de <span className="text-[#E79923] font-semibold">Asesorías al Migrante</span>
+                    {t('authorTitle', language)} <span className="text-[#E79923] font-semibold">Asesorías al Migrante</span>
                   </p>
                   <p className="text-xs text-slate-300 italic pt-1 border-t border-slate-700/60 max-w-xl">
-                    "Acompaño a personas y familias a traspasar fronteras con el respaldo legal correcto."
+                    "{t('authorQuote', language)}"
                   </p>
                   
                   <div className="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-2.5">
@@ -327,7 +327,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                       id="author-whatsapp-link"
                     >
                       <MessageCircle className="w-3.5 h-3.5" />
-                      Contactar por WhatsApp
+                      {t('contactWhatsApp', language)}
                     </a>
                   </div>
                 </div>
@@ -338,7 +338,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
             <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/80 space-y-3">
               <h3 className="font-bold text-[#0B2447] dark:text-[#E79923] text-sm uppercase tracking-wider flex items-center gap-2 font-poppins">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                Puntos Clave del Capítulo
+                {t('chapterKeyPoints', language)}
               </h3>
               <ul className="space-y-2">
                 {displayChapter.keyPoints?.map((point: string, index: number) => (
@@ -355,7 +355,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
               <div className="bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 rounded-2xl p-4 text-rose-900 dark:text-rose-200 flex items-start gap-3 text-xs md:text-sm">
                 <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <strong className="font-bold block mb-1 font-poppins">¡ADVERTENCIA IMPORTANTE DE DANIELA!</strong>
+                  <strong className="font-bold block mb-1 font-poppins">{t('importantWarning', language)}</strong>
                   <span>{displayChapter.warningAlert}</span>
                 </div>
               </div>
@@ -376,7 +376,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                         <img 
                           src={section.imageUrl} 
                           alt={section.imageCaption || section.heading}
-                          className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500"
+                          className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-500"
                           referrerPolicy="no-referrer"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-90" />
@@ -412,13 +412,13 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                   <div>
                     <div className="inline-flex items-center gap-1.5 bg-[#E79923]/20 text-[#E79923] border border-[#E79923]/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider font-poppins mb-1">
                       <Globe2 className="w-3.5 h-3.5" />
-                      Ejemplo del Comparador de Países
+                      {t('countryComparatorExample', language)}
                     </div>
                     <h4 className="text-lg md:text-xl font-extrabold text-[#0B2447] dark:text-[#F3B244] font-poppins">
-                      Comparativa Directa de 3 Destinos Populares
+                      {t('directComparison', language)}
                     </h4>
                     <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300">
-                      Así analiza nuestra plataforma el costo de vida, permisos laborales e idiomas frente a frente:
+                      {t('comparisonDescription', language)}
                     </p>
                   </div>
 
@@ -428,7 +428,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                       className="shrink-0 inline-flex items-center gap-2 bg-[#0B2447] hover:bg-[#123363] text-[#E79923] px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm font-poppins border border-[#E79923]/30 cursor-pointer"
                     >
                       <Sparkles className="w-4 h-4 text-[#E79923]" />
-                      <span>Analizar con IA</span>
+                      <span>{t('analyzeWithAI', language)}</span>
                     </button>
                   )}
                 </div>
@@ -466,7 +466,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                         <div className="bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-xl space-y-0.5">
                           <div className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1 font-poppins">
                             <DollarSign className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                            Costo Mensual Estimado
+                            {t('monthlyCostEstimate', language)}
                           </div>
                           <div className="font-bold text-slate-900 dark:text-slate-100 text-xs">
                             {c.monthlyCostEstimate}
@@ -477,7 +477,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                         <div className="bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-xl space-y-0.5">
                           <div className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1 font-poppins">
                             <FileCheck2 className="w-3.5 h-3.5 text-[#E79923]" />
-                            Facilidad de Visado: <span className="text-[#0B2447] dark:text-[#F3B244] font-extrabold ml-1">{c.visaEase}</span>
+                            {t('visaEase', language)} <span className="text-[#0B2447] dark:text-[#F3B244] font-extrabold ml-1">{c.visaEase}</span>
                           </div>
                           <p className="text-[11px] text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed">
                             {c.visaDetails}
@@ -487,7 +487,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                         {/* Demanded Jobs */}
                         <div className="space-y-1">
                           <div className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold font-poppins">
-                            💼 Profesiones Demandadas:
+                            💼 {t('demandedProfessions', language)}
                           </div>
                           <div className="flex flex-wrap gap-1">
                             {c.demandedProfessions.slice(0, 3).map((job, jidx) => (
@@ -501,7 +501,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                         {/* Pros */}
                         <div className="space-y-1 pt-1">
                           <div className="text-[10px] uppercase tracking-wider text-emerald-700 dark:text-emerald-400 font-bold font-poppins flex items-center gap-1">
-                            <CheckCircle className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> Ventajas Clave:
+                            <CheckCircle className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> {t('keyAdvantages', language)}
                           </div>
                           <ul className="space-y-0.5 text-[11px] text-slate-700 dark:text-slate-300">
                             {c.keyPros.slice(0, 2).map((pro, pidx) => (
@@ -519,7 +519,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
 
                 <div className="text-center pt-2 border-t border-slate-200 dark:border-slate-800">
                   <p className="text-xs text-slate-600 dark:text-slate-300 italic">
-                    💡 Daniela aconseja: Puedes explorar y comparar más de <strong>100 países</strong> utilizando la herramienta interactiva <strong className="text-[#0B2447] dark:text-[#F3B244]">"Comparador de Países"</strong> en el menú superior.
+                    💡 {t('danielaAdvice', language)}
                   </p>
                 </div>
               </div>
@@ -529,7 +529,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
             <div className="bg-[#0B2447] dark:bg-[#08172e] text-white rounded-2xl p-6 border border-slate-800 space-y-3 shadow-lg">
               <div className="flex items-center gap-2 text-[#E79923] text-xs font-bold uppercase tracking-wider font-poppins">
                 <Lightbulb className="w-4 h-4 text-[#E79923]" />
-                Consejo personal de Daniela Harrington (Fundadora)
+                {t('danielaTipTitle', language)}
               </div>
               <p className="text-sm md:text-base text-[#F5F1E8] italic leading-relaxed">
                 "{renderFormattedText(displayChapter.danielaTip, "font-extrabold text-[#E79923]")}"

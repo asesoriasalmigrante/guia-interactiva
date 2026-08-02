@@ -1,0 +1,93 @@
+export const commonTranslations: Record<string, Record<string, string>> = {
+  loading: {
+    es: 'Cargando...', en: 'Loading...', zh: '加载中...', fr: 'Chargement...', de: 'Laden...',
+    pt: 'Carregando...', it: 'Caricamento...', ru: 'Загрузка...', ar: 'جارٍ التحميل...', hi: 'लोड हो रहा है...',
+    ja: '読み込み中...', ko: '로딩 중...', id: 'Memuat...', tr: 'Yükleniyor...', vi: 'Đang tải...',
+  },
+  errorLoading: {
+    es: 'Error al cargar los datos.', en: 'Error loading data.', zh: '加载数据时出错。',
+    fr: 'Erreur lors du chargement des données.', de: 'Fehler beim Laden der Daten.',
+    pt: 'Erro ao carregar dados.', it: 'Errore nel caricamento dei dati.',
+    ru: 'Ошибка загрузки данных.', ar: 'خطأ في تحميل البيانات.',
+    hi: 'डेटा लोड करने में त्रुटि।', ja: 'データの読み込みエラー。',
+    ko: '데이터 로딩 오류.', id: 'Gagal memuat data.',
+    tr: 'Veri yüklenirken hata oluştu.', vi: 'Lỗi tải dữ liệu.',
+  },
+  noResults: {
+    es: 'No se encontraron resultados.', en: 'No results found.', zh: '未找到结果。',
+    fr: 'Aucun résultat trouvé.', de: 'Keine Ergebnisse gefunden.',
+    pt: 'Nenhum resultado encontrado.', it: 'Nessun risultato trovato.',
+    ru: 'Результаты не найдены.', ar: 'لم يتم العثور على نتائج.',
+    hi: 'कोई परिणाम नहीं मिला।', ja: '結果が見つかりません。',
+    ko: '결과를 찾을 수 없습니다.', id: 'Tidak ada hasil ditemukan.',
+    tr: 'Sonuç bulunamadı.', vi: 'Không tìm thấy kết quả.',
+  },
+  emailLabel: {
+    es: 'Correo Electrónico', en: 'Email', zh: '电子邮件', fr: 'Correo Electrónico',
+    de: 'E-Mail', pt: 'Correo Electrónico', it: 'Correo Electrónico',
+    ru: 'Correo Electrónico', ar: 'Correo Electrónico', hi: 'Correo Electrónico',
+    ja: 'Correo Electrónico', ko: 'Correo Electrónico', id: 'Correo Electrónico',
+    tr: 'Correo Electrónico', vi: 'Correo Electrónico',
+  },
+  emailLabelFull: {
+    es: 'Correo Electrónico', en: 'Email Address', zh: '电子邮件地址', fr: 'Adresse e-mail',
+    de: 'E-Mail-Adresse', pt: 'Endereço de e-mail', it: 'Indirizzo e-mail',
+    ru: 'Электронная почта', ar: 'البريد الإلكتروني', hi: 'ईमेल पता',
+    ja: 'メールアドレス', ko: '이메일 주소', id: 'Alamat Email',
+    tr: 'E-posta Adresi', vi: 'Địa chỉ email',
+  },
+  requiredField: {
+    es: 'Este campo es requerido.', en: 'This field is required.', zh: '此字段为必填项。',
+    fr: 'Ce champ est requis.', de: 'Dieses Feld ist erforderlich.',
+    pt: 'Este campo é obrigatório.', it: 'Questo campo è obbligatorio.',
+    ru: 'Это поле обязательно.', ar: 'هذا الحقل مطلوب.',
+    hi: 'यह फ़ील्ड आवश्यक है।', ja: 'この項目は必須です。',
+    ko: '이 필드는 필수입니다.', id: 'Bidang ini wajib diisi.',
+    tr: 'Bu alan zorunludur.', vi: 'Trường này là bắt buộc.',
+  },
+  save: {
+    es: 'Guardar', en: 'Save', zh: '保存', fr: 'Enregistrer', de: 'Speichern',
+    pt: 'Salvar', it: 'Salva', ru: 'Сохранить', ar: 'حفظ', hi: 'सहेजें',
+    ja: '保存', ko: '저장', id: 'Simpan', tr: 'Kaydet', vi: 'Lưu',
+  },
+  cancel: {
+    es: 'Cancelar', en: 'Cancel', zh: '取消', fr: 'Annuler', de: 'Abbrechen',
+    pt: 'Cancelar', it: 'Annulla', ru: 'Отмена', ar: 'إلغاء', hi: 'रद्द करें',
+    ja: 'キャンセル', ko: '취소', id: 'Batal', tr: 'İptal', vi: 'Hủy',
+  },
+  confirm: {
+    es: 'Confirmar', en: 'Confirm', zh: '确认', fr: 'Confirmer', de: 'Bestätigen',
+    pt: 'Confirmar', it: 'Conferma', ru: 'Подтвердить', ar: 'تأكيد', hi: 'पुष्टि करें',
+    ja: '確認', ko: '확인', id: 'Konfirmasi', tr: 'Onayla', vi: 'Xác nhận',
+  },
+  delete: {
+    es: 'Eliminar', en: 'Delete', zh: '删除', fr: 'Supprimer', de: 'Löschen',
+    pt: 'Excluir', it: 'Elimina', ru: 'Удалить', ar: 'حذف', hi: 'हटाएं',
+    ja: '削除', ko: '삭제', id: 'Hapus', tr: 'Sil', vi: 'Xóa',
+  },
+  close: {
+    es: 'Cerrar', en: 'Close', zh: '关闭', fr: 'Fermer', de: 'Schließen',
+    pt: 'Fechar', it: 'Chiudi', ru: 'Закрыть', ar: 'إغلاق', hi: 'बंद करें',
+    ja: '閉じる', ko: '닫기', id: 'Tutup', tr: 'Kapat', vi: 'Đóng',
+  },
+  back: {
+    es: 'Volver', en: 'Back', zh: '返回', fr: 'Retour', de: 'Zurück',
+    pt: 'Voltar', it: 'Indietro', ru: 'Назад', ar: 'رجوع', hi: 'वापस',
+    ja: '戻る', ko: '뒤로', id: 'Kembali', tr: 'Geri', vi: 'Quay lại',
+  },
+  next: {
+    es: 'Siguiente', en: 'Next', zh: '下一步', fr: 'Suivant', de: 'Weiter',
+    pt: 'Próximo', it: 'Successivo', ru: 'Далее', ar: 'التالي', hi: 'अगला',
+    ja: '次へ', ko: '다음', id: 'Selanjutnya', tr: 'Sonraki', vi: 'Tiếp theo',
+  },
+  previous: {
+    es: 'Anterior', en: 'Previous', zh: '上一步', fr: 'Précédent', de: 'Zurück',
+    pt: 'Anterior', it: 'Precedente', ru: 'Назад', ar: 'السابق', hi: 'पिछला',
+    ja: '前へ', ko: '이전', id: 'Sebelumnya', tr: 'Önceki', vi: 'Trước',
+  },
+  tryAgain: {
+    es: 'Intentar nuevamente', en: 'Try again', zh: '重试', fr: 'Réessayer', de: 'Erneut versuchen',
+    pt: 'Tentar novamente', it: 'Riprova', ru: 'Попробовать снова', ar: 'حاول مرة أخرى', hi: 'पुनः प्रयास करें',
+    ja: '再試行', ko: '다시 시도', id: 'Coba lagi', tr: 'Tekrar dene', vi: 'Thử lại',
+  },
+};

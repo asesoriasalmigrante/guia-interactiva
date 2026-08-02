@@ -107,7 +107,7 @@ export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMe
               {t('quizTitle', language)}
             </h1>
             <p className="text-[#8FAFB3] text-sm md:text-base leading-relaxed">
-              Descubre tu nivel de preparación antes de dar uno de los pasos más importantes de tu vida.
+              {t('quizDesc', language)}
             </p>
           </div>
 
@@ -317,7 +317,7 @@ export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMe
               id="btn-show-quiz-results"
               className="w-full sm:w-auto bg-[#E79923] hover:bg-amber-400 text-[#0B2447] font-extrabold px-8 py-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer font-poppins"
             >
-              Ver Mi Resultado e Interpretación
+              {t('finishTest', language)}
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -339,7 +339,7 @@ export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMe
               </div>
 
               <div className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight font-poppins pt-2">
-                {currentScore} <span className="text-xl md:text-2xl text-slate-400 font-semibold">/ 50 Puntos</span>
+                {currentScore} <span className="text-xl md:text-2xl text-slate-400 font-semibold">{t('outOf', language)}</span>
               </div>
 
               <div className="max-w-xl mx-auto pt-2">
@@ -359,21 +359,21 @@ export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMe
                   currentScore >= 41 ? 'bg-emerald-50 border-emerald-400 font-bold dark:bg-emerald-950/40' : 'opacity-60'
                 }`}>
                   <span className="text-emerald-800 dark:text-emerald-300 font-bold">41 a 50 puntos</span>
-                  <span className="text-slate-700 dark:text-slate-300">¡Estás muy bien preparado!</span>
+                  <span className="text-slate-700 dark:text-slate-300">{t('resultHigh', language)}</span>
                 </div>
 
                 <div className={`p-3 rounded-xl border flex items-center justify-between gap-3 ${
                   currentScore >= 26 && currentScore <= 40 ? 'bg-amber-50 border-amber-400 font-bold dark:bg-amber-950/40' : 'opacity-60'
                 }`}>
                   <span className="text-amber-900 dark:text-amber-300 font-bold">26 a 40 puntos</span>
-                  <span className="text-slate-700 dark:text-slate-300">Vas por buen camino</span>
+                  <span className="text-slate-700 dark:text-slate-300">{t('resultMedium', language)}</span>
                 </div>
 
                 <div className={`p-3 rounded-xl border flex items-center justify-between gap-3 ${
                   currentScore <= 25 ? 'bg-red-50 border-red-400 font-bold dark:bg-red-950/40' : 'opacity-60'
                 }`}>
                   <span className="text-red-800 dark:text-red-300 font-bold">0 a 25 puntos</span>
-                  <span className="text-slate-700 dark:text-slate-300">Aún no estás listo</span>
+                  <span className="text-slate-700 dark:text-slate-300">{t('resultLow', language)}</span>
                 </div>
               </div>
             </div>
@@ -422,7 +422,7 @@ export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMe
                 className="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-2 cursor-pointer font-poppins"
               >
                 <RefreshCw className="w-4 h-4" />
-                Repetir el Test
+                {t('retakeTest', language)}
               </button>
 
               {onOpenAIChatWithMessage && (

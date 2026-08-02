@@ -20,7 +20,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
       <div className="bg-slate-900 text-white p-6 md:p-8 rounded-2xl border border-slate-800 shadow-xl space-y-3">
         <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
           <Compass className="w-4 h-4" />
-          Directorio Oficial de Consulta (Capítulo 11 del eBook)
+          {t('resourcesDesc', language)}
         </div>
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
           {t('resourcesTitle', language)}
@@ -65,7 +65,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
               className="bg-slate-900 hover:bg-slate-800 text-amber-300 hover:text-amber-200 text-xs font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
               id={`official-link-${idx}`}
             >
-              <span>Visitar Sitio Oficial</span>
+              <span>{t('selectCountry', language)}</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
@@ -76,7 +76,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
       <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 md:p-8 border border-slate-800 shadow-xl space-y-4">
         <div className="flex items-center gap-2 text-amber-400 font-bold text-sm uppercase tracking-wider">
           <ShieldCheck className="w-5 h-5" />
-          Asesoría Profesional Personalizada con Daniela Harrington
+          {t('resourcesTitle', language)}
         </div>
 
         <p className="text-slate-300 text-xs md:text-sm leading-relaxed max-w-3xl">
@@ -90,7 +90,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
           >
             <Phone className="w-5 h-5 text-amber-400 flex-shrink-0" />
             <div>
-              <div className="text-[10px] text-slate-400 uppercase">Teléfono / WhatsApp</div>
+              <div className="text-[10px] text-slate-400 uppercase">{t('embassy', language)}</div>
               <div className="text-xs font-bold text-white">{EBOOK_METADATA.contact.phone}</div>
             </div>
           </a>
@@ -103,7 +103,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
           >
             <Instagram className="w-5 h-5 text-amber-400 flex-shrink-0" />
             <div>
-              <div className="text-[10px] text-slate-400 uppercase">Instagram Oficial</div>
+              <div className="text-[10px] text-slate-400 uppercase">{t('migrationPortal', language)}</div>
               <div className="text-xs font-bold text-white">{EBOOK_METADATA.contact.instagram}</div>
             </div>
           </a>
@@ -117,7 +117,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
           >
             <TikTokIcon className="w-5 h-5 text-amber-400 flex-shrink-0" />
             <div>
-              <div className="text-[10px] text-slate-400 uppercase">TikTok Oficial</div>
+              <div className="text-[10px] text-slate-400 uppercase">{t('laborMinistry', language)}</div>
               <div className="text-xs font-bold text-white">{EBOOK_METADATA.contact.tiktokHandle}</div>
             </div>
           </a>
@@ -128,7 +128,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
           >
             <Mail className="w-5 h-5 text-amber-400 flex-shrink-0" />
             <div>
-              <div className="text-[10px] text-slate-400 uppercase">Correo Electrónico</div>
+              <div className="text-[10px] text-slate-400 uppercase">{t('socialSecurity', language)}</div>
               <div className="text-xs font-bold text-white truncate">{EBOOK_METADATA.contact.email}</div>
             </div>
           </a>

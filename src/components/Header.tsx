@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Compass, BookOpen, Globe2, Calculator, CheckSquare, BrainCircuit, Briefcase, Sun, Moon, LogOut, ChevronDown, ChevronUp, Languages, Check } from 'lucide-react';
+import { Compass, BookOpen, Globe2, Calculator, CheckSquare, BrainCircuit, Briefcase, Sun, Moon, LogOut, ChevronDown, ChevronUp, Languages, Check, ShieldCheck, Calendar } from 'lucide-react';
 const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
 import { WORLD_LANGUAGES, LanguageOption, t } from '../utils/i18n';
 import { useLanguage } from '@/src/contexts/LanguageContext';
@@ -46,7 +46,9 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'checklist', label: t('navChecklist', language), icon: CheckSquare },
     { id: 'quiz', label: t('navQuiz', language), icon: BrainCircuit },
     { id: 'jobplan', label: t('navJobplan', language), icon: Briefcase },
-    { id: 'resources', label: t('navResources', language), icon: Compass }
+    { id: 'resources', label: t('navResources', language), icon: Compass },
+    { id: 'kit', label: t('navKit', language), icon: ShieldCheck },
+    { id: 'plan90', label: t('navPlan90', language), icon: Calendar },
   ];
 
   const activeNavItem = navItems.find((item) => item.id === activeTab) || navItems[0];

@@ -9,10 +9,13 @@ import { ChecklistTool } from '@/src/components/ChecklistTool';
 import { ReadinessQuiz } from '@/src/components/ReadinessQuiz';
 import { JobSearchPlanner } from '@/src/components/JobSearchPlanner';
 import { OfficialResources } from '@/src/components/OfficialResources';
+import { KitEmergencia } from '@/src/components/KitEmergencia';
+import { Plan90Dias } from '@/src/components/Plan90Dias';
 import { AIConsultantChat } from '@/src/components/AIConsultantChat';
 import { EBOOK_METADATA } from '@/src/data/ebookData';
 import { Phone, Instagram, Mail, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '../utils/i18n';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
@@ -103,6 +106,12 @@ export default function ClientApp() {
         {activeTab === 'resources' && (
           <OfficialResources />
         )}
+        {activeTab === 'kit' && (
+          <KitEmergencia />
+        )}
+        {activeTab === 'plan90' && (
+          <Plan90Dias />
+        )}
       </main>
 
       <footer className="bg-[#0B2447] text-[#8FAFB3] text-xs border-t border-[#0B2447] py-10 px-4 font-lato">
@@ -120,7 +129,7 @@ export default function ClientApp() {
               <div>
                 <h3 className="text-white font-extrabold text-base font-poppins">Asesorías al Migrante</h3>
                 <p className="text-[#8FAFB3] text-xs">
-                  {EBOOK_METADATA.title} — Por {EBOOK_METADATA.author}
+                  {EBOOK_METADATA.title} — {t('footerCredit', language).replace('Asesorías al Migrante — ', '').replace('Migration Advisory — ', '')}
                 </p>
               </div>
             </div>
@@ -137,7 +146,7 @@ export default function ClientApp() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-center text-[#8FAFB3]/80 text-[11px]">
-            <p>&copy; {new Date().getFullYear()} Asesorías al Migrante. Todos los derechos reservados.</p>
+            <p>&copy; {new Date().getFullYear()} {t('footerCredit', language)}</p>
             <p>Información educativa y de guía basada en la obra oficial de Daniela Harrington.</p>
           </div>
         </div>
@@ -149,11 +158,11 @@ export default function ClientApp() {
           setIsAIChatOpen(true);
         }}
         className="fixed bottom-4 right-4 z-40 bg-[#E79923] hover:bg-[#f0a835] text-[#0B2447] font-bold p-2.5 sm:px-3.5 sm:py-2 rounded-full shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer border border-[#0B2447] font-poppins"
-        title="Consultar con Asesora Virtual"
+        title={t('consultAI', language) + ' ' + t('consultWithAI', language)}
         id="fab-ai-chat"
       >
         <Sparkles className="w-4 h-4 fill-[#0B2447]" />
-        <span className="hidden sm:inline text-[11px] font-extrabold uppercase tracking-wide">Asesora IA</span>
+        <span className="hidden sm:inline text-[11px] font-extrabold uppercase tracking-wide">{t('aiConsultantBtn', language)}</span>
       </button>
 
       <AIConsultantChat

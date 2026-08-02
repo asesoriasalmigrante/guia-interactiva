@@ -6,7 +6,7 @@ import { EBOOK_METADATA } from '../data/ebookData';
 import { createClient } from '@/lib/supabase/client';
 const migrationBgImg = '/images/migration_three_phases_1784911692499.jpg';
 const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
-import { WORLD_LANGUAGES, LanguageOption, t } from '../utils/i18n';
+import { WORLD_LANGUAGES, LanguageOption, t, getAppLanguage } from '../utils/i18n';
 import { useLanguage } from '@/src/contexts/LanguageContext';
 
 export default function LoginScreen() {
@@ -27,7 +27,7 @@ export default function LoginScreen() {
     const params = new URLSearchParams(window.location.search);
     const errorParam = params.get('error');
     if (errorParam === 'account_disabled') {
-      setError('Tu cuenta ha sido desactivada. Contacta al administrador.');
+      setError(t('errorAccountDisabled', language));
     }
   }, []);
 
@@ -43,12 +43,12 @@ export default function LoginScreen() {
     setError('');
 
     if (!email.trim()) {
-      setError('Por favor ingresa tu correo electrónico.');
+      setError(t('errorEmailRequired', language));
       return;
     }
 
     if (!password.trim()) {
-      setError('Por favor ingresa tu clave de acceso.');
+      setError(t('errorPasswordRequired', language));
       return;
     }
 
@@ -63,7 +63,7 @@ export default function LoginScreen() {
 
       if (authError) {
         if (authError.message.includes('Invalid login')) {
-          setError('Correo o contraseña incorrectos. Si no tienes cuenta, contacta al administrador.');
+          setError(t('errorInvalidCredentials', language));
         } else {
           setError(authError.message);
         }
@@ -81,7 +81,7 @@ export default function LoginScreen() {
 
         if (profile && !profile.is_active) {
           await supabase.auth.signOut();
-          setError('Tu cuenta ha sido desactivada. Contacta al administrador.');
+          setError(t('errorAccountDisabled', language));
           setIsLoading(false);
           return;
         }
@@ -94,7 +94,7 @@ export default function LoginScreen() {
 
       window.location.href = '/';
     } catch (err: any) {
-      setError('Error al conectar con el servidor. Intenta nuevamente.');
+      setError(t('errorServer', language));
       setIsLoading(false);
     }
   };
@@ -104,7 +104,7 @@ export default function LoginScreen() {
     setForgotError('');
 
     if (!forgotEmail.trim()) {
-      setForgotError('Por favor ingresa tu correo electrónico.');
+      setForgotError(t('errorEmailRequired', language));
       return;
     }
 
@@ -122,7 +122,7 @@ export default function LoginScreen() {
         setForgotSent(true);
       }
     } catch (err: any) {
-      setForgotError('Error al enviar el correo. Intenta nuevamente.');
+      setForgotError(t('errorEmailSend', language));
     } finally {
       setForgotLoading(false);
     }
@@ -166,18 +166,18 @@ export default function LoginScreen() {
           <div className="grid grid-cols-3 gap-1.5 pt-1">
             <div className="bg-[#0B2447]/80 border border-amber-400/30 rounded-xl p-2 flex flex-col items-center justify-center text-center backdrop-blur-md">
               <Luggage className="w-4 h-4 text-[#E79923] mb-1" />
-              <span className="text-[10px] font-extrabold text-amber-200">1. Preparación</span>
-              <span className="text-[9px] text-slate-300">Armando equipaje</span>
+              <span className="text-[10px] font-extrabold text-amber-200">{t('migrationPhase1', language)}</span>
+              <span className="text-[9px] text-slate-300">{t('migrationPhase1Sub', language)}</span>
             </div>
             <div className="bg-[#0B2447]/80 border border-sky-400/30 rounded-xl p-2 flex flex-col items-center justify-center text-center backdrop-blur-md">
               <Plane className="w-4 h-4 text-sky-400 mb-1" />
-              <span className="text-[10px] font-extrabold text-sky-200">2. El Viaje</span>
-              <span className="text-[9px] text-slate-300">En el aeropuerto</span>
+              <span className="text-[10px] font-extrabold text-sky-200">{t('migrationPhase2', language)}</span>
+              <span className="text-[9px] text-slate-300">{t('migrationPhase2Sub', language)}</span>
             </div>
             <div className="bg-[#0B2447]/80 border border-emerald-400/30 rounded-xl p-2 flex flex-col items-center justify-center text-center backdrop-blur-md">
               <Building2 className="w-4 h-4 text-emerald-400 mb-1" />
-              <span className="text-[10px] font-extrabold text-emerald-200">3. Nuevo País</span>
-              <span className="text-[9px] text-slate-300">Llegada y metas</span>
+              <span className="text-[10px] font-extrabold text-emerald-200">{t('migrationPhase3', language)}</span>
+              <span className="text-[9px] text-slate-300">{t('migrationPhase3Sub', language)}</span>
             </div>
           </div>
         </div>
@@ -201,7 +201,7 @@ export default function LoginScreen() {
                 <div className="fixed inset-0 z-40" onClick={() => setIsLangDropdownOpen(false)}></div>
                 <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 bg-[#081a33] border border-[#8FAFB3]/40 rounded-2xl shadow-2xl z-50 p-2 space-y-1 backdrop-blur-xl animate-fadeIn max-h-80 overflow-y-auto">
                   <div className="px-3 py-1.5 border-b border-[#8FAFB3]/20 text-[10px] uppercase font-bold text-[#8FAFB3] tracking-wider flex items-center justify-between">
-                    <span>15 Idiomas / Languages</span>
+                    <span>{t('languagesSelector', language)}</span>
                   </div>
                   {WORLD_LANGUAGES.map((lang) => {
                     const isSelected = lang.code === language;
@@ -240,13 +240,13 @@ export default function LoginScreen() {
             <h2 className="text-lg font-bold font-poppins text-white flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-[#E79923]" />
               {view === 'login'
-                ? t('loginGuideTitle', language)
-                : 'Recuperar Contraseña'}
+                ? t('loginTitle', language)
+                : t('forgotTitle', language)}
             </h2>
             <p className="text-xs text-[#A2C7CC] mt-1">
               {view === 'login'
-                ? 'Ingresa tu correo y clave para acceder a todos los capítulos y herramientas.'
-                : 'Ingresa tu correo electrónico para recibir instrucciones de recuperación.'}
+                ? t('loginSubtitle', language)
+                : t('forgotSubtitle', language)}
             </p>
           </div>
 
@@ -264,7 +264,7 @@ export default function LoginScreen() {
                 {/* Email Input */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-200 uppercase tracking-wider block">
-                    Correo Electrónico
+                    {t('emailLabelFull', language)}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A2C7CC]">
@@ -274,7 +274,7 @@ export default function LoginScreen() {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="tu@correo.com"
+                      placeholder={t('emailPlaceholder', language)}
                       className="w-full pl-10 pr-4 py-3 bg-[#06152b]/90 border border-[#8FAFB3]/30 rounded-xl text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-[#E79923] focus:ring-2 focus:ring-[#E79923]/20 transition-all"
                       id="input-email"
                       autoComplete="email"
@@ -295,7 +295,7 @@ export default function LoginScreen() {
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Ingresa tu clave"
+                      placeholder={t('passwordPlaceholder', language)}
                       className="w-full pl-10 pr-10 py-3 bg-[#06152b]/90 border border-[#8FAFB3]/30 rounded-xl text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-[#E79923] focus:ring-2 focus:ring-[#E79923]/20 transition-all"
                       id="input-password"
                       autoComplete="current-password"
@@ -304,7 +304,7 @@ export default function LoginScreen() {
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#A2C7CC] hover:text-white transition-colors cursor-pointer"
-                      title={showPassword ? 'Ocultar clave' : 'Mostrar clave'}
+                      title={showPassword ? t('hidePassword', language) : t('showPassword', language)}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -323,7 +323,7 @@ export default function LoginScreen() {
                     }}
                     className="text-xs text-[#8FAFB3] hover:text-[#E79923] transition-colors cursor-pointer font-medium"
                   >
-                    ¿Olvidaste tu contraseña?
+                    {t('forgotPassword', language)}
                   </button>
                 </div>
 
@@ -338,7 +338,7 @@ export default function LoginScreen() {
                     <span className="inline-block w-5 h-5 border-2 border-[#0B2447] border-t-transparent rounded-full animate-spin"></span>
                   ) : (
                     <>
-                      <span>Ingresar a la Guía</span>
+                      <span>{t('signIn', language)}</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -349,10 +349,10 @@ export default function LoginScreen() {
               <div className="pt-2 border-t border-[#8FAFB3]/20">
                 <div className="bg-[#06152b]/80 border border-[#8FAFB3]/25 rounded-xl p-3 text-center">
                   <p className="text-xs text-[#A2C7CC]">
-                    Las cuentas son creadas exclusivamente por el administrador.
+                    {t('noAccount', language)}
                   </p>
                   <p className="text-[10px] text-[#8FAFB3]/70 mt-1">
-                    Si no tienes acceso, contacta a Asesorías al Migrante.
+                    {t('contactAdmin', language)}
                   </p>
                 </div>
               </div>
@@ -367,9 +367,9 @@ export default function LoginScreen() {
                   <div className="bg-emerald-500/20 border border-emerald-500/40 rounded-xl p-4 flex flex-col items-center gap-3 animate-fadeIn">
                     <CheckCircle2 className="w-10 h-10 text-emerald-400" />
                     <div>
-                      <p className="text-sm font-bold text-emerald-200">Correo enviado</p>
+                      <p className="text-sm font-bold text-emerald-200">{t('emailSent', language)}</p>
                       <p className="text-xs text-emerald-300/80 mt-1">
-                        Revisa tu bandeja de entrada y sigue las instrucciones para restablecer tu contraseña.
+                        {t('emailSentMessage', language)}
                       </p>
                     </div>
                   </div>
@@ -379,7 +379,7 @@ export default function LoginScreen() {
                     className="text-xs text-[#8FAFB3] hover:text-[#E79923] transition-colors cursor-pointer font-medium flex items-center gap-1 mx-auto"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
-                    Volver al inicio de sesión
+                    {t('backToLogin', language)}
                   </button>
                 </div>
               ) : (
@@ -394,7 +394,7 @@ export default function LoginScreen() {
                   <form onSubmit={handleForgotPassword} className="space-y-4">
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-slate-200 uppercase tracking-wider block">
-                        Correo Electrónico
+                        {t('emailLabelFull', language)}
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A2C7CC]">
@@ -404,7 +404,7 @@ export default function LoginScreen() {
                           type="email"
                           value={forgotEmail}
                           onChange={(e) => setForgotEmail(e.target.value)}
-                          placeholder="tu@correo.com"
+                          placeholder={t('emailPlaceholder', language)}
                           className="w-full pl-10 pr-4 py-3 bg-[#06152b]/90 border border-[#8FAFB3]/30 rounded-xl text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-[#E79923] focus:ring-2 focus:ring-[#E79923]/20 transition-all"
                           id="input-forgot-email"
                           autoComplete="email"
@@ -423,7 +423,7 @@ export default function LoginScreen() {
                       ) : (
                         <>
                           <Send className="w-4 h-4" />
-                          <span>Enviar instrucciones</span>
+                          <span>{t('sendInstructions', language)}</span>
                         </>
                       )}
                     </button>
@@ -435,7 +435,7 @@ export default function LoginScreen() {
                     className="text-xs text-[#8FAFB3] hover:text-[#E79923] transition-colors cursor-pointer font-medium flex items-center gap-1 mx-auto"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
-                    Volver al inicio de sesión
+                    {t('backToLogin', language)}
                   </button>
                 </>
               )}
@@ -445,7 +445,7 @@ export default function LoginScreen() {
 
         {/* Footer info */}
         <p className="text-center text-xs text-[#A2C7CC]">
-          &copy; {new Date().getFullYear()} Asesorías al Migrante &bull; Por Daniela Harrington
+          &copy; {new Date().getFullYear()} {t('footerCredit', language)}
         </p>
       </div>
     </div>
