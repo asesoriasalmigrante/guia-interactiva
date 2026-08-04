@@ -17,6 +17,15 @@ function getGenAIClient(): GoogleGenAI {
   });
 }
 
+async function computeHash(payload: any): Promise<string> {
+  const json = JSON.stringify(payload);
+  const encoder = new TextEncoder();
+  const data = encoder.encode(json);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 export async function POST(request: Request) {
   try {
     const { payload, targetLanguage, chapterId } = await request.json();
@@ -29,17 +38,18 @@ export async function POST(request: Request) {
     }
 
     const langCode = targetLanguage.split(' ')[0].toLowerCase();
+    const contentHash = await computeHash(payload);
 
     if (chapterId && langCode) {
       const supabase = createAdminClient();
       const { data: existing } = await supabase
         .from('chapter_translations')
-        .select('translated_content')
+        .select('translated_content, content_hash')
         .eq('chapter_id', chapterId)
         .eq('language', langCode)
         .single();
 
-      if (existing?.translated_content) {
+      if (existing?.translated_content && existing.content_hash === contentHash) {
         return NextResponse.json({ translated: existing.translated_content });
       }
     }
@@ -74,6 +84,7 @@ ${JSON.stringify(payload)}`;
           chapter_id: chapterId,
           language: langCode,
           translated_content: translatedJson,
+          content_hash: contentHash,
         }, { onConflict: 'chapter_id,language' });
       } catch (err) {
         console.error('Error saving translation to Supabase:', err);

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS chapter_translations (
   chapter_id INTEGER NOT NULL,
   language TEXT NOT NULL,
   translated_content JSONB NOT NULL,
+  content_hash TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE(chapter_id, language)
