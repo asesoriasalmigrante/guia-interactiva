@@ -26,7 +26,24 @@ async function computeHash(data: any): Promise<string> {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-const BATCH_SIZE = 80;
+function flattenStrings(arr: any): string[] {
+  const result: string[] = [];
+  for (const item of arr) {
+    if (typeof item === 'string') {
+      result.push(item);
+    } else if (Array.isArray(item)) {
+      result.push(...flattenStrings(item));
+    } else if (item && typeof item === 'object') {
+      for (const val of Object.values(item)) {
+        if (typeof val === 'string') result.push(val);
+        else if (Array.isArray(val)) result.push(...flattenStrings(val));
+      }
+    }
+  }
+  return result;
+}
+
+const BATCH_SIZE = 60;
 
 export async function POST(request: Request) {
   try {
@@ -48,7 +65,10 @@ export async function POST(request: Request) {
         .eq('language', langCode)
         .single();
 
-      if (existing?.translated_content && existing.content_hash === contentHash) {
+      if (existing?.translated_content &&
+          Array.isArray(existing.translated_content) &&
+          existing.translated_content.length === strings.length &&
+          existing.content_hash === contentHash) {
         return NextResponse.json({ translated: existing.translated_content });
       }
     }
@@ -60,12 +80,14 @@ export async function POST(request: Request) {
       const batch = strings.slice(i, i + BATCH_SIZE);
 
       const prompt = `Translate each string in this JSON array to ${targetLanguage}.
-Return a JSON array with the same length, same order. Translate naturally, fluently.
-Keep **bold**, links, URLs, emojis, proper nouns unchanged.
-Do NOT translate: URLs, email addresses, file paths.
-Return ONLY a raw JSON array of strings. No markdown, no explanations.
+Rules:
+- Return a JSON array with EXACTLY ${batch.length} strings, same order.
+- Translate naturally and fluently.
+- Keep URLs, emails, file paths unchanged.
+- Keep **bold** markup, emojis, proper nouns unchanged.
+- Every input string MUST have a corresponding output string.
 
-Input:
+Input array:
 ${JSON.stringify(batch)}`;
 
       const response = await ai.models.generateContent({
@@ -77,16 +99,28 @@ ${JSON.stringify(batch)}`;
         },
       });
 
-      const parsed = JSON.parse(response.text || '[]');
-      if (Array.isArray(parsed)) {
-        allTranslated.push(...parsed);
-      } else {
-        allTranslated.push(...batch);
+      let parsed: any;
+      try {
+        parsed = JSON.parse(response.text || '[]');
+      } catch {
+        parsed = [];
+      }
+
+      const flat = flattenStrings(parsed);
+
+      for (let j = 0; j < batch.length; j++) {
+        const translated = flat[j];
+        if (typeof translated === 'string' && translated.trim().length > 0) {
+          allTranslated.push(translated);
+        } else {
+          allTranslated.push(batch[j]);
+        }
       }
     }
 
-    while (allTranslated.length < strings.length) {
-      allTranslated.push(strings[allTranslated.length]);
+    const finalResult = allTranslated.slice(0, strings.length);
+    while (finalResult.length < strings.length) {
+      finalResult.push(strings[finalResult.length]);
     }
 
     if (chapterId && langCode) {
@@ -95,7 +129,7 @@ ${JSON.stringify(batch)}`;
         await supabase.from('chapter_translations').upsert({
           chapter_id: chapterId,
           language: langCode,
-          translated_content: allTranslated,
+          translated_content: finalResult,
           content_hash: contentHash,
         }, { onConflict: 'chapter_id,language' });
       } catch (err) {
@@ -103,7 +137,7 @@ ${JSON.stringify(batch)}`;
       }
     }
 
-    return NextResponse.json({ translated: allTranslated });
+    return NextResponse.json({ translated: finalResult });
   } catch (error: any) {
     console.error('Error en /api/translate:', error);
     return NextResponse.json(

@@ -73,7 +73,12 @@ export function getAppLanguage(): string {
 const chapterTranslationCache = new Map<string, any>();
 
 function isTranslatableString(val: any): boolean {
-  return typeof val === 'string' && val.trim().length > 0 && !val.startsWith('http') && !val.startsWith('/');
+  if (typeof val !== 'string') return false;
+  if (val.trim().length === 0) return false;
+  if (/^https?:\/\//i.test(val)) return false;
+  if (/^\/\//.test(val)) return false;
+  if (/^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|gif|svg|webp|pdf|ico)$/i.test(val)) return false;
+  return true;
 }
 
 function extractStrings(obj: any): string[] {
@@ -82,12 +87,12 @@ function extractStrings(obj: any): string[] {
     for (const item of obj) {
       strings.push(...extractStrings(item));
     }
-  } else if (obj && typeof obj === 'object') {
+  } else if (obj !== null && obj !== undefined && typeof obj === 'object') {
     for (const key of Object.keys(obj)) {
       const val = obj[key];
       if (isTranslatableString(val)) {
         strings.push(val);
-      } else if (typeof val === 'object' && val !== null) {
+      } else if (val !== null && val !== undefined && typeof val === 'object') {
         strings.push(...extractStrings(val));
       }
     }
@@ -98,14 +103,20 @@ function extractStrings(obj: any): string[] {
 function replaceStrings(obj: any, translated: string[], cursor: { pos: number }): any {
   if (Array.isArray(obj)) {
     return obj.map(item => replaceStrings(item, translated, cursor));
-  } else if (obj && typeof obj === 'object') {
+  }
+  if (obj !== null && obj !== undefined && typeof obj === 'object') {
     const result: any = {};
     for (const key of Object.keys(obj)) {
       const val = obj[key];
       if (isTranslatableString(val)) {
-        result[key] = translated[cursor.pos] || val;
-        cursor.pos++;
-      } else if (typeof val === 'object' && val !== null) {
+        if (cursor.pos < translated.length) {
+          const t = translated[cursor.pos];
+          result[key] = (typeof t === 'string' && t.trim().length > 0) ? t : val;
+          cursor.pos++;
+        } else {
+          result[key] = val;
+        }
+      } else if (val !== null && val !== undefined && typeof val === 'object') {
         result[key] = replaceStrings(val, translated, cursor);
       } else {
         result[key] = val;
@@ -145,7 +156,12 @@ export async function translateChapterWithAI(chapterObj: any, langCode: string):
     }
 
     const data = await response.json();
-    const translatedStrings: string[] = data.translated || allStrings;
+    const translatedStrings: string[] = data.translated;
+
+    if (!Array.isArray(translatedStrings) || translatedStrings.length !== allStrings.length) {
+      console.warn(`Translation length mismatch: expected ${allStrings.length}, got ${translatedStrings?.length}`);
+      return chapterObj;
+    }
 
     const cursor = { pos: 0 };
     const translatedChapter = replaceStrings(chapterObj, translatedStrings, cursor);
