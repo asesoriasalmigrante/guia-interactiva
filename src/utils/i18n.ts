@@ -72,6 +72,50 @@ export function getAppLanguage(): string {
 
 const chapterTranslationCache = new Map<string, any>();
 
+function isTranslatableString(val: any): boolean {
+  return typeof val === 'string' && val.trim().length > 0 && !val.startsWith('http') && !val.startsWith('/');
+}
+
+function extractStrings(obj: any): string[] {
+  const strings: string[] = [];
+  if (Array.isArray(obj)) {
+    for (const item of obj) {
+      strings.push(...extractStrings(item));
+    }
+  } else if (obj && typeof obj === 'object') {
+    for (const key of Object.keys(obj)) {
+      const val = obj[key];
+      if (isTranslatableString(val)) {
+        strings.push(val);
+      } else if (typeof val === 'object' && val !== null) {
+        strings.push(...extractStrings(val));
+      }
+    }
+  }
+  return strings;
+}
+
+function replaceStrings(obj: any, translated: string[], cursor: { pos: number }): any {
+  if (Array.isArray(obj)) {
+    return obj.map(item => replaceStrings(item, translated, cursor));
+  } else if (obj && typeof obj === 'object') {
+    const result: any = {};
+    for (const key of Object.keys(obj)) {
+      const val = obj[key];
+      if (isTranslatableString(val)) {
+        result[key] = translated[cursor.pos] || val;
+        cursor.pos++;
+      } else if (typeof val === 'object' && val !== null) {
+        result[key] = replaceStrings(val, translated, cursor);
+      } else {
+        result[key] = val;
+      }
+    }
+    return result;
+  }
+  return obj;
+}
+
 export async function translateChapterWithAI(chapterObj: any, langCode: string): Promise<any> {
   if (langCode === 'es') return chapterObj;
 
@@ -83,11 +127,14 @@ export async function translateChapterWithAI(chapterObj: any, langCode: string):
   const langObj = WORLD_LANGUAGES.find((l) => l.code === langCode) || WORLD_LANGUAGES[0];
 
   try {
+    const allStrings = extractStrings(chapterObj);
+    if (allStrings.length === 0) return chapterObj;
+
     const response = await fetch('/api/translate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        payload: chapterObj,
+        strings: allStrings,
         targetLanguage: `${langObj.name} (${langObj.nativeName})`,
         chapterId: chapterObj.id,
       }),
@@ -98,10 +145,13 @@ export async function translateChapterWithAI(chapterObj: any, langCode: string):
     }
 
     const data = await response.json();
-    if (data.translated) {
-      chapterTranslationCache.set(cacheKey, data.translated);
-      return data.translated;
-    }
+    const translatedStrings: string[] = data.translated || allStrings;
+
+    const cursor = { pos: 0 };
+    const translatedChapter = replaceStrings(chapterObj, translatedStrings, cursor);
+
+    chapterTranslationCache.set(cacheKey, translatedChapter);
+    return translatedChapter;
   } catch (err) {
     console.error(`AI Translation error for chapter ${chapterObj.id} into ${langCode}:`, err);
   }

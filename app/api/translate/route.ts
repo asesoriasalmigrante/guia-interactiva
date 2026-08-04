@@ -17,28 +17,27 @@ function getGenAIClient(): GoogleGenAI {
   });
 }
 
-async function computeHash(payload: any): Promise<string> {
-  const json = JSON.stringify(payload);
+async function computeHash(data: any): Promise<string> {
+  const json = JSON.stringify(data);
   const encoder = new TextEncoder();
-  const data = encoder.encode(json);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const encoded = encoder.encode(json);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+const BATCH_SIZE = 80;
+
 export async function POST(request: Request) {
   try {
-    const { payload, targetLanguage, chapterId } = await request.json();
+    const { strings, targetLanguage, chapterId } = await request.json();
 
-    if (!payload || !targetLanguage) {
-      return NextResponse.json(
-        { error: 'Payload y targetLanguage son requeridos' },
-        { status: 400 }
-      );
+    if (!strings || !Array.isArray(strings) || strings.length === 0) {
+      return NextResponse.json({ translated: [] });
     }
 
     const langCode = targetLanguage.split(' ')[0].toLowerCase();
-    const contentHash = await computeHash(payload);
+    const contentHash = await computeHash(strings);
 
     if (chapterId && langCode) {
       const supabase = createAdminClient();
@@ -55,30 +54,40 @@ export async function POST(request: Request) {
     }
 
     const ai = getGenAIClient();
+    const allTranslated: string[] = [];
 
-    const prompt = `You are a professional native legal & migration translator. Translate the given JSON into ${targetLanguage}.
+    for (let i = 0; i < strings.length; i += BATCH_SIZE) {
+      const batch = strings.slice(i, i + BATCH_SIZE);
 
-CRITICAL RULES:
-1. Translate EVERY string value at EVERY nesting level — no matter how deep.
-2. Preserve ALL JSON keys, structure, array lengths, numbers, booleans, and null values EXACTLY.
-3. Do NOT skip any field. If a field has text, translate it.
-4. Preserve formatting: **bold**, links, URLs, emojis, country names, proper nouns.
-5. Do NOT translate: numeric IDs, image URLs (http/https links), email addresses.
-6. Return ONLY valid raw JSON. No markdown wrappers. No explanations.
+      const prompt = `Translate each string in this JSON array to ${targetLanguage}.
+Return a JSON array with the same length, same order. Translate naturally, fluently.
+Keep **bold**, links, URLs, emojis, proper nouns unchanged.
+Do NOT translate: URLs, email addresses, file paths.
+Return ONLY a raw JSON array of strings. No markdown, no explanations.
 
-JSON to translate:
-${JSON.stringify(payload)}`;
+Input:
+${JSON.stringify(batch)}`;
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
-      contents: prompt,
-      config: {
-        temperature: 0.2,
-        responseMimeType: 'application/json',
-      },
-    });
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.0-flash',
+        contents: prompt,
+        config: {
+          temperature: 0.2,
+          responseMimeType: 'application/json',
+        },
+      });
 
-    const translatedJson = JSON.parse(response.text || '{}');
+      const parsed = JSON.parse(response.text || '[]');
+      if (Array.isArray(parsed)) {
+        allTranslated.push(...parsed);
+      } else {
+        allTranslated.push(...batch);
+      }
+    }
+
+    while (allTranslated.length < strings.length) {
+      allTranslated.push(strings[allTranslated.length]);
+    }
 
     if (chapterId && langCode) {
       try {
@@ -86,7 +95,7 @@ ${JSON.stringify(payload)}`;
         await supabase.from('chapter_translations').upsert({
           chapter_id: chapterId,
           language: langCode,
-          translated_content: translatedJson,
+          translated_content: allTranslated,
           content_hash: contentHash,
         }, { onConflict: 'chapter_id,language' });
       } catch (err) {
@@ -94,7 +103,7 @@ ${JSON.stringify(payload)}`;
       }
     }
 
-    return NextResponse.json({ translated: translatedJson });
+    return NextResponse.json({ translated: allTranslated });
   } catch (error: any) {
     console.error('Error en /api/translate:', error);
     return NextResponse.json(
