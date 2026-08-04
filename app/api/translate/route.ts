@@ -40,7 +40,7 @@ JSON content to translate:
 ${JSON.stringify(payload)}`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
+      model: 'gemini-2.0-flash',
       contents: prompt,
       config: {
         temperature: 0.2,
