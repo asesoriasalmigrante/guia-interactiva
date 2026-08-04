@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 function getGenAIClient(): GoogleGenAI {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -18,13 +19,29 @@ function getGenAIClient(): GoogleGenAI {
 
 export async function POST(request: Request) {
   try {
-    const { payload, targetLanguage } = await request.json();
+    const { payload, targetLanguage, chapterId } = await request.json();
 
     if (!payload || !targetLanguage) {
       return NextResponse.json(
         { error: 'Payload y targetLanguage son requeridos' },
         { status: 400 }
       );
+    }
+
+    const langCode = targetLanguage.split(' ')[0].toLowerCase();
+
+    if (chapterId && langCode) {
+      const supabase = createAdminClient();
+      const { data: existing } = await supabase
+        .from('chapter_translations')
+        .select('translated_content')
+        .eq('chapter_id', chapterId)
+        .eq('language', langCode)
+        .single();
+
+      if (existing?.translated_content) {
+        return NextResponse.json({ translated: existing.translated_content });
+      }
     }
 
     const ai = getGenAIClient();
@@ -49,6 +66,20 @@ ${JSON.stringify(payload)}`;
     });
 
     const translatedJson = JSON.parse(response.text || '{}');
+
+    if (chapterId && langCode) {
+      try {
+        const supabase = createAdminClient();
+        await supabase.from('chapter_translations').upsert({
+          chapter_id: chapterId,
+          language: langCode,
+          translated_content: translatedJson,
+        }, { onConflict: 'chapter_id,language' });
+      } catch (err) {
+        console.error('Error saving translation to Supabase:', err);
+      }
+    }
+
     return NextResponse.json({ translated: translatedJson });
   } catch (error: any) {
     console.error('Error en /api/translate:', error);

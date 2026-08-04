@@ -102,6 +102,7 @@ export async function translateChapterWithAI(chapterObj: any, langCode: string):
       body: JSON.stringify({
         payload: payloadToTranslate,
         targetLanguage: `${langObj.name} (${langObj.nativeName})`,
+        chapterId: chapterObj.id,
       }),
     });
 
