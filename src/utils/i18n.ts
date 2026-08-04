@@ -83,25 +83,11 @@ export async function translateChapterWithAI(chapterObj: any, langCode: string):
   const langObj = WORLD_LANGUAGES.find((l) => l.code === langCode) || WORLD_LANGUAGES[0];
 
   try {
-    const payloadToTranslate = {
-      title: chapterObj.title,
-      summary: chapterObj.summary,
-      keyPoints: chapterObj.keyPoints,
-      warningAlert: chapterObj.warningAlert,
-      danielaTip: chapterObj.danielaTip,
-      sections: chapterObj.sections.map((s: any) => ({
-        heading: s.heading,
-        content: s.content,
-        bulletPoints: s.bulletPoints || [],
-        imageCaption: s.imageCaption,
-      })),
-    };
-
     const response = await fetch('/api/translate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        payload: payloadToTranslate,
+        payload: chapterObj,
         targetLanguage: `${langObj.name} (${langObj.nativeName})`,
         chapterId: chapterObj.id,
       }),
@@ -113,28 +99,8 @@ export async function translateChapterWithAI(chapterObj: any, langCode: string):
 
     const data = await response.json();
     if (data.translated) {
-      const trans = data.translated;
-      const translatedChapter = {
-        ...chapterObj,
-        title: trans.title || chapterObj.title,
-        summary: trans.summary || chapterObj.summary,
-        keyPoints: Array.isArray(trans.keyPoints) && trans.keyPoints.length > 0 ? trans.keyPoints : chapterObj.keyPoints,
-        warningAlert: trans.warningAlert || chapterObj.warningAlert,
-        danielaTip: trans.danielaTip || chapterObj.danielaTip,
-        sections: chapterObj.sections.map((origSec: any, idx: number) => {
-          const transSec = trans.sections?.[idx] || {};
-          return {
-            ...origSec,
-            heading: transSec.heading || origSec.heading,
-            content: transSec.content || origSec.content,
-            bulletPoints: Array.isArray(transSec.bulletPoints) && transSec.bulletPoints.length > 0 ? transSec.bulletPoints : origSec.bulletPoints,
-            imageCaption: transSec.imageCaption || origSec.imageCaption,
-          };
-        }),
-      };
-
-      chapterTranslationCache.set(cacheKey, translatedChapter);
-      return translatedChapter;
+      chapterTranslationCache.set(cacheKey, data.translated);
+      return data.translated;
     }
   } catch (err) {
     console.error(`AI Translation error for chapter ${chapterObj.id} into ${langCode}:`, err);

@@ -56,14 +56,17 @@ export async function POST(request: Request) {
 
     const ai = getGenAIClient();
 
-    const prompt = `You are a professional native legal & migration translator. Translate the given JSON content into ${targetLanguage}.
-CRITICAL INSTRUCTIONS:
-1. Preserve all JSON keys, structure, and array lengths EXACTLY.
-2. Preserve all formatting like **bold** words, numbers, country names, link URLs, and emojis.
-3. Translate all descriptive and educational text naturally into fluent ${targetLanguage}.
-4. Return ONLY valid raw JSON. Do not include markdown \`\`\`json wrappers.
+    const prompt = `You are a professional native legal & migration translator. Translate the given JSON into ${targetLanguage}.
 
-JSON content to translate:
+CRITICAL RULES:
+1. Translate EVERY string value at EVERY nesting level — no matter how deep.
+2. Preserve ALL JSON keys, structure, array lengths, numbers, booleans, and null values EXACTLY.
+3. Do NOT skip any field. If a field has text, translate it.
+4. Preserve formatting: **bold**, links, URLs, emojis, country names, proper nouns.
+5. Do NOT translate: numeric IDs, image URLs (http/https links), email addresses.
+6. Return ONLY valid raw JSON. No markdown wrappers. No explanations.
+
+JSON to translate:
 ${JSON.stringify(payload)}`;
 
     const response = await ai.models.generateContent({
