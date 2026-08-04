@@ -69,3 +69,73 @@ export function getAppLanguage(): string {
   if (typeof window === 'undefined') return 'es';
   return localStorage.getItem('migrante_lang') || 'es';
 }
+
+const chapterTranslationCache = new Map<string, any>();
+
+export async function translateChapterWithAI(chapterObj: any, langCode: string): Promise<any> {
+  if (langCode === 'es') return chapterObj;
+
+  const cacheKey = `ch_${chapterObj.id}_${langCode}`;
+  if (chapterTranslationCache.has(cacheKey)) {
+    return chapterTranslationCache.get(cacheKey);
+  }
+
+  const langObj = WORLD_LANGUAGES.find((l) => l.code === langCode) || WORLD_LANGUAGES[0];
+
+  try {
+    const payloadToTranslate = {
+      title: chapterObj.title,
+      summary: chapterObj.summary,
+      keyPoints: chapterObj.keyPoints,
+      warningAlert: chapterObj.warningAlert,
+      sections: chapterObj.sections.map((s: any) => ({
+        heading: s.heading,
+        content: s.content,
+        bulletPoints: s.bulletPoints,
+        imageCaption: s.imageCaption,
+      })),
+    };
+
+    const response = await fetch('/api/translate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        payload: payloadToTranslate,
+        targetLanguage: `${langObj.name} (${langObj.nativeName})`,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (data.translated) {
+      const trans = data.translated;
+      const translatedChapter = {
+        ...chapterObj,
+        title: trans.title || chapterObj.title,
+        summary: trans.summary || chapterObj.summary,
+        keyPoints: Array.isArray(trans.keyPoints) ? trans.keyPoints : chapterObj.keyPoints,
+        warningAlert: trans.warningAlert || chapterObj.warningAlert,
+        sections: chapterObj.sections.map((origSec: any, idx: number) => {
+          const transSec = trans.sections?.[idx] || {};
+          return {
+            ...origSec,
+            heading: transSec.heading || origSec.heading,
+            content: transSec.content || origSec.content,
+            bulletPoints: Array.isArray(transSec.bulletPoints) ? transSec.bulletPoints : origSec.bulletPoints,
+            imageCaption: transSec.imageCaption || origSec.imageCaption,
+          };
+        }),
+      };
+
+      chapterTranslationCache.set(cacheKey, translatedChapter);
+      return translatedChapter;
+    }
+  } catch (err) {
+    console.error(`AI Translation error for chapter ${chapterObj.id} into ${langCode}:`, err);
+  }
+
+  return chapterObj;
+}

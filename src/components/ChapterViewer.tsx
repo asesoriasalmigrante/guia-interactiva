@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CHAPTERS, EBOOK_METADATA, COUNTRIES_DATA } from '../data/ebookData';
-import { BookOpen, Search, ArrowLeft, ArrowRight, Lightbulb, AlertTriangle, CheckCircle2, ChevronRight, ChevronDown, ChevronUp, Instagram, MessageCircle, Globe2, DollarSign, FileCheck2, CheckCircle, Languages } from 'lucide-react';
-import { t, WORLD_LANGUAGES } from '../utils/i18n';
+import { BookOpen, Search, ArrowLeft, ArrowRight, Lightbulb, AlertTriangle, CheckCircle2, ChevronRight, ChevronDown, ChevronUp, Instagram, MessageCircle, Globe2, DollarSign, FileCheck2, CheckCircle, Loader2, Languages } from 'lucide-react';
+import { t, translateChapterWithAI, WORLD_LANGUAGES } from '../utils/i18n';
 import { useLanguage } from '@/src/contexts/LanguageContext';
 
 const TikTokIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => (
@@ -37,13 +37,39 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
   
   const rawChapter = CHAPTERS.find(c => c.id === selectedChapterId) || CHAPTERS[0];
   const [displayChapter, setDisplayChapter] = useState<any>(rawChapter);
+  const [isTranslating, setIsTranslating] = useState<boolean>(false);
 
   const langCode = language;
 
   useEffect(() => {
-    const chapterToLoad = CHAPTERS.find(c => c.id === selectedChapterId) || CHAPTERS[0];
-    setDisplayChapter(chapterToLoad);
-  }, [selectedChapterId]);
+    const chapterToTranslate = CHAPTERS.find(c => c.id === selectedChapterId) || CHAPTERS[0];
+    if (langCode === 'es') {
+      setDisplayChapter(chapterToTranslate);
+      setIsTranslating(false);
+      return;
+    }
+
+    let isMounted = true;
+    setIsTranslating(true);
+
+    translateChapterWithAI(chapterToTranslate, langCode)
+      .then((translated) => {
+        if (isMounted) {
+          setDisplayChapter(translated);
+          setIsTranslating(false);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setDisplayChapter(chapterToTranslate);
+          setIsTranslating(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedChapterId, langCode]);
 
   const activeLangObj = WORLD_LANGUAGES.find(l => l.code === langCode) || WORLD_LANGUAGES[0];
 
@@ -213,6 +239,12 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
           <div className="bg-white dark:bg-[#152338] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md p-6 md:p-8 space-y-6">
             {/* Header / Meta */}
             <div className="border-b border-slate-100 dark:border-slate-800 pb-6 space-y-3">
+              {isTranslating && (
+                <div className="flex items-center gap-2 bg-[#E79923]/15 border border-[#E79923]/40 text-[#0B2447] dark:text-[#E79923] px-3.5 py-2 rounded-xl text-xs font-bold animate-pulse">
+                  <Loader2 className="w-4 h-4 animate-spin text-[#E79923]" />
+                  <span>{t('translatingTo', language)} {activeLangObj.name} ({activeLangObj.nativeName})...</span>
+                </div>
+              )}
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="bg-[#0B2447] text-[#E79923] font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider font-poppins">
                   {t('chapterTitle', language)} {displayChapter.id} • {displayChapter.category}
