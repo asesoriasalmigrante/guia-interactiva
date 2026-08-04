@@ -88,10 +88,11 @@ export async function translateChapterWithAI(chapterObj: any, langCode: string):
       summary: chapterObj.summary,
       keyPoints: chapterObj.keyPoints,
       warningAlert: chapterObj.warningAlert,
+      danielaTip: chapterObj.danielaTip,
       sections: chapterObj.sections.map((s: any) => ({
         heading: s.heading,
         content: s.content,
-        bulletPoints: s.bulletPoints,
+        bulletPoints: s.bulletPoints || [],
         imageCaption: s.imageCaption,
       })),
     };
@@ -117,15 +118,16 @@ export async function translateChapterWithAI(chapterObj: any, langCode: string):
         ...chapterObj,
         title: trans.title || chapterObj.title,
         summary: trans.summary || chapterObj.summary,
-        keyPoints: Array.isArray(trans.keyPoints) ? trans.keyPoints : chapterObj.keyPoints,
+        keyPoints: Array.isArray(trans.keyPoints) && trans.keyPoints.length > 0 ? trans.keyPoints : chapterObj.keyPoints,
         warningAlert: trans.warningAlert || chapterObj.warningAlert,
+        danielaTip: trans.danielaTip || chapterObj.danielaTip,
         sections: chapterObj.sections.map((origSec: any, idx: number) => {
           const transSec = trans.sections?.[idx] || {};
           return {
             ...origSec,
             heading: transSec.heading || origSec.heading,
             content: transSec.content || origSec.content,
-            bulletPoints: Array.isArray(transSec.bulletPoints) ? transSec.bulletPoints : origSec.bulletPoints,
+            bulletPoints: Array.isArray(transSec.bulletPoints) && transSec.bulletPoints.length > 0 ? transSec.bulletPoints : origSec.bulletPoints,
             imageCaption: transSec.imageCaption || origSec.imageCaption,
           };
         }),
