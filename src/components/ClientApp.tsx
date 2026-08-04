@@ -11,9 +11,8 @@ import { JobSearchPlanner } from '@/src/components/JobSearchPlanner';
 import { OfficialResources } from '@/src/components/OfficialResources';
 import { KitEmergencia } from '@/src/components/KitEmergencia';
 import { Plan90Dias } from '@/src/components/Plan90Dias';
-import { AIConsultantChat } from '@/src/components/AIConsultantChat';
 import { EBOOK_METADATA } from '@/src/data/ebookData';
-import { Phone, Instagram, Mail, Sparkles } from 'lucide-react';
+import { Phone, Instagram, Mail } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
 import { t } from '../utils/i18n';
 import { createClient } from '@/lib/supabase/client';
@@ -25,8 +24,6 @@ export default function ClientApp() {
   const router = useRouter();
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<string>('ebook');
-  const [isAIChatOpen, setIsAIChatOpen] = useState<boolean>(false);
-  const [aiInitialMessage, setAiInitialMessage] = useState<string>('');
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
 
@@ -42,11 +39,6 @@ export default function ClientApp() {
       document.documentElement.classList.remove('dark');
     }
   }, [isDarkMode, mounted]);
-
-  const handleOpenAIChatWithMessage = (msg: string) => {
-    setAiInitialMessage(msg);
-    setIsAIChatOpen(true);
-  };
 
   const toggleDarkMode = () => {
     setIsDarkMode(prev => !prev);
@@ -75,10 +67,6 @@ export default function ClientApp() {
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        onOpenAIChat={() => {
-          setAiInitialMessage('');
-          setIsAIChatOpen(true);
-        }}
         isDarkMode={isDarkMode}
         onToggleDarkMode={toggleDarkMode}
         onLogout={handleLogout}
@@ -86,22 +74,22 @@ export default function ClientApp() {
 
       <main className="flex-1 pb-16">
         {activeTab === 'ebook' && (
-          <ChapterViewer onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
+          <ChapterViewer />
         )}
         {activeTab === 'countries' && (
-          <CountryComparer onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
+          <CountryComparer />
         )}
         {activeTab === 'budget' && (
-          <BudgetCalculator onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
+          <BudgetCalculator />
         )}
         {activeTab === 'checklist' && (
-          <ChecklistTool onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
+          <ChecklistTool />
         )}
         {activeTab === 'quiz' && (
-          <ReadinessQuiz onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
+          <ReadinessQuiz />
         )}
         {activeTab === 'jobplan' && (
-          <JobSearchPlanner onOpenAIChatWithMessage={handleOpenAIChatWithMessage} />
+          <JobSearchPlanner />
         )}
         {activeTab === 'resources' && (
           <OfficialResources />
@@ -152,24 +140,6 @@ export default function ClientApp() {
         </div>
       </footer>
 
-      <button
-        onClick={() => {
-          setAiInitialMessage('');
-          setIsAIChatOpen(true);
-        }}
-        className="fixed bottom-4 right-4 z-40 bg-[#E79923] hover:bg-[#f0a835] text-[#0B2447] font-bold p-2.5 sm:px-3.5 sm:py-2 rounded-full shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer border border-[#0B2447] font-poppins"
-        title={t('consultAI', language) + ' ' + t('consultWithAI', language)}
-        id="fab-ai-chat"
-      >
-        <Sparkles className="w-4 h-4 fill-[#0B2447]" />
-        <span className="hidden sm:inline text-[11px] font-extrabold uppercase tracking-wide">{t('aiConsultantBtn', language)}</span>
-      </button>
-
-      <AIConsultantChat
-        isOpen={isAIChatOpen}
-        onClose={() => setIsAIChatOpen(false)}
-        initialMessage={aiInitialMessage}
-      />
     </div>
   );
 }

@@ -9,7 +9,6 @@ import { useLanguage } from '@/src/contexts/LanguageContext';
 interface HeaderProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  onOpenAIChat: () => void;
   isDarkMode: boolean;
   onToggleDarkMode: () => void;
   onLogout?: () => void;
@@ -18,7 +17,6 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   activeTab,
   setActiveTab,
-  onOpenAIChat,
   isDarkMode,
   onToggleDarkMode,
   onLogout,

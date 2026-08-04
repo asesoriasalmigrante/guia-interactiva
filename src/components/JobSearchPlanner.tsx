@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { JOB_ACTION_PLAN } from '../data/ebookData';
-import { Briefcase, AlertTriangle, CheckCircle2, ShieldAlert, Sparkles, ChevronRight } from 'lucide-react';
+import { Briefcase, AlertTriangle, CheckCircle2, ShieldAlert, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
 import { t } from '../utils/i18n';
 
-interface JobSearchPlannerProps {
-  onOpenAIChatWithMessage?: (msg: string) => void;
-}
-
-export const JobSearchPlanner: React.FC<JobSearchPlannerProps> = ({ onOpenAIChatWithMessage }) => {
+export const JobSearchPlanner: React.FC = () => {
   const { language } = useLanguage();
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({});
 
@@ -113,29 +109,6 @@ export const JobSearchPlanner: React.FC<JobSearchPlannerProps> = ({ onOpenAIChat
           </div>
         ))}
       </div>
-
-      {/* AI Help CTA */}
-      {onOpenAIChatWithMessage && (
-        <div className="bg-slate-900 text-white rounded-2xl p-6 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="space-y-1">
-            <h4 className="font-bold text-base flex items-center gap-2 text-amber-400">
-              <Sparkles className="w-5 h-5" />
-              {t('jobplanTitle', language)}
-            </h4>
-            <p className="text-slate-300 text-xs">
-              {t('jobplanDesc', language)}
-            </p>
-          </div>
-
-          <button
-            onClick={() => onOpenAIChatWithMessage(`Quisiera ayuda para adaptar mi Currículum (CV) y carta de presentación para buscar empleo desde el extranjero. ¿Podrías darme un modelo optimizado?`)}
-            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs flex items-center gap-2 whitespace-nowrap shadow-md cursor-pointer transition-all"
-            id="btn-ask-ai-jobs"
-          >
-            {t('jobplanGenerate', language)}
-          </button>
-        </div>
-      )}
     </div>
   );
 };

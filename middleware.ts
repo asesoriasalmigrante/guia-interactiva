@@ -39,7 +39,6 @@ export async function middleware(request: NextRequest) {
   const isAuthCallback = pathname.startsWith('/auth');
   const isAdminRoute = pathname.startsWith('/admin');
   const isAdminApi = pathname.startsWith('/api/admin');
-  const isDeviceApi = pathname.startsWith('/api/devices');
   const isApiRoute = pathname.startsWith('/api');
   const isPaymentPage = pathname.startsWith('/payment');
 

@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { COUNTRIES_DATA } from '../data/ebookData';
 import { CountryInfo } from '../types';
-import { Globe2, ShieldCheck, DollarSign, FileCheck2, AlertCircle, CheckCircle, Sparkles, Filter, Search, X, Check } from 'lucide-react';
+import { Globe2, ShieldCheck, DollarSign, FileCheck2, AlertCircle, CheckCircle, Filter, Search, X, Check } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
 import { t } from '../utils/i18n';
 
-interface CountryComparerProps {
-  onOpenAIChatWithMessage?: (msg: string) => void;
-}
-
-export const CountryComparer: React.FC<CountryComparerProps> = ({ onOpenAIChatWithMessage }) => {
+export const CountryComparer: React.FC = () => {
   const { language } = useLanguage();
   const [selectedCountryIds, setSelectedCountryIds] = useState<string[]>(['espana', 'canada', 'alemania']);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -330,20 +326,6 @@ export const CountryComparer: React.FC<CountryComparerProps> = ({ onOpenAIChatWi
                   </ul>
                 </div>
               </div>
-            </div>
-
-            {/* Footer Action */}
-            <div className="p-4 bg-slate-50 border-t border-slate-200">
-              {onOpenAIChatWithMessage && (
-                <button
-                  onClick={() => onOpenAIChatWithMessage(`Quisiera consultar los requisitos específicos, visas y costo de vida para emigrar a ${country.name} según mi profesión y situación familiar.`)}
-                  className="w-full bg-[#0B2447] hover:bg-slate-800 text-[#E79923] text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer font-poppins shadow-xs"
-                  id={`consult-country-${country.id}`}
-                >
-                  <Sparkles className="w-4 h-4 text-[#E79923]" />
-                  {t('consultAI', language)} {country.name} {t('consultWithAI', language)}
-                </button>
-              )}
             </div>
           </div>
         ))}

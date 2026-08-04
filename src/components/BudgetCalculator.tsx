@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { INITIAL_BUDGET_ITEMS } from '../data/ebookData';
 import { BudgetItem } from '../types';
-import { Calculator, Plus, Trash2, ShieldAlert, Sparkles, Download, RefreshCw, DollarSign, PieChart } from 'lucide-react';
+import { Calculator, Plus, Trash2, ShieldAlert, Download, RefreshCw, DollarSign, PieChart } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
 import { t } from '../utils/i18n';
 
@@ -16,11 +16,7 @@ const CATEGORY_MAP: Record<string, string> = {
   'Fondo de Emergencia': 'categoryFondo',
 };
 
-interface BudgetCalculatorProps {
-  onOpenAIChatWithMessage?: (msg: string) => void;
-}
-
-export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChatWithMessage }) => {
+export const BudgetCalculator: React.FC = () => {
   const { language } = useLanguage();
   const [items, setItems] = useState<BudgetItem[]>(() => {
     const saved = localStorage.getItem('migrante_budget_items');
@@ -313,18 +309,6 @@ export const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({ onOpenAIChat
                 {t('budgetAdvice', language)}
               </p>
             </div>
-
-            {/* AI Advisor Button */}
-            {onOpenAIChatWithMessage && (
-              <button
-                onClick={() => onOpenAIChatWithMessage(`He calculado un presupuesto total de $${totalBudget.toLocaleString()} USD (incluyendo $${initialMoveCost.toLocaleString()} USD de gastos iniciales y $${emergencyFundTotal.toLocaleString()} USD de fondo de emergencia). ¿Podrías darme estrategias de ahorro y optimización financiera para mi proceso migratorio?`)}
-                className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:brightness-110 text-slate-950 text-xs font-extrabold py-3 rounded-xl flex items-center justify-center gap-2 shadow-md cursor-pointer transition-all"
-                id="btn-ask-ai-budget"
-              >
-                <Sparkles className="w-4 h-4 fill-slate-950" />
-                {t('optimizeBudget', language)}
-              </button>
-            )}
           </div>
         </div>
       </div>

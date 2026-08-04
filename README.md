@@ -1,13 +1,12 @@
 # Guía Interactiva - Asesorías al Migrante
 
-Aplicación web interactiva para la "Guía de Supervivencia Migratoria" de Daniela Harrington. Incluye eBook interactivo, comparador de 100+ países, calculadora de presupuesto, checklist de migración, test de preparación, guía de empleo/CV, recursos oficiales, kit de emergencia, plan de 90 días y asesora virtual con IA.
+Aplicación web interactiva para la "Guía de Supervivencia Migratoria" de Daniela Harrington. Incluye eBook interactivo, comparador de 100+ países, calculadora de presupuesto, checklist de migración, test de preparación, guía de empleo/CV, recursos oficiales, kit de emergencia y plan de 90 días.
 
 ## Requisitos
 
 - Node.js v20 o superior
 - npm
 - Supabase (base de datos + autenticación)
-- Google Gemini API Key
 
 ## Instalación
 
@@ -32,9 +31,6 @@ Edita `.env.local` con tus credenciales:
 NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=tu_clave_publica
 SUPABASE_SERVICE_ROLE_KEY=tu_clave_service_role
-
-# Google Gemini (para IA y traducciones)
-GEMINI_API_KEY=tu_clave_gemini
 ```
 
 ## Desarrollo
@@ -64,7 +60,6 @@ npm run start
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY`
-   - `GEMINI_API_KEY`
 4. Despliega
 
 La aplicación se desplegará automáticamente en `https://tu-proyecto.vercel.app`
@@ -81,7 +76,7 @@ La aplicación se desplegará automáticamente en `https://tu-proyecto.vercel.ap
 ```
 guia-interactiva/
 ├── app/                    # App Router (Next.js 15)
-│   ├── api/               # API routes (chat, translate, admin, devices)
+│   ├── api/               # API routes (admin, devices)
 │   ├── admin/             # Panel de administración
 │   ├── auth/              # Callbacks de autenticación
 │   ├── login/             # Página de login
@@ -110,7 +105,6 @@ guia-interactiva/
 - **Recursos oficiales** por país
 - **Kit de emergencia** (Manual PDF descargable)
 - **Plan de 90 días** (Plan maestro PDF descargable)
-- **Asesora virtual con IA** (Gemini)
 - **Panel de administración** con gestión de usuarios
 - **15 idiomas** disponibles
 - **Modo oscuro/claro**
@@ -123,7 +117,6 @@ guia-interactiva/
 - TypeScript
 - Tailwind CSS 4
 - Supabase (Auth + Database)
-- Google Gemini API
 - Vercel (deploy)
 
 ## Licencia

@@ -1,6 +1,6 @@
 {
   "name": "Guía Interactiva de Supervivencia Migratoria",
-  "description": "Aplicación interactiva basada en el eBook de Asesorías al Migrante por Daniela Harrington. Incluye comparador de países, calculadora de presupuesto, checklist de viaje, plan de acción y asesora virtual con IA.",
+  "description": "Aplicación interactiva basada en el eBook de Asesorías al Migrante por Daniela Harrington. Incluye comparador de países, calculadora de presupuesto, checklist de viaje, plan de acción y recursos oficiales.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }

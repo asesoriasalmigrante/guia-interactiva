@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { CHECKLIST_CATEGORIES } from '../data/ebookData';
-import { CheckSquare, AlertTriangle, Cloud, HardDrive, RefreshCw, Sparkles, CheckCircle2, ChevronDown, ChevronUp, ShieldCheck } from 'lucide-react';
+import { CheckSquare, AlertTriangle, Cloud, HardDrive, RefreshCw, CheckCircle2, ChevronDown, ChevronUp, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
 import { t } from '../utils/i18n';
 
-interface ChecklistToolProps {
-  onOpenAIChatWithMessage?: (msg: string) => void;
-}
-
-export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMessage }) => {
+export const ChecklistTool: React.FC = () => {
   const { language } = useLanguage();
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>(() => {
     const saved = localStorage.getItem('migrante_checklist_state');
@@ -326,29 +322,6 @@ export const ChecklistTool: React.FC<ChecklistToolProps> = ({ onOpenAIChatWithMe
         </div>
       </div>
 
-      {/* AI Help CTA */}
-      {onOpenAIChatWithMessage && (
-        <div className="bg-slate-900 text-white rounded-2xl p-6 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="space-y-1">
-            <h4 className="font-extrabold text-base flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-amber-400" />
-              ¿Tienes dudas sobre cómo apostillar o traducir tus documentos?
-            </h4>
-            <p className="text-slate-300 text-xs">
-              Pregunta a nuestra Asesora Virtual sobre los requisitos de apostilla de La Haya o trámites consulares.
-            </p>
-          </div>
-
-          <button
-            onClick={() => onOpenAIChatWithMessage(`Tengo dudas sobre cómo apostillar y legalizar mis documentos (títulos, antecedentes penales y actas) para mi proceso migratorio. ¿Podrías indicarme los pasos?`)}
-            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs flex items-center gap-2 whitespace-nowrap shadow-md transition-all cursor-pointer"
-            id="btn-ask-ai-checklist"
-          >
-            <Sparkles className="w-4 h-4 fill-slate-950" />
-            Consultar sobre Apostillas con Asesora IA
-          </button>
-        </div>
-      )}
     </div>
   );
 };

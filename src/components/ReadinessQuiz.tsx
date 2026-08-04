@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   HelpCircle,
   XCircle,
-  Sparkles,
   RefreshCw,
   Trophy,
   ArrowRight,
@@ -26,13 +25,9 @@ import {
   Info
 } from 'lucide-react';
 
-interface ReadinessQuizProps {
-  onOpenAIChatWithMessage?: (msg: string) => void;
-}
-
 type AnswerOption = 'Si' | 'No estoy seguro' | 'No';
 
-export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMessage }) => {
+export const ReadinessQuiz: React.FC = () => {
   const { language } = useLanguage();
   // answers map: questionId -> 'Si' | 'No estoy seguro' | 'No'
   const [answers, setAnswers] = useState<Record<number, AnswerOption>>({});
@@ -424,17 +419,6 @@ export const ReadinessQuiz: React.FC<ReadinessQuizProps> = ({ onOpenAIChatWithMe
                 <RefreshCw className="w-4 h-4" />
                 {t('retakeTest', language)}
               </button>
-
-              {onOpenAIChatWithMessage && (
-                <button
-                  onClick={() => onOpenAIChatWithMessage(`Obtuve ${currentScore}/50 puntos en el Test de Preparación Migratoria (${activeTier.title}). ¿Podrías darme un análisis de mis puntos fuertes y un plan específico para mejorar en las áreas con menor puntaje?`)}
-                  id="btn-ask-ai-quiz"
-                  className="w-full sm:w-auto bg-[#0B2447] text-[#E79923] hover:bg-[#0a1e3b] text-xs font-extrabold px-6 py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-md cursor-pointer transition-all font-poppins"
-                >
-                  <Sparkles className="w-4 h-4 text-[#E79923]" />
-                  Obtener Plan de Mejora con Asesora IA
-                </button>
-              )}
             </div>
           </div>
 

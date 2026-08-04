@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CHAPTERS, EBOOK_METADATA, COUNTRIES_DATA } from '../data/ebookData';
-import { BookOpen, Search, ArrowLeft, ArrowRight, Lightbulb, AlertTriangle, CheckCircle2, ChevronRight, ChevronDown, ChevronUp, Sparkles, Instagram, MessageCircle, Globe2, DollarSign, FileCheck2, CheckCircle, Loader2, Languages } from 'lucide-react';
-import { t, translateChapterWithAI, WORLD_LANGUAGES } from '../utils/i18n';
+import { BookOpen, Search, ArrowLeft, ArrowRight, Lightbulb, AlertTriangle, CheckCircle2, ChevronRight, ChevronDown, ChevronUp, Instagram, MessageCircle, Globe2, DollarSign, FileCheck2, CheckCircle, Languages } from 'lucide-react';
+import { t, WORLD_LANGUAGES } from '../utils/i18n';
 import { useLanguage } from '@/src/contexts/LanguageContext';
 
 const TikTokIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => (
@@ -11,7 +11,6 @@ const TikTokIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => (
 );
 
 interface ChapterViewerProps {
-  onOpenAIChatWithMessage?: (msg: string) => void;
 }
 
 // Helper function to render text with **bold** markup
@@ -30,7 +29,7 @@ const renderFormattedText = (text: string, strongClassName?: string) => {
   });
 };
 
-export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMessage }) => {
+export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
   const { language } = useLanguage();
   const [selectedChapterId, setSelectedChapterId] = useState<number>(1);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -38,39 +37,13 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
   
   const rawChapter = CHAPTERS.find(c => c.id === selectedChapterId) || CHAPTERS[0];
   const [displayChapter, setDisplayChapter] = useState<any>(rawChapter);
-  const [isTranslating, setIsTranslating] = useState<boolean>(false);
 
   const langCode = language;
 
   useEffect(() => {
-    const chapterToTranslate = CHAPTERS.find(c => c.id === selectedChapterId) || CHAPTERS[0];
-    if (langCode === 'es') {
-      setDisplayChapter(chapterToTranslate);
-      setIsTranslating(false);
-      return;
-    }
-
-    let isMounted = true;
-    setIsTranslating(true);
-
-    translateChapterWithAI(chapterToTranslate, langCode)
-      .then((translated) => {
-        if (isMounted) {
-          setDisplayChapter(translated);
-          setIsTranslating(false);
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setDisplayChapter(chapterToTranslate);
-          setIsTranslating(false);
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [selectedChapterId, langCode]);
+    const chapterToLoad = CHAPTERS.find(c => c.id === selectedChapterId) || CHAPTERS[0];
+    setDisplayChapter(chapterToLoad);
+  }, [selectedChapterId]);
 
   const activeLangObj = WORLD_LANGUAGES.find(l => l.code === langCode) || WORLD_LANGUAGES[0];
 
@@ -240,14 +213,6 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
           <div className="bg-white dark:bg-[#152338] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md p-6 md:p-8 space-y-6">
             {/* Header / Meta */}
             <div className="border-b border-slate-100 dark:border-slate-800 pb-6 space-y-3">
-              {/* Translating Indicator */}
-              {isTranslating && (
-                <div className="flex items-center gap-2 bg-[#E79923]/15 border border-[#E79923]/40 text-[#0B2447] dark:text-[#E79923] px-3.5 py-2 rounded-xl text-xs font-bold animate-pulse">
-                  <Loader2 className="w-4 h-4 animate-spin text-[#E79923]" />
-                  <span>{t('translatingTo', language)} {activeLangObj.name} ({activeLangObj.nativeName})...</span>
-                </div>
-              )}
-
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="bg-[#0B2447] text-[#E79923] font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider font-poppins">
                   {t('chapterTitle', language)} {displayChapter.id} • {displayChapter.category}
@@ -422,15 +387,6 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                     </p>
                   </div>
 
-                  {onOpenAIChatWithMessage && (
-                    <button
-                      onClick={() => onOpenAIChatWithMessage('Hola Daniela, acabo de ver el ejemplo comparativo de España, Canadá y Alemania. ¿Cuál me recomendarías según mi perfil?')}
-                      className="shrink-0 inline-flex items-center gap-2 bg-[#0B2447] hover:bg-[#123363] text-[#E79923] px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm font-poppins border border-[#E79923]/30 cursor-pointer"
-                    >
-                      <Sparkles className="w-4 h-4 text-[#E79923]" />
-                      <span>{t('analyzeWithAI', language)}</span>
-                    </button>
-                  )}
                 </div>
 
                 {/* 3 Country Cards Grid */}
@@ -550,17 +506,6 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({ onOpenAIChatWithMe
                 <ArrowLeft className="w-4 h-4" />
                 {t('btnPrev', langCode)}
               </button>
-
-              {onOpenAIChatWithMessage && (
-                <button
-                  onClick={() => onOpenAIChatWithMessage(`Tengo dudas sobre el Capítulo ${displayChapter.id}: "${displayChapter.title}". ¿Podrías asesorarme?`)}
-                  className="bg-[#E79923] hover:brightness-105 text-[#0B2447] text-xs font-extrabold px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all font-poppins shadow-xs cursor-pointer"
-                  id={`consult-chapter-${displayChapter.id}`}
-                >
-                  <Sparkles className="w-4 h-4 fill-[#0B2447]" />
-                  {t('askAiAboutChapter', langCode)}
-                </button>
-              )}
 
               <button
                 onClick={handleNext}

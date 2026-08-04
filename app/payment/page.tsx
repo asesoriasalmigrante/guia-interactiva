@@ -43,7 +43,7 @@ export default function PaymentPage() {
           </div>
 
           <a
-            href="mailto:asesoriamigrante@gmail.com"
+            href="mailto:asesoriasalmigrante@gmail.com"
             className="w-full py-3 bg-[#E79923] hover:bg-[#f0a835] text-[#0B2447] font-black text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 font-poppins cursor-pointer"
           >
             <Mail className="w-4 h-4" />
