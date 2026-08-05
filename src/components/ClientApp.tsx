@@ -135,7 +135,7 @@ export default function ClientApp() {
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-center text-[#8FAFB3]/80 text-[11px]">
             <p>&copy; {new Date().getFullYear()} {t('footerCredit', language)}</p>
-            <p>Información educativa y de guía basada en la obra oficial de Daniela Harrington.</p>
+            <p>{t('footerDisclaimer', language)}</p>
           </div>
         </div>
       </footer>

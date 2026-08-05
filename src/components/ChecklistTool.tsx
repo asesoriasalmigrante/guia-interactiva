@@ -120,14 +120,14 @@ export const ChecklistTool: React.FC = () => {
       <div className="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 text-white rounded-2xl p-6 border border-indigo-800/80 shadow-lg space-y-3">
         <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
           <Cloud className="w-5 h-5 text-amber-400" />
-          <span>¡CONSEJO DE VIDA DE DANIELA! Respaldo Digital Obligatorio</span>
+          <span>{t('danielaDigitalTip', language)}</span>
         </div>
         <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-          Uno de los errores más comunes es viajar únicamente con documentos físicos. Si te roban la maleta o se extravía en el aeropuerto, estarás indocumentado en un país extranjero. <strong>Guarda copias escaneadas en PDF en tu correo electrónico, nube (Google Drive/Dropbox) y en un pendrive USB en tu bolso de mano.</strong>
+          {t('checklistDigitalTipDesc', language)}
         </p>
         <div className="flex items-center gap-2 text-xs font-bold text-amber-300 bg-indigo-900/60 p-2.5 rounded-xl border border-indigo-700/60 w-fit">
           <HardDrive className="w-4 h-4" />
-          Respaldo Digital Verificado: {digitalCompletedCount} / {digitalBackupItems.length}
+          {t('digitalBackupLabel', language)} {digitalCompletedCount} / {digitalBackupItems.length}
         </div>
       </div>
 

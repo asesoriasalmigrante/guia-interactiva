@@ -19,12 +19,19 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    setLanguageState(getAppLanguage());
+    const lang = getAppLanguage();
+    setLanguageState(lang);
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+    }
   }, []);
 
   const setLanguage = useCallback((code: string) => {
     setLanguageState(code);
     persistLanguage(code);
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = code;
+    }
   }, []);
 
   if (!mounted) {

@@ -117,7 +117,7 @@ export const Header: React.FC<HeaderProps> = ({
                       ></div>
                       <div className="absolute left-0 sm:right-0 sm:left-auto mt-2 w-64 bg-[#081a33] border border-[#8FAFB3]/30 rounded-2xl shadow-2xl z-50 p-2 space-y-1 backdrop-blur-xl animate-fadeIn max-h-80 overflow-y-auto">
                         <div className="px-3 py-1.5 border-b border-[#8FAFB3]/20 text-[10px] uppercase font-bold text-[#8FAFB3] tracking-wider flex items-center justify-between">
-                          <span>15 Idiomas Mundiales</span>
+                          <span>{t('languagesGlobal', language)}</span>
                           <span className="text-[9px] text-[#E79923] lowercase">multilingüe</span>
                         </div>
                         {WORLD_LANGUAGES.map((lang) => {
@@ -192,8 +192,8 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             <div className="flex items-center gap-1 text-[11px] text-[#8FAFB3] group-hover:text-white transition-colors flex-shrink-0">
-              <span className="hidden md:inline text-[10px]">Pasa el cursor o toca para cambiar</span>
-              <span className="md:hidden text-[10px] font-semibold text-[#E79923]">Cambiar</span>
+              <span className="hidden md:inline text-[10px]">{t('hoverToChange', language)}</span>
+              <span className="md:hidden text-[10px] font-semibold text-[#E79923]">{t('change', language)}</span>
               {isNavOpen ? (
                 <ChevronUp className="w-4 h-4 text-[#E79923] animate-bounce" />
               ) : (
@@ -238,7 +238,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="text-2xl">{selectedLang.flag}</div>
           <div>
             <div className="text-xs font-extrabold font-poppins text-[#E79923]">
-              Idioma: {selectedLang.name}
+              {t('languageLabel', language)} {selectedLang.name}
             </div>
             <div className="text-[11px] text-[#8FAFB3]">
               {selectedLang.nativeName} ({selectedLang.code.toUpperCase()})

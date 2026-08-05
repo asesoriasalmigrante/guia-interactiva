@@ -475,13 +475,13 @@ export const ReadinessQuiz: React.FC = () => {
 
             <div className="space-y-4 max-w-3xl relative z-10">
               <span className="text-[#E79923] text-xs font-extrabold uppercase tracking-widest bg-[#E79923]/10 px-3.5 py-1 rounded-full border border-[#E79923]/20">
-                Respaldo Profesional
+                {t('professionalBackup', language)}
               </span>
               <h3 className="text-2xl md:text-3xl font-extrabold font-poppins text-white leading-snug">
-                ¿QUIERES tener una migración 100% segura?
+                {t('quizCTATitle', language)}
               </h3>
               <p className="text-[#8FAFB3] text-sm md:text-base leading-relaxed">
-                Este test te ayuda a identificar tu nivel de preparación, pero cada proyecto migratorio es único. La seguridad no se basa en suerte, sino en información correcta. Precisamente por eso escribí <strong>'Mudarse a otro país: La verdadera guía de supervivencia'</strong>. Es todo lo que yo desearía haber sabido antes de mudarme. Te ahorra meses de investigación y evita errores comunes en tu expediente. Pide la tuya.
+                {t('quizDisclaimer', language)}
               </p>
             </div>
 
@@ -494,7 +494,7 @@ export const ReadinessQuiz: React.FC = () => {
                 className="bg-emerald-600 hover:bg-emerald-500 text-white p-3.5 rounded-xl font-bold flex items-center gap-2.5 transition-all shadow-md"
               >
                 <Phone className="w-4 h-4 flex-shrink-0" />
-                <span>WhatsApp: +54 9 (223) 5173127</span>
+                <span>{t('whatsappContact', language)}</span>
               </a>
 
               <a
@@ -522,7 +522,7 @@ export const ReadinessQuiz: React.FC = () => {
                 className="bg-white/10 hover:bg-white/20 text-white p-3.5 rounded-xl font-medium flex items-center gap-2.5 transition-all border border-white/10"
               >
                 <ExternalLink className="w-4 h-4 text-[#E79923] flex-shrink-0" />
-                <span>Sitio Web Oficial</span>
+                <span>{t('officialWebsite', language)}</span>
               </a>
             </div>
 
