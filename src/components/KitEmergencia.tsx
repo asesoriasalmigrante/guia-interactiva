@@ -1,33 +1,17 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShieldCheck, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
-import { t, translateChapterWithAI } from '../utils/i18n';
-import { KIT_EMERGENCIA_DATA, KitSection } from '../data/kitEmergenciaData';
+import { t } from '../utils/i18n';
+import { KIT_EMERGENCIA_DATA } from '../data/kitEmergenciaData';
+import { useTranslatedData } from '../hooks/useTranslatedData';
 
 export const KitEmergencia: React.FC = () => {
   const { language } = useLanguage();
-  const [translatedData, setTranslatedData] = useState(KIT_EMERGENCIA_DATA);
-  const [loading, setLoading] = useState(false);
+  const { data: translatedData, loading } = useTranslatedData('kit-emergencia', KIT_EMERGENCIA_DATA, language);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const [expandedSubsections, setExpandedSubsections] = useState<Record<string, boolean>>({});
-
-  useEffect(() => {
-    if (language === 'es') {
-      setTranslatedData(KIT_EMERGENCIA_DATA);
-      return;
-    }
-    setLoading(true);
-    translateChapterWithAI({ id: 'kit-emergencia', content: KIT_EMERGENCIA_DATA }, language)
-      .then((translated) => {
-        if (translated?.content) {
-          setTranslatedData(translated.content);
-        }
-      })
-      .catch(() => setTranslatedData(KIT_EMERGENCIA_DATA))
-      .finally(() => setLoading(false));
-  }, [language]);
 
   const toggleSection = (id: string) => {
     setExpandedSections(prev => ({ ...prev, [id]: !prev[id] }));
@@ -37,7 +21,6 @@ export const KitEmergencia: React.FC = () => {
     setExpandedSubsections(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  // Expand all on first load
   useEffect(() => {
     const allSections: Record<string, boolean> = {};
     const allSubs: Record<string, boolean> = {};
@@ -65,7 +48,6 @@ export const KitEmergencia: React.FC = () => {
         </p>
       </div>
 
-      {/* Loading indicator */}
       {loading && (
         <div className="flex items-center justify-center gap-3 py-8 text-[#0B2447]">
           <Loader2 className="w-5 h-5 animate-spin" />
@@ -73,10 +55,8 @@ export const KitEmergencia: React.FC = () => {
         </div>
       )}
 
-      {/* Content Sections */}
-      {!loading && translatedData.map((section) => (
-        <div key={section.id} className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          {/* Section Header */}
+      {!loading && translatedData.map((section, sIdx) => (
+        <div key={sIdx} className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <button
             onClick={() => toggleSection(section.id)}
             className="w-full flex items-center justify-between p-5 bg-[#0B2447] text-white hover:bg-[#0f2d5a] transition-colors"
@@ -85,11 +65,10 @@ export const KitEmergencia: React.FC = () => {
             {expandedSections[section.id] ? <ChevronUp className="w-5 h-5 flex-shrink-0" /> : <ChevronDown className="w-5 h-5 flex-shrink-0" />}
           </button>
 
-          {/* Section Content */}
           {expandedSections[section.id] && (
             <div className="p-5 space-y-4">
-              {section.subsections.map((sub) => (
-                <div key={sub.id} className="border-l-4 border-[#E79923] pl-4 space-y-2">
+              {section.subsections.map((sub, subIdx) => (
+                <div key={subIdx} className="border-l-4 border-[#E79923] pl-4 space-y-2">
                   <button
                     onClick={() => toggleSubsection(sub.id)}
                     className="flex items-center justify-between w-full"
@@ -111,7 +90,6 @@ export const KitEmergencia: React.FC = () => {
         </div>
       ))}
 
-      {/* Advice Box */}
       <div className="bg-gradient-to-r from-[#0B2447] via-[#0f2d5a] to-[#0B2447] text-white rounded-2xl p-6 md:p-8 border border-[#8FAFB3]/20 shadow-xl">
         <p className="text-slate-200 text-sm md:text-base leading-relaxed max-w-3xl">
           {t('kitAdvice', language)}

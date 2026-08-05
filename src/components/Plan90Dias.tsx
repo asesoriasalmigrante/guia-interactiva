@@ -1,32 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Calendar, Loader2, AlertTriangle, CheckSquare } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
-import { t, translateChapterWithAI } from '../utils/i18n';
+import { t } from '../utils/i18n';
 import { PLAN_90_DIAS_DATA } from '../data/plan90DiasData';
+import { useTranslatedData } from '../hooks/useTranslatedData';
 
 export const Plan90Dias: React.FC = () => {
   const { language } = useLanguage();
-  const [translatedData, setTranslatedData] = useState(PLAN_90_DIAS_DATA);
-  const [loading, setLoading] = useState(false);
+  const { data: translatedData, loading } = useTranslatedData('plan-90-dias', PLAN_90_DIAS_DATA, language);
   const [checkedDays, setCheckedDays] = useState<Record<number, boolean>>({});
-
-  useEffect(() => {
-    if (language === 'es') {
-      setTranslatedData(PLAN_90_DIAS_DATA);
-      return;
-    }
-    setLoading(true);
-    translateChapterWithAI({ id: 'plan-90-dias', content: PLAN_90_DIAS_DATA }, language)
-      .then((translated) => {
-        if (translated?.content) {
-          setTranslatedData(translated.content);
-        }
-      })
-      .catch(() => setTranslatedData(PLAN_90_DIAS_DATA))
-      .finally(() => setLoading(false));
-  }, [language]);
 
   const toggleDay = (dayNum: number) => {
     setCheckedDays(prev => ({ ...prev, [dayNum]: !prev[dayNum] }));
@@ -74,7 +58,7 @@ export const Plan90Dias: React.FC = () => {
                 </thead>
                 <tbody>
                   {translatedData.map((phase, idx) => (
-                    <tr key={phase.id} className="border-b border-slate-100 last:border-0">
+                    <tr key={idx} className="border-b border-slate-100 last:border-0">
                       <td className="p-3 font-semibold text-[#0B2447] text-xs">{phase.title}</td>
                       <td className="p-3 text-slate-600 text-xs">{phase.subtitle}</td>
                       <td className="p-3 text-slate-600 text-xs">{idx === 0 ? t('plan90Core1', language) : idx === 1 ? t('plan90Core2', language) : t('plan90Core3', language)}</td>
@@ -88,7 +72,7 @@ export const Plan90Dias: React.FC = () => {
 
           {/* Phases */}
           {translatedData.map((phase, phaseIdx) => (
-            <div key={phase.id} className="space-y-4">
+            <div key={phaseIdx} className="space-y-4">
               {/* Phase Header */}
               <div className="border-l-4 border-[#E79923] pl-4 py-2">
                 <h3 className="text-lg md:text-xl font-extrabold text-[#0B2447] tracking-tight">
@@ -102,18 +86,18 @@ export const Plan90Dias: React.FC = () => {
               </div>
 
               {/* Weeks and Days */}
-              {phase.weeks.map((week) => (
-                <div key={week.id} className="space-y-3">
+              {phase.weeks.map((week, weekIdx) => (
+                <div key={weekIdx} className="space-y-3 ml-1">
                   {/* Week Header */}
-                  <h4 className="text-[#E79923] font-bold text-sm uppercase tracking-wide ml-1">
+                  <h4 className="text-[#E79923] font-bold text-sm uppercase tracking-wide">
                     {week.title}
                   </h4>
 
                   {/* Days */}
-                  <div className="space-y-2 ml-1">
+                  <div className="space-y-2">
                     {week.days.map((day) => (
                       <div
-                        key={`${week.id}-day${day.day}`}
+                        key={day.day}
                         className={`bg-white border rounded-xl p-4 transition-all ${
                           checkedDays[day.day]
                             ? 'border-green-300 bg-green-50/50'
