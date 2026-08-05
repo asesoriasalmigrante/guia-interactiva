@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CHECKLIST_CATEGORIES } from '../data/ebookData';
 import { CheckSquare, AlertTriangle, Cloud, HardDrive, RefreshCw, CheckCircle2, ChevronDown, ChevronUp, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
-import { t } from '../utils/i18n';
+import { t, getChecklistCategoryName, getChecklistCategoryDesc, getChecklistItemText, getChecklistItemTooltip } from '../utils/i18n';
 
 export const ChecklistTool: React.FC = () => {
   const { language } = useLanguage();
@@ -160,14 +160,14 @@ export const ChecklistTool: React.FC = () => {
 
                   <div>
                     <h3 className="font-bold text-slate-900 text-sm md:text-base flex items-center gap-2">
-                      {category.name}
+                      {getChecklistCategoryName(category.id, language)}
                       {isCatAllDone && (
                         <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
                           ✓ {t('percentComplete', language)}
                         </span>
                       )}
                     </h3>
-                    <p className="text-xs text-slate-500">{category.description}</p>
+                    <p className="text-xs text-slate-500">{getChecklistCategoryDesc(category.id, language)}</p>
                   </div>
                 </div>
 
@@ -204,7 +204,7 @@ export const ChecklistTool: React.FC = () => {
 
                         <div className="flex-1 min-w-0">
                           <div className={`text-xs md:text-sm font-semibold leading-snug ${isChecked ? 'line-through text-slate-500' : ''}`}>
-                            {item.text}
+                            {getChecklistItemText(item.id, language)}
                           </div>
 
                           <div className="flex flex-wrap items-center gap-2 mt-1">
@@ -222,7 +222,7 @@ export const ChecklistTool: React.FC = () => {
 
                             {item.tooltip && (
                               <span className="text-[11px] text-slate-500 italic">
-                                ℹ️ {item.tooltip}
+                                ℹ️ {getChecklistItemTooltip(item.id, language) || item.tooltip}
                               </span>
                             )}
                           </div>

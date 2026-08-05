@@ -14,6 +14,8 @@ import { quizDataTranslations } from '../translations/quizData';
 import { adminTranslations } from '../translations/admin';
 import { authTranslations } from '../translations/auth';
 import { paymentTranslations } from '../translations/payment';
+import { dataTranslations } from '../translations/data';
+import { countryTranslations } from '../translations/countriesData';
 
 export interface LanguageOption {
   code: string;
@@ -57,6 +59,8 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
   ...adminTranslations,
   ...authTranslations,
   ...paymentTranslations,
+  ...dataTranslations,
+  ...countryTranslations,
 };
 
 export function t(key: string, langCode?: string): string {
@@ -64,6 +68,87 @@ export function t(key: string, langCode?: string): string {
   const keyMap = TRANSLATIONS[key];
   if (!keyMap) return key;
   return keyMap[code] || keyMap['es'] || key;
+}
+
+const CHECKLIST_CAT_MAP: Record<string, { nameKey: string; descKey: string }> = {
+  identidad: { nameKey: 'catIdentidadName', descKey: 'catIdentidadDesc' },
+  estado_civil: { nameKey: 'catEstadoCivilName', descKey: 'catEstadoCivilDesc' },
+  academicos: { nameKey: 'catAcademicosName', descKey: 'catAcademicosDesc' },
+  salud_penales: { nameKey: 'catSaludName', descKey: 'catSaludDesc' },
+  respaldo_digital: { nameKey: 'catRespaldoName', descKey: 'catRespaldoDesc' },
+  viaje_finanzas: { nameKey: 'catViajeName', descKey: 'catViajeDesc' },
+};
+
+export function getChecklistCategoryName(catId: string, langCode?: string): string {
+  const mapping = CHECKLIST_CAT_MAP[catId];
+  if (!mapping) return catId;
+  return t(mapping.nameKey, langCode);
+}
+
+export function getChecklistCategoryDesc(catId: string, langCode?: string): string {
+  const mapping = CHECKLIST_CAT_MAP[catId];
+  if (!mapping) return '';
+  return t(mapping.descKey, langCode);
+}
+
+const CHECKLIST_ITEM_MAP: Record<string, string> = {
+  chk_1: 'chk1', chk_2: 'chk2', chk_3: 'chk3', chk_4: 'chk4',
+  chk_5: 'chk5', chk_6: 'chk6', chk_7: 'chk7', chk_8: 'chk8',
+  chk_9: 'chk9', chk_10: 'chk10', chk_11: 'chk11', chk_12: 'chk12',
+  chk_13: 'chk13', chk_14: 'chk14', chk_15: 'chk15', chk_16: 'chk16',
+  chk_17: 'chk17', chk_18: 'chk18', chk_19: 'chk19', chk_20: 'chk20',
+  chk_21: 'chk21', chk_22: 'chk22', chk_23: 'chk23', chk_24: 'chk24',
+};
+
+const CHECKLIST_TIP_MAP: Record<string, string> = {
+  chk_1: 'chk1Tip', chk_5: 'chk5Tip', chk_11: 'chk11Tip', chk_14: 'chk14Tip',
+};
+
+export function getChecklistItemText(itemId: string, langCode?: string): string {
+  const key = CHECKLIST_ITEM_MAP[itemId];
+  if (!key) return itemId;
+  return t(key, langCode);
+}
+
+export function getChecklistItemTooltip(itemId: string, langCode?: string): string {
+  const key = CHECKLIST_TIP_MAP[itemId];
+  if (!key) return '';
+  return t(key, langCode);
+}
+
+const COUNTRY_NAME_MAP: Record<string, string> = {
+  espana: 'countryEspana', canada: 'countryCanada', alemania: 'countryAlemania',
+  australia: 'countryAustralia', francia: 'countryFrancia', portugal: 'countryPortugal',
+  italia: 'countryItalia', chile: 'countryChile', argentina: 'countryArgentina',
+  brasil: 'countryBrasil', mexico: 'countryMexico', colombia: 'countryColombia',
+  peru: 'countryPeru', ecuador: 'countryEcuador', costa_rica: 'countryCostaRica',
+  panama: 'countryPanama', uruguay: 'countryUruguay', paraguay: 'countryParaguay',
+  bolivia: 'countryBolivia', republica_dominicana: 'countryRepublicaDominicana',
+  cuba: 'countryCuba', guatemala: 'countryGuatemala', honduras: 'countryHonduras',
+  el_salvador: 'countryElSalvador', nicaragua: 'countryNicaragua', panamá: 'countryPanama',
+  nueva_zelanda: 'countryNuevaZelanda', paises_bajos: 'countryPaisesBajos',
+  belgica: 'countryBelgica', suecia: 'countrySuecia', noruega: 'countryNoruega',
+  dinamarca: 'countryDinamarca', finlandia: 'countryFinlandia', irlanda: 'countryIrlanda',
+  suiza: 'countrySuiza', austria: 'countryAustria', polonia: 'countryPolonia',
+  chequia: 'countryChequia', hungría: 'countryHungria', grecia: 'countryGrecia',
+  croacia: 'countryCroacia', eslovenia: 'countryEslovenia', eslovaquia: 'countryEslovaquia',
+  rumania: 'countryRumania', bulgaria: 'countryBulgaria', chipre: 'countryChipre',
+  malta: 'countryMalta', estonia: 'countryEstonia', letonia: 'countryLetonia',
+  lituania: 'countryLituania', islandia: 'countryIslandia', luxemburgo: 'countryLuxemburgo',
+  turquia: 'countryTurquia', rusia: 'countryRusia', china: 'countryChina',
+  japon: 'countryJapon', corea_del_sur: 'countryCoreaDelSur', india: 'countryIndia',
+  tailandia: 'countryTailandia', vietnam: 'countryVietnam', filipinas: 'countryFilipinas',
+  indonesia: 'countryIndonesia', malasia: 'countryMalasia', singapur: 'countrySingapur',
+  emiratos: 'countryEmiratos', qatar: 'countryQatar', arabia_saudita: 'countryArabiaSaudita',
+  israel: 'countryIsrael', egipto: 'countryEgipto', sudafrica: 'countrySudafrica',
+  marruecos: 'countryMarruecos', nigeria: 'countryNigeria', kenia: 'countryKenia',
+  ghana: 'countryGhana', senegal: 'countrySenegal',
+};
+
+export function getCountryName(countryId: string, langCode?: string): string {
+  const key = COUNTRY_NAME_MAP[countryId];
+  if (!key) return countryId;
+  return t(key, langCode);
 }
 
 export function setAppLanguage(langCode: string): void {
@@ -79,6 +164,10 @@ export function getAppLanguage(): string {
 }
 
 const chapterTranslationCache = new Map<string, any>();
+
+export function clearChapterCache(): void {
+  chapterTranslationCache.clear();
+}
 
 function isTranslatableString(val: any): boolean {
   if (typeof val !== 'string') return false;

@@ -139,7 +139,7 @@ export default function AdminUserDetailPage() {
             </div>
             <div className="flex-1">
               <h2 className="text-base font-black font-poppins text-[#0B2447]">{profile.email}</h2>
-              <p className="text-xs text-gray-400">ID: {profile.id.slice(0, 8)}...</p>
+              <p className="text-xs text-gray-400">{t('idLabel', language)} {profile.id.slice(0, 8)}...</p>
             </div>
             <span className={`px-3 py-1 rounded-full text-xs font-bold ${
               isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'

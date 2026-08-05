@@ -270,7 +270,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
                   <div className="w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-hidden border-2 border-[#E79923] shadow-lg bg-slate-800">
                     <img 
                       src={displayChapter.authorImage || EBOOK_METADATA.authorImage} 
-                      alt="Daniela Harrington - Abogada Migratoria" 
+                      alt={t('altDaniela', language)}
                       className="w-full h-full object-cover object-top"
                       referrerPolicy="no-referrer"
                       id="author-portrait-img"
@@ -289,7 +289,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
                     Daniela Harrington
                   </h3>
                   <p className="text-xs md:text-sm text-slate-300 font-medium">
-                    {t('authorTitle', language)} <span className="text-[#E79923] font-semibold">Asesorías al Migrante</span>
+                    {t('authorTitle', language)} <span className="text-[#E79923] font-semibold">{t('companyName', language)}</span>
                   </p>
                   <p className="text-xs text-slate-300 italic pt-1 border-t border-slate-700/60 max-w-xl">
                     "{t('authorQuote', language)}"
@@ -317,7 +317,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
                       {EBOOK_METADATA.contact.tiktokHandle}
                     </a>
                     <a 
-                      href={`https://wa.me/5492235173127?text=${encodeURIComponent('Hola Daniela, leí tu guía interactiva y me gustaría consultar por una asesoría migratoria.')}`}
+                      href={`https://wa.me/5492235173127?text=${encodeURIComponent(t('whatsappMessage', language))}`}
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="inline-flex items-center gap-1.5 bg-[#E79923] hover:brightness-105 text-[#0B2447] text-xs font-bold px-3 py-1.5 rounded-lg transition-all font-poppins"

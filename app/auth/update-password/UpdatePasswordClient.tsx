@@ -89,7 +89,7 @@ export default function UpdatePasswordPage() {
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-[#0B2447] p-1 border-2 border-[#E79923] shadow-2xl ring-4 ring-[#E79923]/30 overflow-hidden">
             <img
               src={customMigranteLogo}
-              alt="Logo Asesorías al Migrante"
+              alt={t('altLogo', language)}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover rounded-2xl"
             />

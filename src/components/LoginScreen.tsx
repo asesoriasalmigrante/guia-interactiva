@@ -134,7 +134,7 @@ export default function LoginScreen() {
       <div className="absolute inset-0 z-0">
         <img
           src={migrationBgImg}
-          alt="Tres fases de la migración: preparación, aeropuerto y nuevo país"
+          alt={t('migrationPhasesAlt', language)}
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover object-center filter brightness-[0.42] contrast-[1.1] scale-105"
         />
@@ -148,7 +148,7 @@ export default function LoginScreen() {
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-[#0B2447] p-1 border-2 border-[#E79923] shadow-2xl ring-4 ring-[#E79923]/30 mb-1 overflow-hidden">
             <img
               src={customMigranteLogo}
-              alt="Logo Asesorías al Migrante"
+              alt={t('altLogo', language)}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover rounded-2xl"
             />

@@ -109,15 +109,15 @@ export default function ClientApp() {
               <div className="w-10 h-10 rounded-xl bg-[#0B2447] p-0.5 border border-[#E79923] flex items-center justify-center overflow-hidden shadow-md">
                 <img
                   src={customMigranteLogo}
-                  alt="Logo Asesorías al Migrante"
+                  alt={t('altLogo', language)}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover rounded-lg"
                 />
               </div>
               <div>
-                <h3 className="text-white font-extrabold text-base font-poppins">Asesorías al Migrante</h3>
+                <h3 className="text-white font-extrabold text-base font-poppins">{t('companyName', language)}</h3>
                 <p className="text-[#8FAFB3] text-xs">
-                  {EBOOK_METADATA.title} — {t('footerCredit', language).replace('Asesorías al Migrante — ', '').replace('Migration Advisory — ', '')}
+                  {EBOOK_METADATA.title} — {t('footerCredit', language).replace(`${t('companyName', language)} — `, '')}
                 </p>
               </div>
             </div>

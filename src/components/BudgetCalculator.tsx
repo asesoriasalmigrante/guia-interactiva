@@ -99,7 +99,7 @@ export const BudgetCalculator: React.FC = () => {
           {t('budgetTitle', language)}
         </h2>
         <p className="text-slate-300 text-sm md:text-base max-w-3xl leading-relaxed">
-          Daniela Harrington enfatiza: <em className="text-amber-300">{t('budgetQuote', language)}</em>
+          {t('danielaEmphasizesPrefix', language)} <em className="text-amber-300">{t('budgetQuote', language)}</em>
         </p>
       </div>
 

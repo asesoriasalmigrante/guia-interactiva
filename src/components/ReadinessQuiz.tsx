@@ -152,7 +152,7 @@ export const ReadinessQuiz: React.FC = () => {
             <div className="p-4 rounded-xl bg-[#F5F1E8]/70 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1">
               <div className="w-7 h-7 rounded-lg bg-[#0B2447] text-white font-bold flex items-center justify-center text-xs">2</div>
               <h4 className="font-bold text-slate-900 dark:text-white text-sm pt-1">{t('markEachAnswer', language)}</h4>
-              <p className="text-xs text-slate-600 dark:text-slate-400">Elige entre <strong>{t('quizAnswerSi', language)}</strong>, <strong>{t('quizAnswerUnsure', language)}</strong> o <strong>{t('quizAnswerNo', language)}</strong>.</p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">{t('quizChooseBetween', language)} <strong>{t('quizAnswerSi', language)}</strong>, <strong>{t('quizAnswerUnsure', language)}</strong> {t('quizOr', language)} <strong>{t('quizAnswerNo', language)}</strong>.</p>
             </div>
 
             <div className="p-4 rounded-xl bg-[#F5F1E8]/70 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1">
@@ -392,7 +392,7 @@ export const ReadinessQuiz: React.FC = () => {
                           {t('quizBlock' + block.id + 'Title', language)}
                         </span>
                         <span className="text-[#0B2447] dark:text-[#E79923] font-bold">
-                          {earnedBlockPts} / {maxBlockPts} pts ({blockPercentage}%)
+                          {earnedBlockPts} / {maxBlockPts} {t('quizPts', language)} ({blockPercentage}%)
                         </span>
                       </div>
                       <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
@@ -538,7 +538,7 @@ export const ReadinessQuiz: React.FC = () => {
               </div>
 
               <a
-                href={`https://wa.me/${EBOOK_METADATA.contact.phone}?text=${encodeURIComponent(t('whatsappMsgQuiz', language) + ' ' + currentScore + '/50 puntos')}`}
+                href={`https://wa.me/${EBOOK_METADATA.contact.phone}?text=${encodeURIComponent(t('whatsappMsgQuiz', language) + ' ' + currentScore + '/50 ' + t('quizPoints', language))}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto bg-[#E79923] hover:bg-amber-400 text-[#0B2447] font-black px-8 py-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-xl cursor-pointer transition-all font-poppins"

@@ -3,7 +3,7 @@ import { COUNTRIES_DATA } from '../data/ebookData';
 import { CountryInfo } from '../types';
 import { Globe2, ShieldCheck, DollarSign, FileCheck2, AlertCircle, CheckCircle, Filter, Search, X, Check } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
-import { t } from '../utils/i18n';
+import { t, getCountryName } from '../utils/i18n';
 
 export const CountryComparer: React.FC = () => {
   const { language } = useLanguage();
@@ -68,7 +68,7 @@ export const CountryComparer: React.FC = () => {
           {t('countriesTitle', language)}
         </h2>
         <p className="text-[#F5F1E8]/90 text-sm md:text-base max-w-3xl leading-relaxed">
-          Daniela Harrington destaca: <em className="text-[#E79923] font-semibold">{t('countryQuote', language)}</em>
+          {t('danielaHighlightPrefix', language)} <em className="text-[#E79923] font-semibold">{t('countryQuote', language)}</em>
         </p>
       </div>
 
@@ -87,7 +87,7 @@ export const CountryComparer: React.FC = () => {
             {selectedCountries.map(c => (
               <span key={c.id} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#0B2447] text-white shadow-xs">
                 <span>{c.flag}</span>
-                <span>{c.name}</span>
+                <span>{getCountryName(c.id, language)}</span>
                 <button
                   onClick={() => toggleCountrySelection(c.id)}
                   className="ml-1 hover:text-[#E79923] text-slate-300 transition-colors cursor-pointer"
@@ -182,7 +182,7 @@ export const CountryComparer: React.FC = () => {
         {/* Country Badges Grid Picker (Max 110 items) */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs text-slate-500">
-            <span>{t('showingCountries', language)} <strong>{filteredCountriesList.length}</strong> de {COUNTRIES_DATA.length} {t('countriesOf', language)}:</span>
+            <span>{t('showingCountries', language)} <strong>{filteredCountriesList.length}</strong> {t('ofCount', language)} {COUNTRIES_DATA.length} {t('countriesOf', language)}:</span>
             <span>{t('clickToToggle', language)}</span>
           </div>
 
@@ -206,7 +206,7 @@ export const CountryComparer: React.FC = () => {
                     }`}
                   >
                     <span className="text-base">{country.flag}</span>
-                    <span>{country.name}</span>
+                    <span>{getCountryName(country.id, language)}</span>
                     {isSelected && <Check className="w-3.5 h-3.5 text-[#E79923]" />}
                   </button>
                 );
@@ -228,7 +228,7 @@ export const CountryComparer: React.FC = () => {
               <div className="flex items-center gap-3">
                 <span className="text-3xl">{country.flag}</span>
                 <div>
-                  <h3 className="text-xl font-extrabold font-poppins text-white">{country.name}</h3>
+                  <h3 className="text-xl font-extrabold font-poppins text-white">{getCountryName(country.id, language)}</h3>
                   <div className="flex items-center gap-1 text-xs text-[#8FAFB3] font-medium">
                     <span>{t('languagesLabel', language)}</span> {country.languages.join(', ')}
                   </div>

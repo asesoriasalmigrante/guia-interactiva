@@ -60,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="w-10 h-10 rounded-2xl bg-[#0B2447] p-0.5 border-2 border-[#E79923]/80 shadow-lg flex-shrink-0 overflow-hidden group hover:scale-105 transition-transform">
               <img
                 src={customMigranteLogo}
-                alt="Logo - Asesorías al Migrante"
+                alt={t('altLogo', language)}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover rounded-xl"
               />
