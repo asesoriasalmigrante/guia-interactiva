@@ -492,4 +492,59 @@ export const extraTranslations: Record<string, Record<string, string>> = {
     tr: "GÖÇMENLİK HUKUKU UZMANLARINDAN UYARI: Düzensiz bir klasör veya geçerlilik tarihlerindeki tutarsızlıklar, başvuruların %87'sini reddetme nedenini oluşturur. Resmi başvuru sırasında hiçbir geçici belgenin yasal geçerlilik sınırını aşmamasına dikkat edin.",
     vi: "CẢNH BÁO TỪ CHUYÊN GIA LUẬT NHẬP CƯ: Một thư mục không gọn gàng hoặc có sự không nhất quán về ngày hết hạn chiếm 87% lý do từ chối đơn đăng ký. Đảm bảo rằng không có giấy tờ hết hạn tạm thời nào vượt quá giới hạn hợp pháp tại thời điểm nộp chính thức.",
   },
+  plan90TablePhase: {
+    es: "FASE DE GESTIÓN", en: "MANAGEMENT PHASE", zh: "管理阶段", fr: "PHASE DE GESTION", de: "MANAGEMENTPHASE",
+    pt: "FASE DE GESTÃO", it: "FASE DI GESTIONE", ru: "ФАЗА УПРАВЛЕНИЯ", ar: "مرحلة الإدارة", hi: "प्रबंधन चरण",
+    ja: "管理フェーズ", ko: "관리 단계", id: "FASE PENGELOLAAN", tr: "YÖNETİM AŞAMASI", vi: "GIAI ĐOẠN QUẢN LÝ",
+  },
+  plan90TableDays: {
+    es: "TEMPORALIDAD", en: "TIMELINE", zh: "时间线", fr: "PÉRIODE", de: "ZEITRAUM",
+    pt: "PERÍODO", it: "PERIODO", ru: "СРОКИ", ar: "الجدول الزمني", hi: "समय सीमा",
+    ja: "期間", ko: "기간", id: "WAKTU", tr: "ZAMAN ÇİZELGESİ", vi: "THỜI GIAN",
+  },
+  plan90TableCore: {
+    es: "NÚCLEO OPERATIVO", en: "OPERATIONAL CORE", zh: "核心运营", fr: "NOYAU OPÉRATIONNEL", de: "OPERATIVER KERN",
+    pt: "NÚCLEO OPERACIONAL", it: "NUCLEO OPERATIVO", ru: "ОПЕРАЦИОННОЕ ЯДРО", ar: "النواة التشغيلية", hi: "संचालन कोर",
+    ja: "オペレーショナルコア", ko: "운영 핵심", id: "INTI OPERASIONAL", tr: "OPERASYONEL ÇEKİRDEK", vi: "LÕI VẬN HÀNH",
+  },
+  plan90TableGuarantee: {
+    es: "GARANTÍA JURÍDICA", en: "LEGAL GUARANTEE", zh: "法律保障", fr: "GARANTIE JURIDIQUE", de: "RECHTSGARANTIE",
+    pt: "GARANTIA JURÍDICA", it: "GARANZIA LEGALE", ru: "ПРАВОВАЯ ГАРАНТИЯ", ar: "الضمان القانوني", hi: "कानूनी गारंटी",
+    ja: "法的保証", ko: "법적 보장", id: "JAMINAN HUKUM", tr: "HUKKİ GARANTİ", vi: "BẢO ĐẢM PHÁP LÝ",
+  },
+  plan90Core1: {
+    es: "Diagnóstico y Viabilidad", en: "Diagnosis and Viability", zh: "诊断和可行性", fr: "Diagnostic et Viabilité", de: "Diagnose und Tragfähigkeit",
+    pt: "Diagnóstico e Viabilidade", it: "Diagnosi e Fattibilità", ru: "Диагностика и целесообразность", ar: "التشخيص والجدوى", hi: "निदान और व्यवहार्यता",
+    ja: "診断と実現可能性", ko: "진단 및 타당성", id: "Diagnosis dan Kelayakan", tr: "Tanı ve Fizibilite", vi: "Chẩn đoán và Khả thi",
+  },
+  plan90Core2: {
+    es: "Compilación y Auditoría", en: "Compilation and Audit", zh: "汇编和审计", fr: "Compilation et Audit", de: "Zusammenstellung und Prüfung",
+    pt: "Compilação e Auditoria", it: "Compilazione e Auditoria", ru: "Составление и аудит", ar: "الجمع والتدقيق", hi: "संकलन और ऑडिट",
+    ja: "編纂と監査", ko: "편집 및 감사", id: "Pengumpulan dan Audit", tr: "Derleme ve Denetim", vi: "Tổng hợp và Kiểm toán",
+  },
+  plan90Core3: {
+    es: "Radicación y Logística", en: "Filing and Logistics", zh: "提交和物流", fr: "Dépôt et Logistique", de: "Einreichung und Logistik",
+    pt: "Protocolo e Logística", it: "Deposito e Logistica", ru: "Подача и логистика", ar: "التقديم واللوجستيات", hi: "दाखिला और रसद",
+    ja: "提出とロジスティクス", ko: "제출 및 물류", id: "Pengajuan dan Logistik", tr: "Başvuru ve Lojistik", vi: "Nộp hồ sơ và Hậu cần",
+  },
+  plan90Guarantee1: {
+    es: "Mitigación de rechazo por incompatibilidad de perfil.", en: "Mitigation of rejection due to profile incompatibility.", zh: "降低因个人资料不兼容而被拒的风险。", fr: "Atténuation du rejet pour incompatibilité de profil.", de: "Minderung der Ablehnung wegen Profilinkompatibilität.",
+    pt: "Mitigação de rejeição por incompatibilidade de perfil.", it: "Mitigazione del rifiuto per incompatibilità del profilo.", ru: "Снижение риска отказа из-за несовместимости профиля.", ar: "تخفيف رفض عدم توافق الملف الشخصي.", hi: "प्रोफ़ाइल असंगतता के कारण अस्वीकृति को कम करना.",
+    ja: "プロファイル非互換性による拒否の軽減.", ko: "프로파일 비호환성으로 인한 거부 완화.", id: "Mitigasi penolakan karena ketidakcocokan profil.", tr: "Profil uyumsuzluğu nedeniyle reddetmeyi azaltma.", vi: "Giảm thiểu từ chối do không tương thích hồ sơ.",
+  },
+  plan90Guarantee2: {
+    es: "Control de calidad formal y legalizaciones internacionales.", en: "Formal quality control and international legalizations.", zh: "正式质量控制和国际合法化。", fr: "Contrôle qualité formel et légalisations internationales.", de: "Formale Qualitätskontrolle und internationale Legalisierungen.",
+    pt: "Controle de qualidade formal e legalizações internacionais.", it: "Controllo qualità formale e legalizzazioni internazionali.", ru: "Формальный контроль качества и международная легализация.", ar: "مراقبة الجودة الرسمية والتصديقات الدولية.", hi: "औपचारिक गुणवत्ता नियंत्रण और अंतर्राष्ट्रीय वैधीकरण.",
+    ja: "形式的品質管理と国際法的手続き.", ko: "공식 품질 관리 및 국제 합법화.", id: "Kontrol kualitas formal dan legalisasi internasional.", tr: "Resmi kalite kontrolü ve uluslararası yasallaştırmalar.", vi: "Kiểm soát chất lượng chính thức và hợp pháp hóa quốc tế.",
+  },
+  plan90Guarantee3: {
+    es: "Sometimiento a trámite y consolidación del reasentamiento.", en: "Submission to processing and consolidation of resettlement.", zh: "提交处理和巩固重新安置。", fr: "Soumission à la procédure et consolidation du réinstallation.", de: "Einleitung des Verfahrens und Konsolidierung der Wiederveransiedlung.",
+    pt: "Submissão a trâmite e consolidação do realojamento.", it: "Sottomissione a procedimento e consolidamento del reinsediamento.", ru: "Подача на рассмотрение и консолидация переселения.", ar: "تقديم للمعالجة وتثبيت إعادة التوطين.", hi: "प्रसंस्करण के लिए प्रस्तुतीकरण और पुनर्वास का समेकन.",
+    ja: "手続きへの提出と再定住の統合.", ko: "처리 제출 및 정착 확정.", id: "Pengajuan pemrosesan dan konsolidasi pemukiman kembali.", tr: "İşleme başvurusu ve yeniden yerleşimleştirme.", vi: "Nộp xử lý và củng cố tái định cư.",
+  },
+  dayLabel: {
+    es: "Día", en: "Day", zh: "第", fr: "Jour", de: "Tag",
+    pt: "Dia", it: "Giorno", ru: "День", ar: "يوم", hi: "दिन",
+    ja: "日", ko: "일", id: "Hari", tr: "Gün", vi: "Ngày",
+  },
 };
