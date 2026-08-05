@@ -1036,4 +1036,54 @@ export const countriesTranslations: Record<string, Record<string, string>> = {
     tr: "Dikkate Alınacak Zorluklar:",
     vi: "Thách Thức Cần Xem Xét:",
   },
+  regionAmerica: {
+    es: "América", en: "Americas", zh: "美洲", fr: "Amériques", de: "Amerika",
+    pt: "Américas", it: "Americhe", ru: "Америка", ar: "الأمريكتان", hi: "अमेरिका",
+    ja: "アメリカ", ko: "아메리카", id: "Amerika", tr: "Amerika", vi: "Châu Mỹ",
+  },
+  regionEurope: {
+    es: "Europa", en: "Europe", zh: "欧洲", fr: "Europe", de: "Europa",
+    pt: "Europa", it: "Europa", ru: "Европа", ar: "أوروبا", hi: "यूरोप",
+    ja: "ヨーロッパ", ko: "유럽", id: "Eropa", tr: "Avrupa", vi: "Châu Âu",
+  },
+  regionAsia: {
+    es: "Asia", en: "Asia", zh: "亚洲", fr: "Asie", de: "Asien",
+    pt: "Ásia", it: "Asia", ru: "Азия", ar: "آسيا", hi: "एशिया",
+    ja: "アジア", ko: "아시아", id: "Asia", tr: "Asya", vi: "Châu Á",
+  },
+  regionOceania: {
+    es: "Oceanía", en: "Oceania", zh: "大洋洲", fr: "Océanie", de: "Ozeanien",
+    pt: "Oceania", it: "Oceania", ru: "Океания", ar: "أوقيانوسيا", hi: "ओशिनिया",
+    ja: "オセアニア", ko: "오세아니아", id: "Oseania", tr: "Okyanusya", vi: "Châu Đại Dương",
+  },
+  regionAfrica: {
+    es: "África", en: "Africa", zh: "非洲", fr: "Afrique", de: "Afrika",
+    pt: "África", it: "Africa", ru: "Африка", ar: "أفريقيا", hi: "अफ्रीका",
+    ja: "アフリカ", ko: "아프리카", id: "Afrika", tr: "Afrika", vi: "Châu Phi",
+  },
+  langSpanish: {
+    es: "Español", en: "Spanish", zh: "西班牙语", fr: "Espagnol", de: "Spanisch",
+    pt: "Espanhol", it: "Spagnolo", ru: "Испанский", ar: "الإسبانية", hi: "स्पेनिश",
+    ja: "スペイン語", ko: "스페인어", id: "Spanyol", tr: "İspanyolca", vi: "Tây Ban Nha",
+  },
+  langEnglish: {
+    es: "Inglés", en: "English", zh: "英语", fr: "Anglais", de: "Englisch",
+    pt: "Inglês", it: "Inglese", ru: "Английский", ar: "الإنجليزية", hi: "अंग्रेज़ी",
+    ja: "英語", ko: "영어", id: "Inggris", tr: "İngilizce", vi: "Tiếng Anh",
+  },
+  langFrench: {
+    es: "Francés", en: "French", zh: "法语", fr: "Français", de: "Französisch",
+    pt: "Francês", it: "Francese", ru: "Французский", ar: "الفرنسية", hi: "फ्रेंच",
+    ja: "フランス語", ko: "프랑스어", id: "Prancis", tr: "Fransızca", vi: "Tiếng Pháp",
+  },
+  langGerman: {
+    es: "Alemán", en: "German", zh: "德语", fr: "Allemand", de: "Deutsch",
+    pt: "Alemão", it: "Tedesco", ru: "Немецкий", ar: "الألمانية", hi: "जर्मन",
+    ja: "ドイツ語", ko: "독일어", id: "Jerman", tr: "Almanca", vi: "Tiếng Đức",
+  },
+  countriesOf: {
+    es: "países", en: "countries", zh: "个国家", fr: "pays", de: "Länder",
+    pt: "países", it: "paesi", ru: "стран", ar: "بلدان", hi: "देश",
+    ja: "カントリー", ko: "국가", id: "negara", tr: "ülke", vi: "quốc gia",
+  },
 };

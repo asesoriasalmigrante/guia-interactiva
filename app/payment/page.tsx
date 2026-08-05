@@ -3,10 +3,14 @@
 import React from 'react';
 import { CreditCard, ArrowLeft, Mail } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '@/src/utils/i18n';
 
 const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
 
 export default function PaymentPage() {
+  const { language } = useLanguage();
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-[#0B2447] font-lato">
       <div className="w-full max-w-md space-y-6">
@@ -20,10 +24,10 @@ export default function PaymentPage() {
             />
           </div>
           <h1 className="text-2xl font-black font-poppins text-white">
-            Acceso Pendiente
+            {t('pendingAccess', language)}
           </h1>
           <p className="text-xs text-[#8FAFB3]">
-            Tu suscripción no está activa. Completa el pago para acceder a la guía.
+            {t('pendingAccessDesc', language)}
           </p>
         </div>
 
@@ -31,15 +35,15 @@ export default function PaymentPage() {
           <div className="bg-[#06152b]/80 border border-[#8FAFB3]/25 rounded-xl p-4 text-center space-y-3">
             <CreditCard className="w-10 h-10 text-[#E79923] mx-auto" />
             <div>
-              <p className="text-sm font-bold text-white">Integración con MercadoPago</p>
+              <p className="text-sm font-bold text-white">{t('mercadopagoIntegration', language)}</p>
               <p className="text-xs text-[#8FAFB3] mt-1">
-                Próximamente podrás completar tu pago de forma segura.
+                {t('comingSoonPayment', language)}
               </p>
             </div>
           </div>
 
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-200 text-center">
-            Si ya realizaste el pago, contacta al administrador para activar tu cuenta.
+            {t('alreadyPaid', language)}
           </div>
 
           <a
@@ -47,7 +51,7 @@ export default function PaymentPage() {
             className="w-full py-3 bg-[#E79923] hover:bg-[#f0a835] text-[#0B2447] font-black text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 font-poppins cursor-pointer"
           >
             <Mail className="w-4 h-4" />
-            <span>Contactar Soporte</span>
+            <span>{t('contactSupport', language)}</span>
           </a>
 
           <Link
@@ -55,7 +59,7 @@ export default function PaymentPage() {
             className="w-full py-3 bg-transparent border border-[#8FAFB3]/30 hover:border-[#E79923] text-[#8FAFB3] hover:text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Volver al inicio de sesión</span>
+            <span>{t('backToLogin', language)}</span>
           </Link>
         </div>
       </div>

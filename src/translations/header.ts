@@ -407,4 +407,34 @@ export const headerTranslations: Record<string, Record<string, string>> = {
     tr: "Çıkış",
     vi: "Đăng xuất",
   },
+  lightMode: {
+    es: "Claro", en: "Light", zh: "浅色", fr: "Clair", de: "Hell",
+    pt: "Claro", it: "Chiaro", ru: "Светлая", ar: "فاتح", hi: "लाइट",
+    ja: "ライト", ko: "라이트", id: "Terang", tr: "Açık", vi: "Sáng",
+  },
+  darkMode: {
+    es: "Oscuro", en: "Dark", zh: "深色", fr: "Sombre", de: "Dunkel",
+    pt: "Escuro", it: "Scuro", ru: "Тёмная", ar: "داكن", hi: "डार्क",
+    ja: "ダーク", ko: "다크", id: "Gelap", tr: "Koyu", vi: "Tối",
+  },
+  lightModeTitle: {
+    es: "Modo Claro", en: "Light Mode", zh: "浅色模式", fr: "Mode Clair", de: "Heller Modus",
+    pt: "Modo Claro", it: "Modalità Chiara", ru: "Светлый режим", ar: "الوضع الفاتح", hi: "लाइट मोड",
+    ja: "ライトモード", ko: "라이트 모드", id: "Mode Terang", tr: "Açık Mod", vi: "Chế Độ Sáng",
+  },
+  darkModeTitle: {
+    es: "Modo Oscuro", en: "Dark Mode", zh: "深色模式", fr: "Mode Sombre", de: "Dunkler Modus",
+    pt: "Modo Escuro", it: "Modalità Scura", ru: "Тёмный режим", ar: "الوضع الداكن", hi: "डार्क मोड",
+    ja: "ダークモード", ko: "다크 모드", id: "Mode Gelap", tr: "Koyu Mod", vi: "Chế Độ Tối",
+  },
+  selectLanguageTitle: {
+    es: "Seleccionar idioma", en: "Select language", zh: "选择语言", fr: "Sélectionner la langue", de: "Sprache auswählen",
+    pt: "Selecionar idioma", it: "Seleziona lingua", ru: "Выбрать язык", ar: "اختر اللغة", hi: "भाषा चुनें",
+    ja: "言語を選択", ko: "언어 선택", id: "Pilih bahasa", tr: "Dil seçin", vi: "Chọn ngôn ngữ",
+  },
+  multilingualLabel: {
+    es: "multilingüe", en: "multilingual", zh: "多语言", fr: "multilingue", de: "mehrsprachig",
+    pt: "multilíngue", it: "multilingue", ru: "многоязычный", ar: "متعدد اللغات", hi: "बहुभाषी",
+    ja: "多言語", ko: "다국어", id: "multibahasa", tr: "çok dilli", vi: "đa ngôn ngữ",
+  },
 };

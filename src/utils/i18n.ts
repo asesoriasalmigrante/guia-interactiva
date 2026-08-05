@@ -10,6 +10,10 @@ import { jobplanTranslations } from '../translations/jobplan';
 import { resourcesTranslations } from '../translations/resources';
 import { footerTranslations } from '../translations/footer';
 import { extraTranslations } from '../translations/extra';
+import { quizDataTranslations } from '../translations/quizData';
+import { adminTranslations } from '../translations/admin';
+import { authTranslations } from '../translations/auth';
+import { paymentTranslations } from '../translations/payment';
 
 export interface LanguageOption {
   code: string;
@@ -49,6 +53,10 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
   ...resourcesTranslations,
   ...footerTranslations,
   ...extraTranslations,
+  ...quizDataTranslations,
+  ...adminTranslations,
+  ...authTranslations,
+  ...paymentTranslations,
 };
 
 export function t(key: string, langCode?: string): string {

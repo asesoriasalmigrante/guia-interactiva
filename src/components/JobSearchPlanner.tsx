@@ -24,7 +24,7 @@ export const JobSearchPlanner: React.FC = () => {
           {t('jobplanTitle', language)}
         </h2>
         <p className="text-slate-300 text-sm md:text-base max-w-3xl leading-relaxed">
-          Daniela Harrington destaca: <em className="text-amber-300">"Conseguir empleo antes de emigrar reduce dramáticamente la incertidumbre económica y te permite acceder a visados de trabajo. Adapta tu síntesis curricular al país de destino y cuídate de las estafas."</em>
+          {t('danielaJobQuote', language)}
         </p>
       </div>
 
@@ -35,20 +35,20 @@ export const JobSearchPlanner: React.FC = () => {
           <span>{t('jobplanSelectCountry', language)}</span>
         </div>
         <p className="text-xs md:text-sm text-red-800 leading-relaxed">
-          Los estafadores se aprovechan de la urgencia del migrante. <strong>Desconfía inmediatamente si:</strong>
+          {t('scamWarning', language)}
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-medium text-red-900">
           <div className="bg-white/80 p-2.5 rounded-xl border border-red-200">
-            ❌ Te solicitan dinero o pago previo para "contratarte" o tramitar la oferta.
+            {t('scamWarning1', language)}
           </div>
           <div className="bg-white/80 p-2.5 rounded-xl border border-red-200">
-            ❌ Te prometen "visas 100% garantizadas" sin requisitos oficiales.
+            {t('scamWarning2', language)}
           </div>
           <div className="bg-white/80 p-2.5 rounded-xl border border-red-200">
-            ❌ Salarios excesivamente altos sin exigir experiencia ni entrevistas reales.
+            {t('scamWarning3', language)}
           </div>
           <div className="bg-white/80 p-2.5 rounded-xl border border-red-200">
-            ❌ No existe sitio web o presencia oficial verificable de la empresa.
+            {t('scamWarning4', language)}
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@ export const JobSearchPlanner: React.FC = () => {
           >
             <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
               <span className="bg-amber-500 text-slate-950 font-extrabold px-3 py-1 rounded-xl text-xs uppercase tracking-wider">
-                Mes {month.monthNumber}
+                {t('monthLabel', language).replace('{n}', String(month.monthNumber))}
               </span>
               <h3 className="font-extrabold text-slate-900 text-base md:text-lg">
                 {month.title}
@@ -98,7 +98,7 @@ export const JobSearchPlanner: React.FC = () => {
                       </p>
                       {task.tip && (
                         <p className="text-[11px] text-amber-800 bg-amber-50/80 border border-amber-200/60 p-2 rounded-lg italic">
-                          💡 <strong>Tip de Daniela:</strong> {task.tip}
+                          💡 <strong>{t('danielaTipLabel', language)}</strong> {task.tip}
                         </p>
                       )}
                     </div>

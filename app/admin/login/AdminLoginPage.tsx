@@ -4,11 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { ShieldCheck, Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '@/src/utils/i18n';
 
 const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const { language } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -38,7 +41,7 @@ export default function AdminLoginPage() {
     setError('');
 
     if (!email.trim() || !password.trim()) {
-      setError('Completa todos los campos.');
+      setError(t('fillAllFields', language));
       return;
     }
 
@@ -52,14 +55,14 @@ export default function AdminLoginPage() {
       });
 
       if (authError) {
-        setError('Correo o contraseña incorrectos.');
+        setError(t('invalidCredentials', language));
         setLoading(false);
         return;
       }
 
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        setError('Error al obtener datos del usuario.');
+        setError(t('userDataError', language));
         setLoading(false);
         return;
       }
@@ -72,14 +75,14 @@ export default function AdminLoginPage() {
 
       if (!profile || profile.role !== 'admin') {
         await supabase.auth.signOut();
-        setError('No tienes permisos de administrador.');
+        setError(t('noAdminPermission', language));
         setLoading(false);
         return;
       }
 
       router.push('/admin');
     } catch {
-      setError('Error al conectar con el servidor.');
+      setError(t('connectionError', language));
       setLoading(false);
     }
   };
@@ -97,10 +100,10 @@ export default function AdminLoginPage() {
             />
           </div>
           <h1 className="text-2xl font-black font-poppins text-white">
-            Panel de Administración
+            {t('adminPanel', language)}
           </h1>
           <p className="text-xs text-[#8FAFB3]">
-            Acceso exclusivo para administradores.
+            {t('adminAccessOnly', language)}
           </p>
         </div>
 
@@ -115,7 +118,7 @@ export default function AdminLoginPage() {
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-200 uppercase tracking-wider block">
-                Correo Electrónico
+                {t('emailLabel', language)}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8FAFB3]">
@@ -125,7 +128,7 @@ export default function AdminLoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@correo.com"
+                  placeholder={t('emailPlaceholder', language)}
                   className="w-full pl-10 pr-4 py-3 bg-[#06152b]/90 border border-[#8FAFB3]/30 rounded-xl text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-[#E79923] focus:ring-2 focus:ring-[#E79923]/20 transition-all"
                   autoComplete="email"
                 />
@@ -134,7 +137,7 @@ export default function AdminLoginPage() {
 
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-200 uppercase tracking-wider block">
-                Contraseña
+                {t('passwordLabel', language)}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8FAFB3]">
@@ -144,7 +147,7 @@ export default function AdminLoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Tu contraseña"
+                  placeholder={t('passwordPlaceholder', language)}
                   className="w-full pl-10 pr-10 py-3 bg-[#06152b]/90 border border-[#8FAFB3]/30 rounded-xl text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-[#E79923] focus:ring-2 focus:ring-[#E79923]/20 transition-all"
                   autoComplete="current-password"
                 />
@@ -168,7 +171,7 @@ export default function AdminLoginPage() {
               ) : (
                 <>
                   <ShieldCheck className="w-4 h-4" />
-                  <span>Iniciar Sesión</span>
+                  <span>{t('signIn', language)}</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
@@ -177,7 +180,7 @@ export default function AdminLoginPage() {
         </div>
 
         <p className="text-center text-xs text-[#8FAFB3]/60">
-          &copy; {new Date().getFullYear()} Asesorías al Migrante — Admin Panel
+          &copy; {new Date().getFullYear()} {t('adminFooter', language)}
         </p>
       </div>
     </div>

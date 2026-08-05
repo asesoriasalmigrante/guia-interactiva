@@ -4,11 +4,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Lock, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '@/src/utils/i18n';
 
 const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
 
 export default function UpdatePasswordPage() {
   const router = useRouter();
+  const { language } = useLanguage();
   const [supabase] = useState(() => createClient());
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -35,17 +38,17 @@ export default function UpdatePasswordPage() {
     setError('');
 
     if (!password.trim()) {
-      setError('Por favor ingresa una nueva contraseña.');
+      setError(t('enterNewPassword', language));
       return;
     }
 
     if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
+      setError(t('passwordMinLength', language));
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden.');
+      setError(t('passwordsNoMatch', language));
       return;
     }
 
@@ -65,7 +68,7 @@ export default function UpdatePasswordPage() {
         }, 3000);
       }
     } catch (err) {
-      setError('Error al actualizar la contraseña. Intenta nuevamente.');
+      setError(t('passwordUpdateError', language));
     } finally {
       setLoading(false);
     }
@@ -92,10 +95,10 @@ export default function UpdatePasswordPage() {
             />
           </div>
           <h1 className="text-2xl font-black font-poppins text-white">
-            Actualizar Contraseña
+            {t('updatePassword', language)}
           </h1>
           <p className="text-xs text-[#A2C7CC]">
-            Ingresa tu nueva contraseña para acceder a la guía.
+            {t('newPasswordDesc', language)}
           </p>
         </div>
 
@@ -105,9 +108,9 @@ export default function UpdatePasswordPage() {
               <div className="bg-emerald-500/20 border border-emerald-500/40 rounded-xl p-4 flex flex-col items-center gap-3">
                 <CheckCircle2 className="w-10 h-10 text-emerald-400" />
                 <div>
-                  <p className="text-sm font-bold text-emerald-200">Contraseña actualizada</p>
+                  <p className="text-sm font-bold text-emerald-200">{t('passwordUpdated', language)}</p>
                   <p className="text-xs text-emerald-300/80 mt-1">
-                    Redirigiendo al inicio de sesión...
+                    {t('redirecting', language)}
                   </p>
                 </div>
               </div>
@@ -124,7 +127,7 @@ export default function UpdatePasswordPage() {
               <form onSubmit={handleUpdatePassword} className="space-y-4">
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-200 uppercase tracking-wider block">
-                    Nueva Contraseña
+                    {t('newPasswordLabel', language)}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A2C7CC]">
@@ -134,7 +137,7 @@ export default function UpdatePasswordPage() {
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Mínimo 6 caracteres"
+                      placeholder={t('minLength6', language)}
                       className="w-full pl-10 pr-10 py-3 bg-[#06152b]/90 border border-[#8FAFB3]/30 rounded-xl text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-[#E79923] focus:ring-2 focus:ring-[#E79923]/20 transition-all"
                       autoComplete="new-password"
                     />
@@ -150,7 +153,7 @@ export default function UpdatePasswordPage() {
 
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-200 uppercase tracking-wider block">
-                    Confirmar Contraseña
+                    {t('confirmPassword', language)}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A2C7CC]">
@@ -160,7 +163,7 @@ export default function UpdatePasswordPage() {
                       type={showPassword ? 'text' : 'password'}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      placeholder="Repite tu contraseña"
+                      placeholder={t('repeatPassword', language)}
                       className="w-full pl-10 pr-4 py-3 bg-[#06152b]/90 border border-[#8FAFB3]/30 rounded-xl text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-[#E79923] focus:ring-2 focus:ring-[#E79923]/20 transition-all"
                       autoComplete="new-password"
                     />
@@ -176,7 +179,7 @@ export default function UpdatePasswordPage() {
                     <span className="inline-block w-5 h-5 border-2 border-[#0B2447] border-t-transparent rounded-full animate-spin" />
                   ) : (
                     <>
-                      <span>Actualizar Contraseña</span>
+                      <span>{t('updatePassword', language)}</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}

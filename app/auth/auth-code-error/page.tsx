@@ -2,10 +2,14 @@
 
 import { AlertTriangle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/src/contexts/LanguageContext';
+import { t } from '@/src/utils/i18n';
 
 const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
 
 export default function AuthCodeErrorPage() {
+  const { language } = useLanguage();
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 font-lato bg-slate-950 text-white">
       <div className="w-full max-w-md space-y-6">
@@ -19,10 +23,10 @@ export default function AuthCodeErrorPage() {
             />
           </div>
           <h1 className="text-2xl font-black font-poppins text-white">
-            Enlace no válido
+            {t('invalidLink', language)}
           </h1>
           <p className="text-xs text-[#A2C7CC]">
-            El enlace de recuperación ha expirado o no es válido.
+            {t('linkExpired', language)}
           </p>
         </div>
 
@@ -30,9 +34,9 @@ export default function AuthCodeErrorPage() {
           <div className="bg-rose-500/20 border border-rose-500/40 rounded-xl p-4 flex items-center gap-3">
             <AlertTriangle className="w-6 h-6 text-rose-400 flex-shrink-0" />
             <div>
-              <p className="text-sm font-bold text-rose-200">Error de autenticación</p>
+              <p className="text-sm font-bold text-rose-200">{t('authError', language)}</p>
               <p className="text-xs text-rose-300/80 mt-1">
-                Solicita un nuevo enlace de recuperación desde la pantalla de inicio de sesión.
+                {t('requestNewLink', language)}
               </p>
             </div>
           </div>
@@ -42,7 +46,7 @@ export default function AuthCodeErrorPage() {
             className="w-full py-3 bg-[#E79923] hover:bg-[#f0a835] text-[#0B2447] font-black text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 font-poppins"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Volver al inicio de sesión</span>
+            <span>{t('backToLogin', language)}</span>
           </Link>
         </div>
       </div>

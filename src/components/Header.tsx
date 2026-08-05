@@ -77,18 +77,18 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   onClick={onToggleDarkMode}
                   className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold transition-all cursor-pointer border bg-[#081b36] border-[#8FAFB3]/30 hover:border-[#E79923] text-[#F5F1E8] shadow-xs hover:scale-105 active:scale-95"
-                  title={isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}
+                  title={isDarkMode ? t('lightModeTitle', language) : t('darkModeTitle', language)}
                   id="toggle-reading-mode-btn"
                 >
                   {isDarkMode ? (
                     <>
                       <Sun className="w-3.5 h-3.5 text-[#E79923]" />
-                      <span className="text-[11px]">Claro</span>
+                      <span className="text-[11px]">{t('lightMode', language)}</span>
                     </>
                   ) : (
                     <>
                       <Moon className="w-3.5 h-3.5 text-[#8FAFB3]" />
-                      <span className="text-[11px]">Oscuro</span>
+                      <span className="text-[11px]">{t('darkMode', language)}</span>
                     </>
                   )}
                 </button>
@@ -97,7 +97,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <button
                     onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
                     className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold transition-all cursor-pointer border bg-[#081b36] border-[#8FAFB3]/30 hover:border-[#E79923] text-[#F5F1E8] shadow-xs hover:scale-105 active:scale-95"
-                    title="Seleccionar idioma"
+                    title={t('selectLanguageTitle', language)}
                     id="btn-language-selector"
                     aria-expanded={isLangDropdownOpen}
                   >
@@ -118,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <div className="absolute left-0 sm:right-0 sm:left-auto mt-2 w-64 bg-[#081a33] border border-[#8FAFB3]/30 rounded-2xl shadow-2xl z-50 p-2 space-y-1 backdrop-blur-xl animate-fadeIn max-h-80 overflow-y-auto">
                         <div className="px-3 py-1.5 border-b border-[#8FAFB3]/20 text-[10px] uppercase font-bold text-[#8FAFB3] tracking-wider flex items-center justify-between">
                           <span>{t('languagesGlobal', language)}</span>
-                          <span className="text-[9px] text-[#E79923] lowercase">multilingüe</span>
+                          <span className="text-[9px] text-[#E79923] lowercase">{t('multilingualLabel', language)}</span>
                         </div>
                         {WORLD_LANGUAGES.map((lang) => {
                           const isSelected = lang.code === language;

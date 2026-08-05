@@ -60,13 +60,13 @@ export const ChecklistTool: React.FC = () => {
       <div className="bg-slate-900 text-white p-6 md:p-8 rounded-2xl border border-slate-800 shadow-xl space-y-3">
         <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
           <CheckSquare className="w-4 h-4" />
-          Lista de Comprobación Final (Capítulos 5 y 10 del eBook)
+          {t('checklistBadge', language)}
         </div>
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
           {t('checklistTitle', language)}
         </h2>
         <p className="text-slate-300 text-sm md:text-base max-w-3xl leading-relaxed">
-          Daniela Harrington advierte: <em className="text-amber-300">"Tener los documentos correctos, vigentes y debidamente apostillados te ahorrará meses de retraso y miles de dólares. ¡No olvides realizar tu respaldo digital obligatorio!"</em>
+          {t('checklistQuote', language)}
         </p>
       </div>
 
@@ -75,13 +75,13 @@ export const ChecklistTool: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <h3 className="font-extrabold text-slate-900 text-lg flex items-center gap-2">
-              Progreso General de Preparación
+              {t('progressTitle', language)}
               <span className="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">
                 {completedCount} {t('completedCount', language)} / {totalCount} {t('totalSteps', language)}
               </span>
             </h3>
             <p className="text-xs text-slate-500">
-              Marca los documentos y gestiones que ya tienes listos y verificados para viajar.
+              {t('progressDesc', language)}
             </p>
           </div>
 
@@ -110,7 +110,7 @@ export const ChecklistTool: React.FC = () => {
                 <CheckCircle2 className="w-4 h-4" /> {t('allCompleted', language)}
               </span>
             ) : (
-              <span className="text-slate-500">Faltan {totalCount - completedCount} tareas</span>
+              <span className="text-slate-500">{totalCount - completedCount} {t('tasksRemainingShort', language)}</span>
             )}
           </div>
         </div>
@@ -210,13 +210,13 @@ export const ChecklistTool: React.FC = () => {
                           <div className="flex flex-wrap items-center gap-2 mt-1">
                             {item.required && (
                               <span className="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.2 rounded">
-                                Obligatorio
+                                {t('requiredBadge', language)}
                               </span>
                             )}
 
                             {item.isDigitalBackupRecommend && (
                               <span className="text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.2 rounded flex items-center gap-1">
-                                <Cloud className="w-3 h-3" /> Respaldo Digital
+                                <Cloud className="w-3 h-3" /> {t('digitalBackupLabel', language)}
                               </span>
                             )}
 
@@ -243,10 +243,10 @@ export const ChecklistTool: React.FC = () => {
           <div>
             <h3 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
               <CheckCircle2 className="w-6 h-6 text-emerald-600" />
-              Estado Final de tu Preparación
+              {t('finalStateTitle', language)}
             </h3>
             <p className="text-xs md:text-sm text-slate-500 mt-0.5">
-              Resumen detallado de los avances en tu lista de comprobación migratoria.
+              {t('finalStateDesc', language)}
             </p>
           </div>
           <span className="text-xs font-bold px-3 py-1 bg-slate-100 text-slate-700 rounded-full w-fit">
@@ -260,7 +260,7 @@ export const ChecklistTool: React.FC = () => {
           <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-2xl p-5 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
-                Porcentaje Logrado
+                {t('percentAchieved', language)}
               </span>
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
             </div>
@@ -283,7 +283,7 @@ export const ChecklistTool: React.FC = () => {
           <div className="bg-amber-50/80 border border-amber-200/90 rounded-2xl p-5 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-amber-800">
-                Porcentaje Faltante
+                {t('percentRemaining', language)}
               </span>
               <AlertTriangle className="w-4 h-4 text-amber-600" />
             </div>
@@ -292,13 +292,13 @@ export const ChecklistTool: React.FC = () => {
                 {100 - progressPercent}%
               </span>
               <span className="text-xs font-semibold text-amber-800">
-                Pendiente
+                {t('pendingLabel', language)}
               </span>
             </div>
             <p className="text-xs text-amber-700/90 leading-relaxed pt-1">
               {totalCount - completedCount === 0
                 ? t('allCompleted', language)
-                : `Faltan ${totalCount - completedCount} ${t('totalSteps', language)}`}
+                : `${t('tasksRemainingShort', language)} ${totalCount - completedCount} ${t('totalSteps', language)}`}
             </p>
           </div>
         </div>
@@ -306,8 +306,8 @@ export const ChecklistTool: React.FC = () => {
         {/* Visual Progress Bar Breakdown */}
         <div className="space-y-2">
           <div className="flex justify-between text-xs font-extrabold text-slate-700">
-            <span className="text-emerald-700">✓ Logrado: {progressPercent}%</span>
-            <span className="text-amber-700">⏳ Faltante: {100 - progressPercent}%</span>
+            <span className="text-emerald-700">✓ {t('achievedLabel', language)}: {progressPercent}%</span>
+            <span className="text-amber-700">⏳ {t('remainingLabel', language)}: {100 - progressPercent}%</span>
           </div>
           <div className="w-full bg-amber-100 h-5 rounded-full overflow-hidden flex p-1 border border-slate-200 shadow-inner">
             <div

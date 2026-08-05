@@ -26,7 +26,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
           {t('resourcesTitle', language)}
         </h2>
         <p className="text-slate-300 text-sm md:text-base max-w-3xl leading-relaxed">
-          Daniela Harrington enfatiza: <em className="text-amber-300">"Las leyes migratorias pueden cambiar en cualquier momento. Siempre debes verificar los requisitos en sitios oficiales y evitar basarte únicamente en rumores."</em>
+          {t('danielaLawsQuote', language)}
         </p>
       </div>
 
@@ -80,7 +80,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
         </div>
 
         <p className="text-slate-300 text-xs md:text-sm leading-relaxed max-w-3xl">
-          "Expertos en leyes, aliados en tu viaje. Traspasa fronteras con el respaldo correcto." Si deseas una consulta personalizada para analizar tu perfil migratorio, homologaciones o tramitación de visas, puedes contactarnos directamente:
+          {t('officialResourcesContact', language)}
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
