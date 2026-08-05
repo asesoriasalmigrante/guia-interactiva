@@ -22,7 +22,11 @@ function extractStrings(obj: any): string[] {
   const strings: string[] = [];
   if (Array.isArray(obj)) {
     for (const item of obj) {
-      strings.push(...extractStrings(item));
+      if (isTranslatableString(item)) {
+        strings.push(item);
+      } else {
+        strings.push(...extractStrings(item));
+      }
     }
   } else if (obj !== null && obj !== undefined && typeof obj === 'object') {
     for (const key of Object.keys(obj)) {
@@ -39,7 +43,17 @@ function extractStrings(obj: any): string[] {
 
 function replaceStrings(obj: any, translated: string[], cursor: { pos: number }): any {
   if (Array.isArray(obj)) {
-    return obj.map(item => replaceStrings(item, translated, cursor));
+    return obj.map(item => {
+      if (isTranslatableString(item)) {
+        if (cursor.pos < translated.length) {
+          const t = translated[cursor.pos];
+          cursor.pos++;
+          return (typeof t === 'string' && t.trim().length > 0) ? t : item;
+        }
+        return item;
+      }
+      return replaceStrings(item, translated, cursor);
+    });
   }
   if (obj !== null && obj !== undefined && typeof obj === 'object') {
     const result: any = {};
