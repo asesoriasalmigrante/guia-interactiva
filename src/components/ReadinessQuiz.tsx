@@ -327,7 +327,7 @@ export const ReadinessQuiz: React.FC = () => {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full border shadow-xs">
                 <span className={`px-3 py-1 rounded-full font-extrabold text-xs uppercase ${activeTier.badgeColor}`}>
-                  {activeTier.title}
+                  {currentScore >= 41 ? t('quizTierHighTitle', language) : currentScore >= 26 ? t('quizTierMidTitle', language) : t('quizTierLowTitle', language)}
                 </span>
               </div>
 
@@ -337,7 +337,7 @@ export const ReadinessQuiz: React.FC = () => {
 
               <div className="max-w-xl mx-auto pt-2">
                 <div className={`p-5 rounded-2xl border text-sm md:text-base leading-relaxed ${activeTier.badgeBorder}`}>
-                  {activeTier.description}
+                  {currentScore >= 41 ? t('quizTierHighDesc', language) : currentScore >= 26 ? t('quizTierMidDesc', language) : t('quizTierLowDesc', language)}
                 </div>
               </div>
             </div>

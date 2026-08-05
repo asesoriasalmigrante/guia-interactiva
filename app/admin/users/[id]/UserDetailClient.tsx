@@ -11,6 +11,12 @@ import {
 import { useLanguage } from '@/src/contexts/LanguageContext';
 import { t } from '@/src/utils/i18n';
 
+const LOCALE_MAP: Record<string, string> = {
+  es: 'es-ES', en: 'en-US', zh: 'zh-CN', fr: 'fr-FR', de: 'de-DE',
+  pt: 'pt-BR', it: 'it-IT', ru: 'ru-RU', ar: 'ar-SA', hi: 'hi-IN',
+  ja: 'ja-JP', ko: 'ko-KR', id: 'id-ID', tr: 'tr-TR', vi: 'vi-VN',
+};
+
 export default function AdminUserDetailPage() {
   const router = useRouter();
   const params = useParams();
@@ -238,7 +244,7 @@ export default function AdminUserDetailPage() {
                     <p className="text-sm font-bold text-[#0B2447] truncate">{device.device_name || t('unknownDevice', language)}</p>
                     <p className="text-[10px] text-gray-400 truncate">{device.user_agent}</p>
                     <p className="text-[10px] text-gray-400">
-                      {t('lastAccess', language)} {new Date(device.last_active_at).toLocaleString('es-ES')}
+                      {t('lastAccess', language)} {new Date(device.last_active_at).toLocaleString(LOCALE_MAP[language] || 'es-ES')}
                     </p>
                   </div>
                   <button
@@ -297,12 +303,12 @@ export default function AdminUserDetailPage() {
             </div>
             <div>
               <span className="text-gray-400 uppercase font-bold">{t('created', language)}</span>
-              <p className="font-bold text-[#0B2447]">{new Date(profile.created_at).toLocaleDateString('es-ES')}</p>
+              <p className="font-bold text-[#0B2447]">{new Date(profile.created_at).toLocaleDateString(LOCALE_MAP[language] || 'es-ES')}</p>
             </div>
             <div>
               <span className="text-gray-400 uppercase font-bold">{t('lastLogin', language)}</span>
               <p className="font-bold text-[#0B2447]">
-                {profile.last_login_at ? new Date(profile.last_login_at).toLocaleString('es-ES') : t('never', language)}
+                {profile.last_login_at ? new Date(profile.last_login_at).toLocaleString(LOCALE_MAP[language] || 'es-ES') : t('never', language)}
               </p>
             </div>
             <div>

@@ -577,4 +577,49 @@ export const quizTranslations: Record<string, Record<string, string>> = {
     pt: "Olá Daniela, acabei de fazer o Teste de Preparação Migratória e gostaria de solicitar uma consultoria personalizada.", it: "Ciao Daniela, ho appena completato il Test di Preparazione Migratoria e vorrei richiedere una consulenza personalizzata.", ru: "Привет, Даниэла, я только что прошёл тест готовности к миграции и хотел бы запросить персональную консультацию.", ar: "مرحباً دانييلا، أfinished لقد أكملت اختبار الاستعداد للهجرة وأريد طلب استشارة مخصصة.", hi: "हैलो डेनिएला, मैंने अभी प्रवासन तैयारी परीक्षा पूरी की है और व्यक्तिगत सलाह का अनुरोध करना चाहूंगा।",
     ja: "こんにちはダニエラ、移住準備テストを受験しました。パーソナライズされたアドバイスをお願いしたいです。", ko: "안녕하세요 다니엘라, 이민 준비 테스트를 완료했습니다. 맞춤 상담을 요청하고 싶습니다.", id: "Halo Daniela, saya baru saja menyelesaikan Uji Kesiapan Migrasi dan ingin meminta konsultasi pribadi.", tr: "Merhaba Daniela, Göç Hazırlık Testi'ni yeni tamamladım ve kişisel bir danışmanlık talep etmek istiyorum.", vi: "Xin chào Daniela, tôi vừa hoàn thành Bài Kiểm Tra Sẵn Sàng Di Trú và muốn yêu cầu tư vấn cá nhân.",
   },
+  quizPts: {
+    es: "pts", en: "pts", zh: "分", fr: "pts", de: "Pkt",
+    pt: "pts", it: "pt", ru: "очк", ar: "نقطة", hi: "अंक",
+    ja: "点", ko: "점", id: "poin", tr: "puan", vi: "điểm",
+  },
+  quizChooseBetween: {
+    es: "Elige entre", en: "Choose between", zh: "请选择", fr: "Choisissez entre", de: "Wählen Sie zwischen",
+    pt: "Escolha entre", it: "Scegli tra", ru: "Выберите", ar: "اختر بين", hi: "के बीच चुनें",
+    ja: "から選択", ko: "선택하세요", id: "Pilih antara", tr: "arasında seçim yapın", vi: "Chọn giữa",
+  },
+  quizOr: {
+    es: "o", en: "or", zh: "或", fr: "ou", de: "oder",
+    pt: "ou", it: "o", ru: "или", ar: "أو", hi: "या",
+    ja: "または", ko: "또는", id: "atau", tr: "veya", vi: "hoặc",
+  },
+  quizTierHighTitle: {
+    es: "¡Estás muy bien preparado!", en: "You're very well prepared!", zh: "你准备得非常好！", fr: "Vous êtes très bien préparé !", de: "Sie sind sehr gut vorbereitet!",
+    pt: "Você está muito bem preparado!", it: "Sei molto ben preparato!", ru: "Вы очень хорошо подготовлены!", ar: "أنت مستعد جيداً!", hi: "आप बहुत अच्छी तरह तैयार हैं!",
+    ja: "とてもよく準備されています！", ko: "매우 잘 준비되었습니다!", id: "Anda sudah sangat siap!", tr: "Çok iyi hazırlandınız!", vi: "Bạn đã chuẩn bị rất tốt!",
+  },
+  quizTierHighDesc: {
+    es: "Has realizado una planificación sólida. Aun así, revisa los detalles específicos del país al que deseas emigrar para minimizar riesgos.", en: "You've made a solid plan. Still, review the specific details of your target country to minimize risks.", zh: "你已经制定了扎实的计划。尽管如此，请审查目标国家的具体细节以最小化风险。", fr: "Vous avez fait un plan solide. Toutefois, revoyez les détails spécifiques du pays de destination pour minimiser les risques.", de: "Sie haben einen soliden Plan erstellt. Überprüfen Sie dennoch die spezifischen Details Ihres Ziellands, um Risiken zu minimieren.",
+    pt: "Você fez um plano sólido. Ainda assim, revise os detalhes específicos do país de destino para minimizar riscos.", it: "Hai elaborato un piano solido. Tuttavia, rivedi i dettagli specifici del paese di destinazione per minimizzare i rischi.", ru: "Вы составили прочный план. Тем не менее, проверьте конкретные细节 details страны назначения для минимизации рисков.", ar: "لقد أجريت خطة متينة. ومع ذلك، راجع التفاصيل المحددة للبلد المطلوب لتقليل المخاطر.", hi: "आपने एक ठोस योजना बनाई है। फिर भी, जोखिमों को कम करने के लिए अपने गंतव्य देश की विशिष्ट जानकारी की समीक्षा करें।",
+    ja: "堅実な計画を立てました。ただし、リスクを最小限に抑えるために、移住先国の詳細を確認してください。", ko: "탄탄한 계획을 세우셨습니다. 그러나 위험을 줄이기 위해 목적국의 구체적인细节을 검토하세요.", id: "Anda telah membuat rencana yang solid. Namun, tinjau detail spesifik negara tujuan Anda untuk meminimalkan risiko.", tr: "Sağlam bir plan yaptınız. Yine de riskleri en aza indirmek için hedef ülkenin belirli detaylarını gözden geçirin.", vi: "Bạn đã lập kế hoạch vững chắc. Tuy nhiên, hãy xem xét các chi tiết cụ thể của quốc gia mục tiêu để giảm thiểu rủi ro.",
+  },
+  quizTierMidTitle: {
+    es: "Vas por buen camino", en: "You're on the right track", zh: "你走在正确的道路上", fr: "Vous êtes sur la bonne voie", de: "Sie sind auf dem richtigen Weg",
+    pt: "Você está no caminho certo", it: "Sei sulla strada giusta", ru: "Вы на правильном пути", ar: "أنت على الطريق الصحيح", hi: "आप सही रास्ते पर हैं",
+    ja: "正しい道を進んでいます", ko: "올바른 길을 가고 있습니다", id: "Anda di jalur yang benar", tr: "Doğru yoldasınız", vi: "Bạn đang đi đúng hướng",
+  },
+  quizTierMidDesc: {
+    es: "Tu proyecto tiene una buena base, pero existen áreas que conviene fortalecer antes de dar el paso.", en: "Your project has a good foundation, but there are areas to strengthen before taking the step.", zh: "你的项目有良好的基础，但在迈出步伐之前还有一些方面需要加强。", fr: "Votre projet a de bonnes bases, mais il existe des domaines à renforcer avant de franchir le pas.", de: "Ihr Projekt hat eine gute Grundlage, aber es gibt Bereiche, die vor dem Schritt gestärkt werden sollten.",
+    pt: "Seu projeto tem uma boa base, mas existem áreas a fortalecer antes de dar o passo.", it: "Il tuo progetto ha una buona base, ma ci sono aree da rafforzare prima di fare il passo.", ru: "Ваш проект имеет хорошую основу, но есть области, которые cần усилить перед шагом.", ar: "مشروعك له أساس جيد، لكن هناك مجالات تحتاج إلى تعزيز قبل اتخاذ الخطوة.", hi: "आपकी परियोजना की अच्छी नींव है, लेकिन कदम उठाने से पहले कुछ क्षेत्रों को मजबूत करने की आवश्यकता है।",
+    ja: "良い基盤がありますが、一歩を踏み出す前に強化すべき分野があります。", ko: "좋은 기반이 있지만, 한 발을 내디기 전에 강화해야 할 영역이 있습니다.", id: "Proyek Anda memiliki fondasi yang baik, tetapi ada area yang perlu diperkuat sebelum mengambil langkah.", tr: "Projenizin iyi bir temeli var, ancak adım atmadan önce güçlendirmeniz gereken alanlar var.", vi: "Dự án của bạn có nền tảng tốt, nhưng có những lĩnh vực cần củng cố trước khi bước tiếp.",
+  },
+  quizTierLowTitle: {
+    es: "Aún no estás listo", en: "You're not ready yet", zh: "你还没准备好", fr: "Vous n'êtes pas encore prêt", de: "Sie sind noch nicht bereit",
+    pt: "Você ainda não está pronto", it: "Non sei ancora pronto", ru: "Вы еще не готовы", ar: "أنت لست مستعداً بعد", hi: "आप अभी तैयार नहीं हैं",
+    ja: "まだ準備ができていません", ko: "아직 준비가되지 않았습니다", id: "Anda belum siap", tr: "Henüz hazır değilsiniz", vi: "Bạn chưa sẵn sàng",
+  },
+  quizTierLowDesc: {
+    es: "No significa que debas renunciar a tu sueño. Solo necesitas una mejor planificación para evitar errores que puedan costarte tiempo, dinero y oportunidades.", en: "It doesn't mean you should give up on your dream. You just need better planning to avoid mistakes that could cost you time, money and opportunities.", zh: "这并不意味着你应该放弃梦想。你只需要更好的规划来避免可能浪费时间、金钱和机会的错误。", fr: "Cela ne signifie pas que vous devez abandonner votre rêve. Vous avez simplement besoin d'une meilleure planification pour éviter les erreurs qui pourraient vous coûter du temps, de l'argent et des opportunités.", de: "Das bedeutet nicht, dass Sie Ihren Traum aufgeben sollten. Sie brauchen nur bessere Planung, um Fehler zu vermeiden, die Sie Zeit, Geld und Chancen kosten könnten.",
+    pt: "Isso não significa que você deva desistir do seu sonho. Você só precisa de um melhor planejamento para evitar erros que possam custar tempo, dinheiro e oportunidades.", it: "Non significa che devi rinunciare al tuo sogno. Hai solo bisogno di una pianificazione migliore per evitare errori che potrebbero costarti tempo, denaro e opportunità.", ru: "Это не значит, что вам следует отказаться от своей мечты. Вам просто нужно лучшее планирование, чтобы избежать ошибок, которые могут стоить вам времени, денег и возможностей.", ar: "لا يعني ذلك أنك يجب أن تتخلى عن حلمك. أنت فقط تحتاج إلى تخطيط أفضل لتجنب الأخطاء التي قد تكلفك الوقت والمال والفرص.", hi: "इसका मतलब यह नहीं है कि आपको अपना सपना छोड़ देना चाहिए। आपको बस बेहतर योजना की आवश्यकता है ताकि उन गलतियों से बचा जा सके जो आपका समय, पैसा और अवसर छीन सकती हैं।",
+    ja: "夢を諦める必要はありません。時間を浪費し、お金と機会を失う可能性のあるミスを避けるために、より良い計画が必要なだけです。", ko: "꿈을 포기해야 한다는 뜻이 아닙니다. 시간과 돈, 기회를 잃을 수 있는 실수를 피하기 위해 더 나은 계획이 필요할 뿐입니다.", id: "Ini bukan berarti Anda harus menyerah mimpi Anda. Anda hanya perlu perencanaan yang lebih baik untuk menghindari kesalahan yang dapat menghabiskan waktu, uang, dan peluang.", tr: "Bu, hayalinden vazgeçmen gerektiği anlamına gelmez. Sadece sana zaman, para ve fırsat kaybettirebilecek hatalardan kaçınmak için daha iyi bir planlamaya ihtiyacın var.", vi: "Điều này không có nghĩa là bạn phải từ bỏ ước mơ. Bạn chỉ cần lập kế hoạch tốt hơn để tránh những sai lầm có thể khiến bạn mất thời gian, tiền bạc và cơ hội.",
+  },
 };

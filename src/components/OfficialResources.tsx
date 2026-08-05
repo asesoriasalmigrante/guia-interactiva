@@ -3,6 +3,7 @@ import { OFFICIAL_RESOURCES, EBOOK_METADATA } from '../data/ebookData';
 import { Compass, ExternalLink, ShieldCheck, Phone, Instagram, Mail, Globe } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
 import { t } from '../utils/i18n';
+import { useTranslatedData } from '../hooks/useTranslatedData';
 
 const TikTokIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -14,6 +15,7 @@ interface OfficialResourcesProps {}
 
 export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
   const { language } = useLanguage();
+  const { data: translatedResources } = useTranslatedData('official-resources', OFFICIAL_RESOURCES, language);
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* Header Banner */}
@@ -32,7 +34,7 @@ export const OfficialResources: React.FC<OfficialResourcesProps> = () => {
 
       {/* Resource Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {OFFICIAL_RESOURCES.map((res, idx) => (
+        {translatedResources.map((res, idx) => (
           <div
             key={idx}
             className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between hover:border-amber-500/60 transition-all space-y-4"

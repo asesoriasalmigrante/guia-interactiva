@@ -12,6 +12,12 @@ import {
 import { useLanguage } from '@/src/contexts/LanguageContext';
 import { t } from '@/src/utils/i18n';
 
+const LOCALE_MAP: Record<string, string> = {
+  es: 'es-ES', en: 'en-US', zh: 'zh-CN', fr: 'fr-FR', de: 'de-DE',
+  pt: 'pt-BR', it: 'it-IT', ru: 'ru-RU', ar: 'ar-SA', hi: 'hi-IN',
+  ja: 'ja-JP', ko: 'ko-KR', id: 'id-ID', tr: 'tr-TR', vi: 'vi-VN',
+};
+
 const customMigranteLogo = '/images/asesorias_migrante_custom_logo_1784912635483.jpg';
 
 interface UserWithCount extends Profile {
@@ -306,7 +312,7 @@ export default function AdminDashboard() {
                     </td>
                     <td className="py-3 px-3 hidden lg:table-cell">
                       <span className="text-xs text-gray-400">
-                        {new Date(user.created_at).toLocaleDateString('es-ES')}
+                        {new Date(user.created_at).toLocaleDateString(LOCALE_MAP[language] || 'es-ES')}
                       </span>
                     </td>
                     <td className="py-3 px-3">
