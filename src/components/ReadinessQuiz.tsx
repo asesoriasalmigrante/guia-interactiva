@@ -25,18 +25,16 @@ import {
   Info
 } from 'lucide-react';
 
-type AnswerOption = 'Si' | 'No estoy seguro' | 'No';
+type AnswerOption = 'yes' | 'unsure' | 'no';
 
 export const ReadinessQuiz: React.FC = () => {
   const { language } = useLanguage();
-  // answers map: questionId -> 'Si' | 'No estoy seguro' | 'No'
   const [answers, setAnswers] = useState<Record<number, AnswerOption>>({});
   const [showResult, setShowResult] = useState<boolean>(false);
 
-  // Flattened questions list (25 questions)
   const allQuestions = READINESS_QUIZ_BLOCKS.flatMap(b => b.questions);
-  const totalQuestionsCount = allQuestions.length; // 25
-  const maxPoints = totalQuestionsCount * 2; // 50 points
+  const totalQuestionsCount = allQuestions.length;
+  const maxPoints = totalQuestionsCount * 2;
 
   const handleSelectOption = (questionId: number, option: AnswerOption) => {
     setAnswers(prev => ({
@@ -46,9 +44,9 @@ export const ReadinessQuiz: React.FC = () => {
   };
 
   const getPointsForAnswer = (option?: AnswerOption): number => {
-    if (option === 'Si') return 2;
-    if (option === 'No estoy seguro') return 1;
-    return 0; // 'No' or undefined
+    if (option === 'yes') return 2;
+    if (option === 'unsure') return 1;
+    return 0;
   };
 
   const calculateTotalScore = (): number => {
@@ -238,48 +236,48 @@ export const ReadinessQuiz: React.FC = () => {
 
                       {/* 3 Answer Option Buttons */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pl-0 sm:pl-10">
-                        {/* Option: Si */}
+                        {/* Option: Yes */}
                         <button
                           type="button"
-                          onClick={() => handleSelectOption(q.id, 'Si')}
+                          onClick={() => handleSelectOption(q.id, 'yes')}
                           id={`q-${q.id}-opt-si`}
                           className={`p-3.5 rounded-xl border text-xs sm:text-sm font-bold flex items-center gap-2.5 transition-all cursor-pointer ${
-                            currentAnswer === 'Si'
+                            currentAnswer === 'yes'
                               ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm ring-2 ring-emerald-500/30'
                               : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
                           }`}
                         >
-                          <CheckCircle2 className={`w-4 h-4 ${currentAnswer === 'Si' ? 'text-white' : 'text-emerald-600'}`} />
+                          <CheckCircle2 className={`w-4 h-4 ${currentAnswer === 'yes' ? 'text-white' : 'text-emerald-600'}`} />
                           <span>{t('quizAnswerSi', language)}</span>
                         </button>
 
-                        {/* Option: No estoy seguro */}
+                        {/* Option: Unsure */}
                         <button
                           type="button"
-                          onClick={() => handleSelectOption(q.id, 'No estoy seguro')}
+                          onClick={() => handleSelectOption(q.id, 'unsure')}
                           id={`q-${q.id}-opt-unsure`}
                           className={`p-3.5 rounded-xl border text-xs sm:text-sm font-bold flex items-center gap-2.5 transition-all cursor-pointer ${
-                            currentAnswer === 'No estoy seguro'
+                            currentAnswer === 'unsure'
                               ? 'bg-amber-500 text-slate-950 border-amber-500 shadow-sm ring-2 ring-amber-500/30'
                               : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-amber-950/30'
                           }`}
                         >
-                          <HelpCircle className={`w-4 h-4 ${currentAnswer === 'No estoy seguro' ? 'text-slate-950' : 'text-amber-500'}`} />
+                          <HelpCircle className={`w-4 h-4 ${currentAnswer === 'unsure' ? 'text-slate-950' : 'text-amber-500'}`} />
                           <span>{t('quizAnswerUnsure', language)}</span>
                         </button>
 
                         {/* Option: No */}
                         <button
                           type="button"
-                          onClick={() => handleSelectOption(q.id, 'No')}
+                          onClick={() => handleSelectOption(q.id, 'no')}
                           id={`q-${q.id}-opt-no`}
                           className={`p-3.5 rounded-xl border text-xs sm:text-sm font-bold flex items-center gap-2.5 transition-all cursor-pointer ${
-                            currentAnswer === 'No'
+                            currentAnswer === 'no'
                               ? 'bg-slate-800 text-white border-slate-800 shadow-sm ring-2 ring-slate-800/30'
                               : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
                           }`}
                         >
-                          <XCircle className={`w-4 h-4 ${currentAnswer === 'No' ? 'text-white' : 'text-slate-400'}`} />
+                          <XCircle className={`w-4 h-4 ${currentAnswer === 'no' ? 'text-white' : 'text-slate-400'}`} />
                           <span>{t('quizAnswerNo', language)}</span>
                         </button>
                       </div>

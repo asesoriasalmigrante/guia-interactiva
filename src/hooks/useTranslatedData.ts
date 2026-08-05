@@ -1,8 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
-const TRANSLATION_CACHE_PREFIX = 'migrante_translated_';
+const CACHE_VERSION = 1;
+const CACHE_PREFIX = `migrante_translated_v${CACHE_VERSION}_`;
+const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+const BATCH_SIZE = 80;
+const MAX_RETRIES = 1;
 
 function isTranslatableString(val: any): boolean {
   if (typeof val !== 'string') return false;
@@ -60,29 +64,94 @@ function replaceStrings(obj: any, translated: string[], cursor: { pos: number })
   return obj;
 }
 
-function getCachedTranslation(id: string, lang: string): any | null {
+interface CacheEntry {
+  data: any;
+  timestamp: number;
+}
+
+function getCacheKey(dataId: string, lang: string): string {
+  return `${CACHE_PREFIX}${dataId}_${lang}`;
+}
+
+function getCachedTranslation(dataId: string, lang: string): any | null {
   if (typeof window === 'undefined') return null;
   try {
-    const key = `${TRANSLATION_CACHE_PREFIX}${id}_${lang}`;
-    const raw = localStorage.getItem(key);
+    const raw = localStorage.getItem(getCacheKey(dataId, lang));
     if (!raw) return null;
-    return JSON.parse(raw);
+    const entry: CacheEntry = JSON.parse(raw);
+    if (Date.now() - entry.timestamp > CACHE_TTL_MS) {
+      localStorage.removeItem(getCacheKey(dataId, lang));
+      return null;
+    }
+    return entry.data;
   } catch {
     return null;
   }
 }
 
-function setCachedTranslation(id: string, lang: string, data: any): void {
+function setCachedTranslation(dataId: string, lang: string, data: any): void {
   if (typeof window === 'undefined') return;
   try {
-    const key = `${TRANSLATION_CACHE_PREFIX}${id}_${lang}`;
-    localStorage.setItem(key, JSON.stringify(data));
+    const entry: CacheEntry = { data, timestamp: Date.now() };
+    localStorage.setItem(getCacheKey(dataId, lang), JSON.stringify(entry));
   } catch {}
 }
 
-export function useTranslatedData<T>(dataId: string, originalData: T, language: string): { data: T; loading: boolean } {
+export function clearAllTranslationCaches(): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const keys = Object.keys(localStorage);
+    for (const key of keys) {
+      if (key.startsWith(CACHE_PREFIX)) {
+        localStorage.removeItem(key);
+      }
+    }
+  } catch {}
+}
+
+async function translateBatch(
+  batch: string[],
+  targetLang: string,
+  chapterId: string
+): Promise<string[]> {
+  const resp = await fetch('/api/translate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      strings: batch,
+      targetLanguage: targetLang,
+      chapterId,
+    }),
+  });
+
+  if (!resp.ok) {
+    const errorBody = await resp.text().catch(() => '');
+    throw new Error(`[Translation] API error ${resp.status}: ${errorBody}`);
+  }
+
+  const result = await resp.json();
+  const flat: any[] = Array.isArray(result.translated) ? result.translated : [];
+
+  const translated: string[] = [];
+  for (let j = 0; j < batch.length; j++) {
+    const t = flat[j];
+    if (typeof t === 'string' && t.trim().length > 0) {
+      translated.push(t);
+    } else {
+      translated.push(batch[j]);
+    }
+  }
+  return translated;
+}
+
+export function useTranslatedData<T>(
+  dataId: string,
+  originalData: T,
+  language: string
+): { data: T; loading: boolean } {
   const [data, setData] = useState<T>(originalData);
   const [loading, setLoading] = useState(false);
+  const requestIdRef = useRef(0);
 
   const translate = useCallback(async (lang: string) => {
     if (lang === 'es') {
@@ -96,7 +165,9 @@ export function useTranslatedData<T>(dataId: string, originalData: T, language: 
       return;
     }
 
+    const currentRequestId = ++requestIdRef.current;
     setLoading(true);
+
     try {
       const allStrings = extractStrings(originalData);
       if (allStrings.length === 0) {
@@ -105,32 +176,51 @@ export function useTranslatedData<T>(dataId: string, originalData: T, language: 
         return;
       }
 
-      const BATCH = 80;
-      const allTranslated: string[] = [];
+      let allTranslated: string[] = [];
+      let failed = false;
 
-      for (let i = 0; i < allStrings.length; i += BATCH) {
-        const batch = allStrings.slice(i, i + BATCH);
-        const resp = await fetch('/api/translate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            strings: batch,
-            targetLanguage: lang,
-            chapterId: `${dataId}_${lang}_${i}`,
-          }),
-        });
+      for (let i = 0; i < allStrings.length; i += BATCH_SIZE) {
+        if (requestIdRef.current !== currentRequestId) return;
 
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        const result = await resp.json();
-        const flat = Array.isArray(result.translated) ? result.translated : [];
+        const batch = allStrings.slice(i, i + BATCH_SIZE);
+        const batchId = `${dataId}_${lang}_${i}`;
+        let batchResult: string[] | null = null;
 
-        for (let j = 0; j < batch.length; j++) {
-          allTranslated.push(typeof flat[j] === 'string' && flat[j].trim() ? flat[j] : batch[j]);
+        for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+          try {
+            const result = await translateBatch(batch, lang, batchId);
+            if (result.length === batch.length) {
+              batchResult = result;
+              break;
+            }
+            console.warn(
+              `[Translation] ${dataId}/${lang} batch ${i}: length mismatch ` +
+              `expected ${batch.length}, got ${result.length}. ` +
+              `${attempt < MAX_RETRIES ? 'Retrying...' : 'Using fallback.'}`
+            );
+          } catch (err) {
+            console.warn(
+              `[Translation] ${dataId}/${lang} batch ${i} attempt ${attempt + 1}:`,
+              err
+            );
+          }
+        }
+
+        if (batchResult) {
+          allTranslated.push(...batchResult);
+        } else {
+          failed = true;
+          allTranslated.push(...batch);
         }
       }
 
-      while (allTranslated.length < allStrings.length) {
-        allTranslated.push(allStrings[allTranslated.length]);
+      if (requestIdRef.current !== currentRequestId) return;
+
+      if (failed) {
+        console.warn(
+          `[Translation] ${dataId}/${lang}: some batches failed. ` +
+          `Partial translation applied.`
+        );
       }
 
       const cursor = { pos: 0 };
@@ -138,7 +228,7 @@ export function useTranslatedData<T>(dataId: string, originalData: T, language: 
       setCachedTranslation(dataId, lang, translated);
       setData(translated);
     } catch (err) {
-      console.error(`Translation error for ${dataId}:`, err);
+      console.error(`[Translation] ${dataId}/${lang}: unexpected error`, err);
       setData(originalData);
     } finally {
       setLoading(false);

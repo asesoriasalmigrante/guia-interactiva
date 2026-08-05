@@ -12,6 +12,7 @@ import {
   getCountryName,
   clearChapterCache,
 } from '@/src/utils/i18n';
+import { clearAllTranslationCaches } from '@/src/hooks/useTranslatedData';
 
 interface LanguageContextType {
   language: string;
@@ -52,6 +53,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     setLanguageState(code);
     persistLanguage(code);
     clearChapterCache();
+    clearAllTranslationCaches();
     if (typeof document !== 'undefined') {
       document.documentElement.lang = code;
     }

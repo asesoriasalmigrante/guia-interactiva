@@ -4,9 +4,11 @@ import { CountryInfo } from '../types';
 import { Globe2, ShieldCheck, DollarSign, FileCheck2, AlertCircle, CheckCircle, Filter, Search, X, Check } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
 import { t, getCountryName } from '../utils/i18n';
+import { useTranslatedData } from '../hooks/useTranslatedData';
 
 export const CountryComparer: React.FC = () => {
   const { language } = useLanguage();
+  const { data: translatedCountries } = useTranslatedData('countries', COUNTRIES_DATA, language);
   const [selectedCountryIds, setSelectedCountryIds] = useState<string[]>(['espana', 'canada', 'alemania']);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filterRegion, setFilterRegion] = useState<string>('all');
@@ -27,9 +29,9 @@ export const CountryComparer: React.FC = () => {
     }
   };
 
-  const selectedCountries = COUNTRIES_DATA.filter(c => selectedCountryIds.includes(c.id));
+  const selectedCountries = translatedCountries.filter(c => selectedCountryIds.includes(c.id));
 
-  const filteredCountriesList = COUNTRIES_DATA.filter(c => {
+  const filteredCountriesList = translatedCountries.filter(c => {
     // Region Filter
     if (filterRegion !== 'all' && c.region !== filterRegion) return false;
 
@@ -58,10 +60,10 @@ export const CountryComparer: React.FC = () => {
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2 text-[#E79923] text-xs font-bold uppercase tracking-wider font-poppins">
             <Globe2 className="w-4 h-4" />
-            {t('migrationToolLabel', language)} — {COUNTRIES_DATA.length} {t('countriesCount', language)}
+            {t('migrationToolLabel', language)} — {translatedCountries.length} {t('countriesCount', language)}
           </div>
           <span className="bg-[#8FAFB3]/20 text-[#8FAFB3] border border-[#8FAFB3]/30 px-3 py-1 rounded-full text-xs font-bold">
-            {COUNTRIES_DATA.length} {t('countriesWorld', language)}
+            {translatedCountries.length} {t('countriesWorld', language)}
           </span>
         </div>
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white font-poppins">
@@ -157,12 +159,12 @@ export const CountryComparer: React.FC = () => {
           <div className="flex items-center gap-1.5 overflow-x-auto pt-1 pb-1 text-xs border-t border-slate-100">
             <span className="text-slate-500 font-bold pr-1">{t('continentLabel', language)}</span>
             {[
-              { id: 'all', label: `${t('allContinents', language)} (${COUNTRIES_DATA.length})` },
-              { id: 'América', label: `${t('regionAmerica', language)} (${COUNTRIES_DATA.filter(c => c.region === 'América').length})` },
-              { id: 'Europa', label: `${t('regionEurope', language)} (${COUNTRIES_DATA.filter(c => c.region === 'Europa').length})` },
-              { id: 'Asia', label: `${t('regionAsia', language)} (${COUNTRIES_DATA.filter(c => c.region === 'Asia').length})` },
-              { id: 'Oceanía', label: `${t('regionOceania', language)} (${COUNTRIES_DATA.filter(c => c.region === 'Oceanía').length})` },
-              { id: 'África', label: `${t('regionAfrica', language)} (${COUNTRIES_DATA.filter(c => c.region === 'África').length})` }
+              { id: 'all', label: `${t('allContinents', language)} (${translatedCountries.length})` },
+              { id: 'América', label: `${t('regionAmerica', language)} (${translatedCountries.filter(c => c.region === 'América').length})` },
+              { id: 'Europa', label: `${t('regionEurope', language)} (${translatedCountries.filter(c => c.region === 'Europa').length})` },
+              { id: 'Asia', label: `${t('regionAsia', language)} (${translatedCountries.filter(c => c.region === 'Asia').length})` },
+              { id: 'Oceanía', label: `${t('regionOceania', language)} (${translatedCountries.filter(c => c.region === 'Oceanía').length})` },
+              { id: 'África', label: `${t('regionAfrica', language)} (${translatedCountries.filter(c => c.region === 'África').length})` }
             ].map(reg => (
               <button
                 key={reg.id}
@@ -182,7 +184,7 @@ export const CountryComparer: React.FC = () => {
         {/* Country Badges Grid Picker (Max 110 items) */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs text-slate-500">
-            <span>{t('showingCountries', language)} <strong>{filteredCountriesList.length}</strong> {t('ofCount', language)} {COUNTRIES_DATA.length} {t('countriesOf', language)}:</span>
+            <span>{t('showingCountries', language)} <strong>{filteredCountriesList.length}</strong> {t('ofCount', language)} {translatedCountries.length} {t('countriesOf', language)}:</span>
             <span>{t('clickToToggle', language)}</span>
           </div>
 

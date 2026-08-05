@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { CHAPTERS, EBOOK_METADATA, COUNTRIES_DATA } from '../data/ebookData';
 import { BookOpen, Search, ArrowLeft, ArrowRight, Lightbulb, AlertTriangle, CheckCircle2, ChevronRight, ChevronDown, ChevronUp, Instagram, MessageCircle, Globe2, DollarSign, FileCheck2, CheckCircle, Loader2, Languages } from 'lucide-react';
-import { t, translateChapterWithAI, WORLD_LANGUAGES } from '../utils/i18n';
+import { t, WORLD_LANGUAGES } from '../utils/i18n';
 import { useLanguage } from '@/src/contexts/LanguageContext';
+import { useTranslatedData } from '../hooks/useTranslatedData';
 
 const TikTokIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -36,42 +37,13 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
   const [isIndexOpen, setIsIndexOpen] = useState<boolean>(false);
   
   const rawChapter = CHAPTERS.find(c => c.id === selectedChapterId) || CHAPTERS[0];
-  const [displayChapter, setDisplayChapter] = useState<any>(rawChapter);
-  const [isTranslating, setIsTranslating] = useState<boolean>(false);
+  const { data: displayChapter, loading: isTranslating } = useTranslatedData(
+    `chapter-${selectedChapterId}`,
+    rawChapter,
+    language
+  );
 
-  const langCode = language;
-
-  useEffect(() => {
-    const chapterToTranslate = CHAPTERS.find(c => c.id === selectedChapterId) || CHAPTERS[0];
-    if (langCode === 'es') {
-      setDisplayChapter(chapterToTranslate);
-      setIsTranslating(false);
-      return;
-    }
-
-    let isMounted = true;
-    setIsTranslating(true);
-
-    translateChapterWithAI(chapterToTranslate, langCode)
-      .then((translated) => {
-        if (isMounted) {
-          setDisplayChapter(translated);
-          setIsTranslating(false);
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setDisplayChapter(chapterToTranslate);
-          setIsTranslating(false);
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [selectedChapterId, langCode]);
-
-  const activeLangObj = WORLD_LANGUAGES.find(l => l.code === langCode) || WORLD_LANGUAGES[0];
+  const activeLangObj = WORLD_LANGUAGES.find(l => l.code === language) || WORLD_LANGUAGES[0];
 
   const filteredChapters = CHAPTERS.filter(ch =>
     ch.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -146,7 +118,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
                     <h3 className="font-bold text-[#0B2447] dark:text-[#E79923] text-sm md:text-base font-poppins">
-                      {t('chapterIndexTitle', langCode)}
+                      {t('chapterIndexTitle', language)}
                     </h3>
                     <span className="text-[10px] font-extrabold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full flex-shrink-0">
                       {CHAPTERS.length} {t('chapterOf', language)}.
@@ -159,7 +131,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
               </div>
 
               <div className="flex items-center gap-1.5 text-xs text-[#0B2447] dark:text-[#E79923] font-bold flex-shrink-0 bg-[#E79923]/20 border border-[#E79923]/40 px-2.5 py-1.5 rounded-xl group-hover:bg-[#E79923] group-hover:text-[#0B2447] transition-all">
-                <span className="hidden sm:inline font-poppins">{isIndexOpen ? t('btnCollapse', langCode) : t('btnExpand', langCode)}</span>
+                <span className="hidden sm:inline font-poppins">{isIndexOpen ? t('btnCollapse', language) : t('btnExpand', language)}</span>
                 {isIndexOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </div>
             </button>
@@ -174,7 +146,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder={t('searchPlaceholder', langCode)}
+                    placeholder={t('searchPlaceholder', language)}
                     className="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E79923] bg-slate-50 dark:bg-slate-800 dark:text-slate-100 placeholder:text-slate-400"
                   />
                 </div>
@@ -514,15 +486,17 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
             )}
 
             {/* Daniela Harrington Tip Box */}
+            {displayChapter.danielaTip && (
             <div className="bg-[#0B2447] dark:bg-[#08172e] text-white rounded-2xl p-6 border border-slate-800 space-y-3 shadow-lg">
               <div className="flex items-center gap-2 text-[#E79923] text-xs font-bold uppercase tracking-wider font-poppins">
                 <Lightbulb className="w-4 h-4 text-[#E79923]" />
                 {t('danielaTipTitle', language)}
               </div>
               <p className="text-sm md:text-base text-[#F5F1E8] italic leading-relaxed">
-                "{renderFormattedText(displayChapter.danielaTip, "font-extrabold text-[#E79923]")}"
+                "{renderFormattedText(displayChapter.danielaTip!, "font-extrabold text-[#E79923]")}"
               </p>
             </div>
+            )}
 
             {/* Chapter Bottom Actions */}
             <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -536,7 +510,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
                 }`}
               >
                 <ArrowLeft className="w-4 h-4" />
-                {t('btnPrev', langCode)}
+                {t('btnPrev', language)}
               </button>
 
               <button
@@ -548,7 +522,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
                     : 'bg-[#0B2447] hover:bg-slate-800 text-white'
                 }`}
               >
-                {t('btnNext', langCode)}
+                {t('btnNext', language)}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
