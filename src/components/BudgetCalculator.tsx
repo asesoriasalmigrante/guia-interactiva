@@ -3,6 +3,7 @@ import { INITIAL_BUDGET_ITEMS } from '../data/ebookData';
 import { BudgetItem } from '../types';
 import { Calculator, Plus, Trash2, ShieldAlert, Download, RefreshCw, DollarSign, PieChart } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
+import { useTranslatedData } from '@/src/hooks/useTranslatedData';
 import { t } from '../utils/i18n';
 
 const CATEGORY_MAP: Record<string, string> = {
@@ -18,18 +19,19 @@ const CATEGORY_MAP: Record<string, string> = {
 
 export const BudgetCalculator: React.FC = () => {
   const { language } = useLanguage();
+  const { data: translatedInitialItems } = useTranslatedData('budgetItems', INITIAL_BUDGET_ITEMS, language);
   const [items, setItems] = useState<BudgetItem[]>(() => {
     const saved = localStorage.getItem('migrante_budget_items');
     if (saved) {
       try { return JSON.parse(saved); } catch (e) { /* ignore */ }
     }
-    return INITIAL_BUDGET_ITEMS;
+    return translatedInitialItems.map((item, i) => ({ ...item, category: INITIAL_BUDGET_ITEMS[i]?.category || item.category }));
   });
 
   const [monthsOfEmergencyFund, setMonthsOfEmergencyFund] = useState<number>(3);
   const [newItemName, setNewItemName] = useState<string>('');
   const [newItemCost, setNewItemCost] = useState<string>('');
-  const [newItemCategory, setNewItemCategory] = useState<BudgetItem['category']>(t('categoryTramites', language) as BudgetItem['category']);
+  const [newItemCategory, setNewItemCategory] = useState<BudgetItem['category']>('Trámites y Documentos');
 
   useEffect(() => {
     localStorage.setItem('migrante_budget_items', JSON.stringify(items));

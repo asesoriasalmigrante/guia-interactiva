@@ -622,4 +622,19 @@ export const quizTranslations: Record<string, Record<string, string>> = {
     pt: "Isso não significa que você deva desistir do seu sonho. Você só precisa de um melhor planejamento para evitar erros que possam custar tempo, dinheiro e oportunidades.", it: "Non significa che devi rinunciare al tuo sogno. Hai solo bisogno di una pianificazione migliore per evitare errori che potrebbero costarti tempo, denaro e opportunità.", ru: "Это не значит, что вам следует отказаться от своей мечты. Вам просто нужно лучшее планирование, чтобы избежать ошибок, которые могут стоить вам времени, денег и возможностей.", ar: "لا يعني ذلك أنك يجب أن تتخلى عن حلمك. أنت فقط تحتاج إلى تخطيط أفضل لتجنب الأخطاء التي قد تكلفك الوقت والمال والفرص.", hi: "इसका मतलब यह नहीं है कि आपको अपना सपना छोड़ देना चाहिए। आपको बस बेहतर योजना की आवश्यकता है ताकि उन गलतियों से बचा जा सके जो आपका समय, पैसा और अवसर छीन सकती हैं।",
     ja: "夢を諦める必要はありません。時間を浪費し、お金と機会を失う可能性のあるミスを避けるために、より良い計画が必要なだけです。", ko: "꿈을 포기해야 한다는 뜻이 아닙니다. 시간과 돈, 기회를 잃을 수 있는 실수를 피하기 위해 더 나은 계획이 필요할 뿐입니다.", id: "Ini bukan berarti Anda harus menyerah mimpi Anda. Anda hanya perlu perencanaan yang lebih baik untuk menghindari kesalahan yang dapat menghabiskan waktu, uang, dan peluang.", tr: "Bu, hayalinden vazgeçmen gerektiği anlamına gelmez. Sadece sana zaman, para ve fırsat kaybettirebilecek hatalardan kaçınmak için daha iyi bir planlamaya ihtiyacın var.", vi: "Điều này không có nghĩa là bạn phải từ bỏ ước mơ. Bạn chỉ cần lập kế hoạch tốt hơn để tránh những sai lầm có thể khiến bạn mất thời gian, tiền bạc và cơ hội.",
   },
+  quizAnswerSi: {
+    es: "Sí", en: "Yes", zh: "是", fr: "Oui", de: "Ja",
+    pt: "Sim", it: "Sì", ru: "Да", ar: "نعم", hi: "हाँ",
+    ja: "はい", ko: "예", id: "Ya", tr: "Evet", vi: "Có",
+  },
+  quizAnswerUnsure: {
+    es: "No estoy seguro/a", en: "Not sure", zh: "不确定", fr: "Pas sûr", de: "Nicht sicher",
+    pt: "Não tenho certeza", it: "Non sono sicuro", ru: "Не уверен", ar: "لست متأكداً", hi: "अनिश्चित",
+    ja: "確信できない", ko: "확실하지 않음", id: "Tidak yakin", tr: "Emin değilim", vi: "Không chắc",
+  },
+  quizAnswerNo: {
+    es: "No", en: "No", zh: "否", fr: "Non", de: "Nein",
+    pt: "Não", it: "No", ru: "Нет", ar: "لا", hi: "नहीं",
+    ja: "いいえ", ko: "아니오", id: "Tidak", tr: "Hayır", vi: "Không",
+  },
 };

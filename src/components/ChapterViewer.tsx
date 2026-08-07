@@ -43,6 +43,13 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
     language
   );
 
+  const comparisonCountries = COUNTRIES_DATA.filter(c => ['espana', 'canada', 'alemania'].includes(c.id));
+  const { data: translatedComparisonCountries } = useTranslatedData(
+    'chapter3Comparison',
+    comparisonCountries,
+    language
+  );
+
   const activeLangObj = WORLD_LANGUAGES.find(l => l.code === language) || WORLD_LANGUAGES[0];
 
   const filteredChapters = CHAPTERS.filter(ch =>
@@ -395,7 +402,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = () => {
 
                 {/* 3 Country Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {COUNTRIES_DATA.filter(c => ['espana', 'canada', 'alemania'].includes(c.id)).map((c) => (
+                  {translatedComparisonCountries.map((c) => (
                     <div 
                       key={c.id}
                       className="bg-white dark:bg-[#101d30] rounded-2xl border border-slate-200 dark:border-slate-700/80 p-4 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"

@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { JOB_ACTION_PLAN } from '../data/ebookData';
 import { Briefcase, AlertTriangle, CheckCircle2, ShieldAlert, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/src/contexts/LanguageContext';
+import { useTranslatedData } from '@/src/hooks/useTranslatedData';
 import { t } from '../utils/i18n';
 
 export const JobSearchPlanner: React.FC = () => {
   const { language } = useLanguage();
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({});
+  const { data: translatedPlan } = useTranslatedData('jobPlan', JOB_ACTION_PLAN, language);
 
   const toggleTask = (taskId: string) => {
     setCompletedTasks(prev => ({ ...prev, [taskId]: !prev[taskId] }));
@@ -55,7 +57,7 @@ export const JobSearchPlanner: React.FC = () => {
 
       {/* 3-Month Action Plan Timeline */}
       <div className="space-y-6">
-        {JOB_ACTION_PLAN.map((month) => (
+        {translatedPlan.map((month) => (
           <div
             key={month.monthNumber}
             className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4"

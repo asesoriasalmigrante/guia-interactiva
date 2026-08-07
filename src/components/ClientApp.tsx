@@ -117,7 +117,7 @@ export default function ClientApp() {
               <div>
                 <h3 className="text-white font-extrabold text-base font-poppins">{t('companyName', language)}</h3>
                 <p className="text-[#8FAFB3] text-xs">
-                  {EBOOK_METADATA.title} — {t('footerCredit', language).replace(`${t('companyName', language)} — `, '')}
+                  {t('ebookTitle', language)} — {t('footerCredit', language).replace(`${t('companyName', language)} — `, '')}
                 </p>
               </div>
             </div>

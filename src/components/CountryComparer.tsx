@@ -35,11 +35,18 @@ export const CountryComparer: React.FC = () => {
     // Region Filter
     if (filterRegion !== 'all' && c.region !== filterRegion) return false;
 
-    // Language Filter
-    if (filterLanguage === 'spanish' && !c.languages.some(l => l.includes('Castellano') || l.includes('Español'))) return false;
-    if (filterLanguage === 'english' && !c.languages.some(l => l.includes('Inglés'))) return false;
-    if (filterLanguage === 'french' && !c.languages.some(l => l.includes('Francés'))) return false;
-    if (filterLanguage === 'german' && !c.languages.some(l => l.includes('Alemán'))) return false;
+    // Language Filter - use original language names for matching
+    const originalCountry = COUNTRIES_DATA.find(oc => oc.id === c.id);
+    if (filterLanguage !== 'all' && originalCountry) {
+      const langFilterMap: Record<string, string[]> = {
+        spanish: ['Castellano', 'Español'],
+        english: ['Inglés'],
+        french: ['Francés'],
+        german: ['Alemán'],
+      };
+      const filterLangs = langFilterMap[filterLanguage];
+      if (filterLangs && !originalCountry.languages.some(l => filterLangs.some(fl => l.includes(fl)))) return false;
+    }
 
     // Search Query (Name or demanded profession)
     if (searchQuery.trim() !== '') {

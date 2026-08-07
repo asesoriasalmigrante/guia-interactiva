@@ -155,10 +155,10 @@ export default function LoginScreen() {
           </div>
           <div>
             <h1 className="text-2xl sm:text-3xl font-black font-poppins text-white tracking-tight drop-shadow-md">
-              {EBOOK_METADATA.title}
+              {t('ebookTitle', language)}
             </h1>
             <p className="text-xs sm:text-sm text-[#A2C7CC] font-medium mt-1">
-              {EBOOK_METADATA.subtitle}
+              {t('ebookSubtitle', language)}
             </p>
           </div>
 
