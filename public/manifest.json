@@ -1,0 +1,29 @@
+{
+  "name": "Guía Interactiva de Supervivencia Migratoria",
+  "short_name": "Guía Migrante",
+  "description": "Guía de Supervivencia Migratoria interactiva con Daniela Harrington. Calculadoras, comparadores de países, checklists y asesoría con IA.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B2447",
+  "theme_color": "#E79923",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "es",
+  "categories": ["education", "lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}
